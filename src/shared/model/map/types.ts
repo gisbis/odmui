@@ -34,11 +34,13 @@ export interface ILayerGroup {
 	nameLayerGroup: string
 }
 
-export type OLMap = import('ol').Map
-export type OLCoordinate = import('ol/coordinate').Coordinate
-export type OLTileSource = import('ol/source').Tile
-export type OLGeometry = import('ol/geom').Geometry
-export type OLFeatureLike = import('ol/Feature').FeatureLike
-export type OLDraw = import('ol/interaction').Draw
+export type Map = import('ol').Map
+export type Coordinate = import('ol/coordinate').Coordinate
+export type TileSource = import('ol/source').Tile
+export type Geometry = import('ol/geom').Geometry
+export type FeatureLike = import('ol/Feature').FeatureLike
+export type Draw = import('ol/interaction').Draw
+export type MapBrowserEvent = import('ol').MapBrowserEvent<any>
+export type BaseEvent = import('ol/events/Event').default
 
 export type MapModeType = 'view' | 'measure'

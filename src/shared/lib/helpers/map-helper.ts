@@ -1,7 +1,7 @@
-import { OLGeometry } from 'shared/model'
+import { Geometry } from 'shared/model'
 import { getArea, getLength } from 'ol/sphere'
 
-export const formatLength = (line: OLGeometry) => {
+export const formatLength = (line: Geometry) => {
 	const length = getLength(line)
 	let output
 	if (length > 100) {
@@ -12,7 +12,7 @@ export const formatLength = (line: OLGeometry) => {
 	return output
 }
 
-export const formatArea = (polygon: OLGeometry) => {
+export const formatArea = (polygon: Geometry) => {
 	const area = getArea(polygon)
 	let output
 	if (area > 10000) {

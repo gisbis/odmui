@@ -7,18 +7,18 @@ import { CloseMeasure } from 'features/map/components/map-controls/measure/Close
 import { Fill, RegularShape, Stroke, Style, Text } from 'ol/style'
 import CircleStyle from 'ol/style/Circle'
 
-import { OLDraw, OLFeatureLike, OLGeometry } from 'shared/model'
+import type { Draw, FeatureLike, Geometry } from 'shared/model'
 import VectorSource from 'ol/source/Vector'
-import { Draw, Modify } from 'ol/interaction'
+import { Draw as IntDraw, Modify } from 'ol/interaction'
 import { LineString, Point } from 'ol/geom'
 import VectorLayer from 'ol/layer/Vector'
 
-import { mapHelpers } from 'shared/lib'
+import { mapHelpers } from 'shared/lib/helpers'
 import { IMapContext, MapContext } from 'entities/map'
 
 export type MeasureModeType = 'LineString' | 'Polygon' | undefined
 
-let tipPoint: OLGeometry
+let tipPoint: Geometry
 
 const style = new Style({
 	fill: new Fill({
@@ -135,12 +135,12 @@ const source = new VectorSource()
 const modify = new Modify({ source: source, style: modifyStyle })
 
 function styleFunction(
-	feature: OLFeatureLike,
+	feature: FeatureLike,
 	measureType?: MeasureModeType,
 	tip?: string
 ) {
 	const styles = [style]
-	const geometry = feature.getGeometry() as OLGeometry
+	const geometry = feature.getGeometry() as Geometry
 
 	if (!geometry) {
 		return
@@ -205,7 +205,7 @@ const vector = new VectorLayer({
 export const Measure = () => {
 	const { map } = useContext(MapContext) as IMapContext
 
-	const drawRef = useRef<OLDraw | null>(null)
+	const drawRef = useRef<Draw | null>(null)
 	const [measureMode, setMeasureMode] = useState<MeasureModeType>(undefined)
 
 	useEffect(() => {
@@ -253,7 +253,7 @@ export const Measure = () => {
 		const idleTip = 'Click to start measuring'
 		let tip = idleTip
 
-		const draw = new Draw({
+		const draw = new IntDraw({
 			source: source,
 			// @ts-ignore
 			type: measureMode,
@@ -261,6 +261,7 @@ export const Measure = () => {
 				return styleFunction(feature, measureMode, tip)
 			},
 		})
+
 		drawRef.current = draw
 
 		draw.on('drawstart', function () {

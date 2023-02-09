@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IFetchMapInfoParams, mapApi } from 'shared/api/map'
-import { OLCoordinate, MapModeType, OLMap } from 'shared/model'
-import { errorHelper } from 'shared/lib'
+import { mapApi } from 'shared/api/map'
+import { IFetchMapInfoParams } from 'shared/api/map/types'
+import { Coordinate, MapModeType, Map } from 'shared/model'
+import { errorHelper } from 'shared/lib/helpers'
 
 import { IMapState } from 'entities/map/model/types'
 
@@ -34,13 +35,13 @@ const store = createSlice({
 	name: 'map',
 	initialState,
 	reducers: {
-		setMap(state, action: PayloadAction<OLMap | null>) {
+		setMap(state, action: PayloadAction<Map | null>) {
 			state.map = action.payload
 		},
 		setCurrentZoom(state, action: PayloadAction<number>) {
 			state.currentZoom = action.payload
 		},
-		setCurrentCoords(state, action: PayloadAction<OLCoordinate | null>) {
+		setCurrentCoords(state, action: PayloadAction<Coordinate | null>) {
 			state.currentCoords = action.payload
 		},
 		setMapMode(state, action: PayloadAction<MapModeType>) {

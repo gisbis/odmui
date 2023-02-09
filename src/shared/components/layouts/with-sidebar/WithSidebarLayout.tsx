@@ -53,11 +53,8 @@ const Sidebar = styled('div', {
 	minWidth: sidebarwidth,
 	height: '100%',
 	overflow: 'hidden',
-	borderColor: theme.palette.divider,
-	borderWidth: 0,
-	borderRightWidth: anchor === 'left' && open ? '1px' : '0px',
-	borderLeftWidth: anchor === 'right' && open ? '1px' : '0px',
-	borderStyle: 'solid',
+	boxShadow:
+		'rgb(0 0 0 / 20%) 0px 8px 10px -5px, rgb(0 0 0 / 14%) 0px 16px 24px 2px, rgb(0 0 0 / 12%) 0px 6px 30px 5px',
 	transition: theme.transitions.create('margin', {
 		easing: theme.transitions.easing.sharp,
 		duration: theme.transitions.duration.leavingScreen,

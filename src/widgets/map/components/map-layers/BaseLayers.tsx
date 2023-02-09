@@ -1,15 +1,15 @@
 import { TileLayer } from 'entities/map/components/tile-layer/TileLayer'
-import { OLTileSource } from 'shared/model'
+import { TileSource } from 'shared/model'
 import { OSM, XYZ } from 'ol/source'
 
-interface IOLTileLayerProps {
-	source: OLTileSource
+interface ITileLayerProps {
+	source: TileSource
 	properties?: { [x: string]: any }
 	zIndex: number
 	visible: boolean
 }
 
-const commonBaseLayers: IOLTileLayerProps[] = [
+const commonBaseLayers: ITileLayerProps[] = [
 	{
 		properties: { title: 'OSM', type: 'base' },
 		source: new OSM(),

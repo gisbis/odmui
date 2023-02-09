@@ -1,11 +1,11 @@
 import { useContext, useEffect } from 'react'
 import { IMapContext, MapContext } from 'entities/map/context'
-import { OLTileSource } from 'shared/model'
+import { TileSource } from 'shared/model'
 
 import OLTileLayer from 'ol/layer/Tile'
 
 interface ITileLayerProps {
-	source: OLTileSource
+	source: TileSource
 	properties?: { [x: string]: any }
 	zIndex: number
 	visible: boolean

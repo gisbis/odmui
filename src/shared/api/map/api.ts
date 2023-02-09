@@ -1,7 +1,8 @@
-import { axiosHelper, dataHelper, errorHelper } from 'shared/lib'
-import { IFetchMapInfoParams, IMapInfoRowData } from 'shared/api/map'
+import { axiosHelper, dataHelper, errorHelper } from 'shared/lib/helpers'
 import { ILayer } from 'shared/model'
 import { axiosInstance } from 'shared/api/base'
+
+import { IFetchMapInfoParams, IMapInfoRowData } from './types'
 
 export const fetchMapInfo = (
 	params: IFetchMapInfoParams

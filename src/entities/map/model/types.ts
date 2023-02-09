@@ -1,11 +1,11 @@
-import { ILayer, MapModeType, OLCoordinate, OLMap } from 'shared/model'
+import { ILayer, MapModeType, Coordinate, Map } from 'shared/model'
 
 export interface IMapState {
-	map: OLMap | null
+	map: Map | null
 	layerList: ILayer[]
 	activeLayerIdList: number[]
 	currentZoom?: number
-	currentCoords: OLCoordinate | null
+	currentCoords: Coordinate | null
 	mapMode: MapModeType
 	infoData: any
 	error: string | null

@@ -1,8 +1,10 @@
 import React from 'react'
-import { OLMap } from 'shared/model'
+import { Map } from 'shared/model'
 
 export interface IMapContext {
-	map: OLMap | null
+	map: Map | null
+	renderRightSidebarContent: () => JSX.Element | null
+	renderLeftSidebarContent: () => JSX.Element | null
 }
 
 export const MapContext = React.createContext<IMapContext | null>(null)

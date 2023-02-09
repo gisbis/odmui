@@ -1,5 +1,5 @@
 import { axiosInstance } from '../base'
-import { errorHelper, dataHelper } from 'shared/lib'
+import { errorHelper, dataHelper } from 'shared/lib/helpers'
 import { I18nLng, I18nLocale } from 'shared/model'
 
 export const fetchAppLocales = (): Promise<{
