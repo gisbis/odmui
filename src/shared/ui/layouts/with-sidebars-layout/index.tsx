@@ -1,5 +1,6 @@
-import { Box, styled } from '@mui/material'
 import { PropsWithChildren } from 'react'
+
+import { Box, styled } from '@mui/material'
 
 const Main = styled('main', {
 	shouldForwardProp: (prop) =>
@@ -77,7 +78,7 @@ const Sidebar = styled('div', {
 	}),
 }))
 
-interface IWithSidebarLayoutProps extends PropsWithChildren {
+interface IWithSidebarsLayoutProps extends PropsWithChildren {
 	sidebarwidth: number
 	isOpenRightSidebar?: boolean
 	rightSidebarComponent?: React.ReactNode
@@ -86,7 +87,7 @@ interface IWithSidebarLayoutProps extends PropsWithChildren {
 	isMobile?: boolean
 }
 
-export const WithSidebarLayout: React.FC<IWithSidebarLayoutProps> = ({
+export const WithSidebarsLayout: React.FC<IWithSidebarsLayoutProps> = ({
 	children,
 	isMobile = false,
 	sidebarwidth,

@@ -1,6 +1,4 @@
-export const axiosEncodeParams = (params: {
-	[key: string]: any
-}): URLSearchParams => {
+export const encodePostParams = (params: { [key: string]: any }) => {
 	const encodeParams = new URLSearchParams()
 
 	for (const key in params) {

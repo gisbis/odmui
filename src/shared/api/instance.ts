@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { dataHelper } from 'shared/lib/helpers'
 
-const BASE_URL = '/gisbis'
+import { BASE_URL } from '../config'
+import { parsers } from '../lib'
 
 export const axiosInstance = axios.create({
 	withCredentials: true,
@@ -12,7 +12,7 @@ export const axiosInstance = axios.create({
 	transformResponse: [
 		function (data) {
 			try {
-				return dataHelper.xmlParser(data)
+				return parsers.xmlToJson(data)
 			} catch (e) {
 				throw e
 			}
