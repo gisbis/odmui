@@ -46,8 +46,11 @@ const Sidebar = styled('div', {
 	minWidth: sidebarwidth,
 	height: '100%',
 	overflow: 'hidden',
+	zIndex: 1,
 	boxShadow:
-		'rgb(0 0 0 / 20%) 0px 8px 10px -5px, rgb(0 0 0 / 14%) 0px 16px 24px 2px, rgb(0 0 0 / 12%) 0px 6px 30px 5px',
+		anchor === 'left'
+			? '2px 0 2px 0 rgb(0 0 0 / 10%)'
+			: '0 2px 0 2px rgb(0 0 0 / 10%)',
 	transition: theme.transitions.create('margin', {
 		easing: theme.transitions.easing.sharp,
 		duration: theme.transitions.duration.leavingScreen,

@@ -2,10 +2,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import type { RequestStatus } from 'shared/model'
 
-import type { ILayer, MapModeType } from './types'
+import type {
+	ILayer,
+	MapModeType,
+	LeftMapSidebarType,
+	RightMapSidebarType,
+} from './types'
+
 import { getLayerList } from './thunk'
 
-import type { Map } from 'ol'
 import { Coordinate } from 'ol/coordinate'
 import { convertersLib } from 'shared/lib'
 
@@ -17,8 +22,8 @@ interface IMapState {
 	currenMapModeType: MapModeType
 	isOpenLeftSidebar: boolean
 	isOpenRightsSidebar: boolean
-	leftSidebarContent?: JSX.Element
-	rightSidebarContent?: JSX.Element
+	leftSidebarType: LeftMapSidebarType
+	rightSidebarType: RightMapSidebarType
 	status: RequestStatus
 	errorMsg: string | null
 }
@@ -31,8 +36,8 @@ const initialState: IMapState = {
 	currentZoom: undefined,
 	isOpenLeftSidebar: true,
 	isOpenRightsSidebar: true,
-	leftSidebarContent: undefined,
-	rightSidebarContent: undefined,
+	leftSidebarType: 'home-screen',
+	rightSidebarType: 'layer-switcher',
 	errorMsg: null,
 	status: undefined,
 }
@@ -55,6 +60,18 @@ const state = createSlice({
 		},
 		setActiveIdLayerList(state, action: PayloadAction<number[]>) {
 			state.activeIdLayerList = action.payload
+		},
+		setIsOpenLeftSidebar(state, action: PayloadAction<boolean>) {
+			state.isOpenLeftSidebar = action.payload
+		},
+		setIsOpenRightSidebar(state, action: PayloadAction<boolean>) {
+			state.isOpenRightsSidebar = action.payload
+		},
+		setLeftSidebarType(state, action: PayloadAction<LeftMapSidebarType>) {
+			state.leftSidebarType = action.payload
+		},
+		setRightSidebarType(state, action: PayloadAction<RightMapSidebarType>) {
+			state.rightSidebarType = action.payload
 		},
 		setErrorMsg(state, action: PayloadAction<string | null>) {
 			state.errorMsg = action.payload

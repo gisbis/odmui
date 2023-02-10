@@ -33,3 +33,6 @@ export interface ILayer {
 }
 
 export type MapModeType = 'measure' | 'edit' | undefined
+
+export type LeftMapSidebarType = 'map-data' | 'home-screen'
+export type RightMapSidebarType = 'layer-switcher' | 'symbol-list'

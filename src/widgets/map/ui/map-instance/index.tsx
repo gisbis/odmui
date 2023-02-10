@@ -1,34 +1,30 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Box } from '@mui/material'
 
-import { useAppSelector } from 'shared/model'
-import { BaseLayers, MapContext } from 'entities/map'
-import { MapControlsLayout } from 'entities/map/ui'
+import { BaseLayers, MapContext, MapControlsLayout } from 'entities/map'
+
+import {
+	ToggleLeftSidebar,
+	LayerSwitcher,
+	ViewMapSymbols,
+	Measure,
+	ZoomGroup,
+} from 'features/map/ui'
+
 import { MapPageLayout } from 'widgets/page-layouts'
 
-import type { Map } from 'ol'
-import * as ol from 'ol'
+import { Map } from 'ol'
 import { fromLonLat } from 'ol/proj'
 
-interface IMapInstanceProps {
-	initialZoom: number
-	initialCoords: number[]
-}
-export const MapInstance: React.FC<IMapInstanceProps> = ({
-	initialCoords,
-	initialZoom,
-}) => {
-	const {
-		isOpenRightsSidebar,
-		isOpenLeftSidebar,
-		rightSidebarContent,
-		leftSidebarContent,
-	} = useAppSelector((state) => state.map)
+import * as ol from 'ol'
 
+export const MapInstance = () => {
 	const [map, setMap] = useState<Map | null>(null)
 	const mapRef = useRef<HTMLDivElement>(null)
-	const center = useMemo(() => fromLonLat(initialCoords), [initialCoords])
+
+	const center = fromLonLat([30.3, 59.94])
+	const zoom = 8
 
 	useEffect(() => {
 		if (!mapRef.current) {
@@ -38,7 +34,7 @@ export const MapInstance: React.FC<IMapInstanceProps> = ({
 		let options = {
 			view: new ol.View({
 				center,
-				zoom: initialZoom,
+				zoom,
 			}),
 			layers: [],
 			controls: [],
@@ -47,44 +43,56 @@ export const MapInstance: React.FC<IMapInstanceProps> = ({
 
 		let mapObject = new ol.Map(options)
 		mapObject.setTarget(mapRef.current)
-
 		setMap(mapObject)
 
 		return () => mapObject.setTarget(undefined)
 	}, [])
 
 	useEffect(() => {
-		if (!map) return
-		map.getView().setZoom(initialZoom)
-	}, [map, initialZoom])
+		if (!map) {
+			return
+		}
 
-	useEffect(() => {
-		if (!map) return
+		map.getView().setZoom(zoom)
 		map.getView().setCenter(center)
-	}, [map, center])
+	}, [map])
 
 	return (
-		<MapContext.Provider value={{ map }}>
-			<BaseLayers />
-
-			<MapPageLayout
-				isOpenRightSidebar={isOpenRightsSidebar}
-				isOpenLeftSidebar={isOpenLeftSidebar}
-				leftSidebarComponent={leftSidebarContent}
-				rightSidebarComponent={rightSidebarContent}
-			>
-				<Box
-					ref={mapRef}
-					sx={{
-						height: '100%',
-						width: '100%',
-						minHeight: 500,
-						position: 'relative',
-					}}
-				>
-					<MapControlsLayout>Controls</MapControlsLayout>
-				</Box>
-			</MapPageLayout>
-		</MapContext.Provider>
+		<>
+			<MapContext.Provider value={{ map }}>
+				<MapPageLayout>
+					<BaseLayers />
+					<Box
+						ref={mapRef}
+						sx={{
+							height: '100%',
+							width: '100%',
+							minHeight: 500,
+							position: 'relative',
+						}}
+					>
+						<MapControlsLayout
+							leftControls={
+								<>
+									<ToggleLeftSidebar />
+									<ZoomGroup />
+								</>
+							}
+							centerControls={
+								<>
+									<Measure />
+								</>
+							}
+							rightControls={
+								<>
+									<LayerSwitcher />
+									<ViewMapSymbols />
+								</>
+							}
+						/>
+					</Box>
+				</MapPageLayout>
+			</MapContext.Provider>
+		</>
 	)
 }
