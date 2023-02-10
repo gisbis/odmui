@@ -1,17 +1,35 @@
-import { ILayer, MapModeType, Coordinate, Map } from 'shared/model'
-
-export interface IMapState {
-	map: Map | null
-	layerList: ILayer[]
-	activeLayerIdList: number[]
-	currentZoom?: number
-	currentCoords: Coordinate | null
-	mapMode: MapModeType
-	infoData: any
-	error: string | null
-	isLoading: boolean
-	errorOnFetchInfoData: string | null
-	isLoadingInfoData: boolean
-	isOpenLeftSidebar: boolean
-	isOpenRightSidebar: boolean
+export interface ILayer {
+	id: number
+	name: string
+	zindex: number
+	srvSystemId: number
+	WMSName: string
+	autoload: boolean
+	canEdit: number
+	canCreate: number
+	canDelete: number
+	minzoom: number
+	maxzoom: number
+	type: number
+	tiled: number
+	hideOnSatelliteView: number
+	transparent: number
+	wmsImageType: string
+	timeScale: number
+	defaultStyle: string
+	customLegendStyle?: string
+	geometryType: number
+	hint?: string
+	toBaseLayer?: string
+	LayerGroup: {
+		idLayerGroup: string
+		nameLayerGroup: string
+	}
+	layerSourceWMS?: {
+		name: string
+	}
+	noLegend?: number
+	legendStyle?: string
 }
+
+export type MapModeType = 'measure' | 'edit' | undefined

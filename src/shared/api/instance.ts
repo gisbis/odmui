@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import { BASE_URL } from '../config'
-import { parsers } from '../lib'
+import { BASE_URL } from './config'
+import { parsersLib } from '../lib'
 
 export const axiosInstance = axios.create({
 	withCredentials: true,
@@ -12,7 +12,7 @@ export const axiosInstance = axios.create({
 	transformResponse: [
 		function (data) {
 			try {
-				return parsers.xmlToJson(data)
+				return parsersLib.xmlToJson(data)
 			} catch (e) {
 				throw e
 			}

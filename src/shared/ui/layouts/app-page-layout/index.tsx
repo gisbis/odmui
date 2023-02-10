@@ -8,6 +8,7 @@ export const AppPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 				height: '100%',
 				display: 'flex',
 				flexDirection: 'column',
+				overflow: 'hidden',
 			}}
 		>
 			<AppBar position="fixed">

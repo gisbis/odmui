@@ -1,5 +1,7 @@
 import { Provider } from 'react-redux'
-import { store } from '../model/store'
+import { store } from './redux-toolkit'
 
-export const withStore = (component: () => React.ReactNode) => () =>
-	<Provider store={store}>{component()}</Provider>
+export const withStore = (component: () => React.ReactNode) => () => {
+	console.log('withsotre')
+	return <Provider store={store}>{component()}</Provider>
+}

@@ -1,19 +1,15 @@
 import { PropsWithChildren } from 'react'
 
 import { Box, styled } from '@mui/material'
+import { DEFAULT_SIDEBAR_WIDTH } from './config'
 
 const Main = styled('main', {
 	shouldForwardProp: (prop) =>
-		prop !== 'openleftsidebar' &&
-		prop !== 'openrightsidebar' &&
-		prop !== 'ismobile' &&
-		prop !== 'sidebarwidth',
+		prop !== 'openleftsidebar' && prop !== 'openrightsidebar',
 })<{
-	sidebarwidth: number
 	openleftsidebar: boolean
 	openrightsidebar: boolean
-	ismobile: boolean
-}>(({ theme, sidebarwidth, openleftsidebar, openrightsidebar, ismobile }) => ({
+}>(({ theme, openleftsidebar, openrightsidebar }) => ({
 	flexGrow: 1,
 	height: '100%',
 	overflow: 'hidden',
@@ -40,16 +36,12 @@ const Main = styled('main', {
 
 const Sidebar = styled('div', {
 	shouldForwardProp: (prop) =>
-		prop !== 'open' &&
-		prop !== 'ismobile' &&
-		prop !== 'sidebarwidth' &&
-		prop !== 'anchor',
+		prop !== 'open' && prop !== 'sidebarwidth' && prop !== 'anchor',
 })<{
 	open: boolean
-	ismobile: boolean
 	sidebarwidth: number
 	anchor: 'left' | 'right'
-}>(({ theme, open, ismobile, anchor, sidebarwidth }) => ({
+}>(({ theme, open, anchor, sidebarwidth }) => ({
 	width: sidebarwidth,
 	minWidth: sidebarwidth,
 	height: '100%',
@@ -79,22 +71,22 @@ const Sidebar = styled('div', {
 }))
 
 interface IWithSidebarsLayoutProps extends PropsWithChildren {
-	sidebarwidth: number
+	leftSidebarWidth?: number
+	rightSidebarWidth?: number
 	isOpenRightSidebar?: boolean
-	rightSidebarComponent?: React.ReactNode
 	isOpenLeftSidebar?: boolean
+	rightSidebarComponent?: React.ReactNode
 	leftSidebarComponent?: React.ReactNode
-	isMobile?: boolean
 }
 
 export const WithSidebarsLayout: React.FC<IWithSidebarsLayoutProps> = ({
 	children,
-	isMobile = false,
-	sidebarwidth,
+	leftSidebarWidth = DEFAULT_SIDEBAR_WIDTH,
+	rightSidebarWidth = DEFAULT_SIDEBAR_WIDTH,
 	isOpenLeftSidebar,
+	isOpenRightSidebar,
 	leftSidebarComponent,
 	rightSidebarComponent,
-	isOpenRightSidebar,
 }) => {
 	return (
 		<Box
@@ -108,26 +100,22 @@ export const WithSidebarsLayout: React.FC<IWithSidebarsLayoutProps> = ({
 		>
 			<Sidebar
 				open={!!isOpenLeftSidebar}
-				ismobile={isMobile}
-				sidebarwidth={sidebarwidth}
+				sidebarwidth={leftSidebarWidth}
 				anchor="left"
 			>
 				{leftSidebarComponent}
 			</Sidebar>
 
 			<Main
-				sidebarwidth={sidebarwidth}
 				openleftsidebar={!!isOpenLeftSidebar}
 				openrightsidebar={!!isOpenRightSidebar}
-				ismobile={isMobile}
 			>
 				{children}
 			</Main>
 
 			<Sidebar
 				open={!!isOpenRightSidebar}
-				ismobile={isMobile}
-				sidebarwidth={sidebarwidth}
+				sidebarwidth={rightSidebarWidth}
 				anchor="right"
 			>
 				{rightSidebarComponent}

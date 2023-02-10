@@ -1,20 +1,14 @@
 import { lazy } from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
-const MapPage = lazy(() => import('pages/map/MapPage'))
-const TestPage = lazy(() => import('pages/test/TestPage'))
-
-const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <TestPage />,
-	},
-	{
-		path: '/map',
-		element: <MapPage />,
-	},
-])
+const TestPage = lazy(() => import('./test'))
+const MapPage = lazy(() => import('./map'))
 
 export const Routing = () => {
-	return <RouterProvider router={router} />
+	return (
+		<Routes>
+			<Route path="/" element={<TestPage />} />
+			<Route path="/map" element={<MapPage />} />
+		</Routes>
+	)
 }

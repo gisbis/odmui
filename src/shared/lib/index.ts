@@ -1,5 +1,5 @@
-import * as axios from './axios'
-import * as parsers from './parsers'
-import * as converters from './converters'
+import * as requestLib from './request'
+import * as parsersLib from './parsers'
+import * as convertersLib from './converters'
 
-export { axios, parsers, converters }
+export { requestLib, parsersLib, convertersLib }

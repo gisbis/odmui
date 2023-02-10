@@ -1,15 +1,15 @@
 import { withProviders } from 'app/providers'
 
 import { Routing } from 'pages'
-import { DataContainer } from 'app/containers/DataContainer'
+import { AppDataContainer } from 'widgets/data-containers'
 
 import 'app/index.scss'
 
 const App = () => {
 	return (
-		<DataContainer>
+		<AppDataContainer>
 			<Routing />
-		</DataContainer>
+		</AppDataContainer>
 	)
 }
 
