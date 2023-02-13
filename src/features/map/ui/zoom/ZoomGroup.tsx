@@ -1,13 +1,13 @@
-import { MapIconButtonGroup } from 'shared/ui/buttons'
+import { ButtonGroup } from '@mui/material'
 
 import { ZoomIn } from './ZoomIn'
 import { ZoomOut } from './ZoomOut'
 
 export const ZoomGroup = () => {
 	return (
-		<MapIconButtonGroup orientation="vertical">
+		<ButtonGroup orientation="vertical">
 			<ZoomIn />
 			<ZoomOut />
-		</MapIconButtonGroup>
+		</ButtonGroup>
 	)
 }

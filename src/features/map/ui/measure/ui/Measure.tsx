@@ -1,13 +1,13 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+import { ButtonGroup } from '@mui/material'
 
 import { LineMeasure } from './LineMeasure'
 import { PolygonMeasure } from './PolygonMeasure'
 import { CloseMeasure } from './CloseMeasure'
 import { MeasureModeType } from '../model'
 
-import { MapIconButtonGroup } from 'shared/ui/buttons'
-
-import { IMapContext, MapContext, mapLib } from 'entities/map'
+import { mapLib, useMapContext } from 'entities/map'
 
 import { FeatureLike } from 'ol/Feature'
 import { Fill, RegularShape, Stroke, Style, Text } from 'ol/style'
@@ -202,8 +202,7 @@ const vector = new VectorLayer({
 })
 
 export const Measure = () => {
-	const { map } = useContext(MapContext) as IMapContext
-
+	const { map } = useMapContext()
 	const drawRef = useRef<Draw | null>(null)
 	const [measureMode, setMeasureMode] = useState<MeasureModeType>(undefined)
 
@@ -220,6 +219,32 @@ export const Measure = () => {
 			clear()
 		}
 	}, [measureMode, map])
+
+	useEffect(() => {
+		if (!map) {
+			return
+		}
+
+		if (measureMode !== undefined) {
+			document.addEventListener('keydown', handleKeyDown)
+		} else {
+			document.removeEventListener('keydown', handleKeyDown)
+		}
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown)
+		}
+	}, [map, measureMode])
+
+	const handleKeyDown = (evt: KeyboardEvent) => {
+		evt.stopPropagation()
+
+		if (evt.code === 'Escape') {
+			clear()
+		}
+
+		setMeasureMode(undefined)
+	}
 
 	const clear = () => {
 		if (!map) {
@@ -281,7 +306,7 @@ export const Measure = () => {
 	}
 
 	return (
-		<MapIconButtonGroup>
+		<ButtonGroup orientation="vertical">
 			<LineMeasure
 				isActive={measureMode === 'LineString'}
 				cbcOnClick={() => setMeasureMode('LineString')}
@@ -295,6 +320,6 @@ export const Measure = () => {
 			{measureMode !== undefined && (
 				<CloseMeasure cbcOnClick={() => setMeasureMode(undefined)} />
 			)}
-		</MapIconButtonGroup>
+		</ButtonGroup>
 	)
 }

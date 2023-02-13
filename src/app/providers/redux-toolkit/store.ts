@@ -1,16 +1,20 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
 import { appReducer } from 'shared/model'
-import { i18nReducer } from 'shared/i18n/model'
-import { userReducer } from 'entities/user/model'
-import { mapReducer } from 'entities/map/model'
+import { i18nReducer } from 'shared/i18n'
+import { userReducer } from 'entities/user'
+import { settingsReducer } from 'shared/settings'
+import { selectReducer } from 'entities/select'
+import { mapReducer } from 'widgets/map'
 
 export const store = configureStore({
 	reducer: {
 		app: appReducer,
-		user: userReducer,
-		map: mapReducer,
 		i18n: i18nReducer,
+		user: userReducer,
+		settings: settingsReducer,
+		select: selectReducer,
+		map: mapReducer,
 	},
 })
 

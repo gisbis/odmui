@@ -6,6 +6,7 @@ import { convertersLib } from 'shared/lib'
 
 import { getLocaleList } from 'shared/i18n/model'
 import { getUserInfo } from 'entities/user/model'
+import { getAppSettings } from 'shared/app-settings'
 
 export const AppDataContainer: React.FC<PropsWithChildren> = ({ children }) => {
 	const dispatch = useAppDispatch()
@@ -22,7 +23,11 @@ export const AppDataContainer: React.FC<PropsWithChildren> = ({ children }) => {
 		actions.setStatus('loading')
 
 		try {
-			await Promise.all([dispatch(getLocaleList()), dispatch(getUserInfo())])
+			await Promise.all([
+				dispatch(getLocaleList()),
+				dispatch(getUserInfo()),
+				dispatch(getAppSettings()),
+			])
 
 			actions.setStatus('success')
 		} catch (e) {

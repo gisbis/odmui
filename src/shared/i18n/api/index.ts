@@ -1,1 +1,1 @@
-export * from './fetchAppLocales'
+export * from './fetch-app-locales'

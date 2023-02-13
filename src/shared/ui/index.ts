@@ -1,4 +1,3 @@
-import * as layouts from './layouts'
-import * as buttons from './buttons'
-
-export { layouts, buttons }
+export * from './layouts'
+export * from './buttons'
+export * from './accordions'

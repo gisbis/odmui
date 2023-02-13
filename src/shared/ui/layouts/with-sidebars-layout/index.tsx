@@ -1,7 +1,8 @@
 import { PropsWithChildren } from 'react'
 
 import { Box, styled } from '@mui/material'
-import { DEFAULT_SIDEBAR_WIDTH } from './config'
+
+import { DEFAULT_SIDEBAR_WIDTH } from 'shared/config'
 
 const Main = styled('main', {
 	shouldForwardProp: (prop) =>
@@ -78,8 +79,8 @@ interface IWithSidebarsLayoutProps extends PropsWithChildren {
 	rightSidebarWidth?: number
 	isOpenRightSidebar?: boolean
 	isOpenLeftSidebar?: boolean
-	rightSidebarComponent?: React.ReactNode
-	leftSidebarComponent?: React.ReactNode
+	rightSidebarComponent: JSX.Element | null
+	leftSidebarComponent: JSX.Element | null
 }
 
 export const WithSidebarsLayout: React.FC<IWithSidebarsLayoutProps> = ({

@@ -1,8 +1,9 @@
-import { useCallback, useContext } from 'react'
-import { easeOut } from 'ol/easing'
+import { useCallback } from 'react'
 
-import { IMapContext, MapContext } from 'entities/map'
 import { MapIconButton } from 'shared/ui/buttons'
+import { useMapContext } from 'entities/map'
+
+import { easeOut } from 'ol/easing'
 
 interface IZoomProps {
 	icon: JSX.Element
@@ -10,7 +11,7 @@ interface IZoomProps {
 	duration?: number
 }
 export const Zoom: React.FC<IZoomProps> = ({ icon, duration = 250, delta }) => {
-	const { map } = useContext(MapContext) as IMapContext
+	const { map } = useMapContext()
 
 	const handleClick = useCallback(() => {
 		if (!map) {

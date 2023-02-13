@@ -1,10 +1,10 @@
 import { MapDataContainer } from 'widgets/data-containers'
-import { MapInstance } from 'widgets/map/ui'
+import { MapWidget } from 'widgets/map'
 
 const MapPage = () => {
 	return (
 		<MapDataContainer>
-			<MapInstance />
+			<MapWidget zoom={9} center={[30.3, 59.94]} />
 		</MapDataContainer>
 	)
 }

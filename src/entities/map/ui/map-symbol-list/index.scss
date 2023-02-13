@@ -1,0 +1,19 @@
+.symbol-wsimg {
+  width: 100%;
+  height: auto;
+}
+
+.symbol-hint {
+  p {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    img {
+      width: 100%;
+      height: auto;
+      max-width: 50px;
+      max-height: 50px;
+    }
+  }
+}

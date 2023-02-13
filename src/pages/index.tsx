@@ -7,8 +7,8 @@ const MapPage = lazy(() => import('./map'))
 export const Routing = () => {
 	return (
 		<Routes>
-			<Route path="/" element={<TestPage />} />
-			<Route path="/map" element={<MapPage />} />
+			<Route path="/" element={<MapPage />} />
+			<Route path="/*" element={<MapPage />} />
 		</Routes>
 	)
 }

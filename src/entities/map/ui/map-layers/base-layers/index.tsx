@@ -1,13 +1,11 @@
-import { useContext, useEffect } from 'react'
+import { useMemo } from 'react'
 
-import type { ITileLayerProps } from '../layer-creators'
-import { TileCreator } from '../layer-creators'
+import { useAppSelector } from 'shared/model'
+import { useMapContext, ImageLayer, TileLayer, mapLib } from 'entities/map'
 
-import { IMapContext, MapContext } from 'entities/map/context'
+import { OSM, TileWMS, XYZ } from 'ol/source'
 
-import { OSM, XYZ } from 'ol/source'
-
-const commonBaseLayers: ITileLayerProps[] = [
+const commonBaseLayers = [
 	{
 		id: 'osm',
 		properties: { title: 'OSM', type: 'base' },
@@ -38,7 +36,12 @@ const commonBaseLayers: ITileLayerProps[] = [
 ]
 
 export const BaseLayers = () => {
-	const { map } = useContext(MapContext) as IMapContext
+	const { map } = useMapContext()
+	const layerList = useAppSelector((state) => state.map.layerList)
+
+	const baseLayerList = useMemo(() => {
+		return mapLib.filterBaseLayers(layerList)
+	}, [layerList])
 
 	if (!map) {
 		return null
@@ -47,8 +50,38 @@ export const BaseLayers = () => {
 	return (
 		<>
 			{commonBaseLayers.map((options) => (
-				<TileCreator key={options.id} map={map} {...options} />
+				<TileLayer key={options.id} map={map} {...options} />
 			))}
+
+			{baseLayerList.map((lyr) =>
+				lyr.tiled ? (
+					<TileLayer
+						key={lyr.id}
+						map={map}
+						id={lyr.id}
+						source={
+							new TileWMS({
+								url: `../gisbis/MapProxy/layer${lyr.id}`,
+								params: {
+									LAYERS: lyr.layerSourceWMS
+										? lyr.layerSourceWMS.name
+										: lyr.WMSName,
+									TILED: !!lyr.tiled,
+								},
+								serverType: 'geoserver',
+								transition: 0,
+							})
+						}
+						properties={{ title: lyr.name, idLayer: lyr.id, type: 'base' }}
+						zIndex={lyr.zindex}
+						visible={false}
+						minZoom={lyr.minzoom}
+						maxZoom={lyr.maxzoom}
+					/>
+				) : (
+					<ImageLayer map={map} layer={lyr} type="base" />
+				)
+			)}
 		</>
 	)
 }

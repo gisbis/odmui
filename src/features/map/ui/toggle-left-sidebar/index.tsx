@@ -1,7 +1,8 @@
 import { useDispatch } from 'react-redux'
-import { useAppSelector } from 'shared/model'
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft'
+import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 
+import { useAppSelector } from 'shared/model'
 import { MapIconButton } from 'shared/ui/buttons'
 import { mapActions } from 'entities/map/model'
 
@@ -17,7 +18,7 @@ export const ToggleLeftSidebar: React.FC = () => {
 
 	return (
 		<MapIconButton onClick={handleOnClick}>
-			<ArrowLeftIcon />
+			{isOpenLeftSidebar ? <ArrowLeftIcon /> : <ArrowRightIcon />}
 		</MapIconButton>
 	)
 }

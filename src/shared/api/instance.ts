@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-import { BASE_URL } from './config'
+import { BASE_URL } from 'shared/config'
+
 import { parsersLib } from '../lib'
 
 export const axiosInstance = axios.create({

@@ -1,1 +1,2 @@
-export * from './tile-creator'
+export * from './tile-layer'
+export * from './img-layer'
