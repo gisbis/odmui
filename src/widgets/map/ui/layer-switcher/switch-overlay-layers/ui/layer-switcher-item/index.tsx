@@ -3,12 +3,15 @@ import { Checkbox, FormControlLabel, Typography } from '@mui/material'
 
 import { theme } from 'shared/theme'
 import { useAppDispatch, useAppSelector } from 'shared/model'
-import { ILayer } from 'entities/select'
 
 import { mapActions } from '../../../../../model'
 
+import { Layer } from 'ol/layer'
+import { Source } from 'ol/source'
+import LayerRenderer from 'ol/renderer/Layer'
+
 interface ILayerSwitcherItemProps {
-	layer: ILayer
+	layer: Layer<Source, LayerRenderer<any>>
 }
 
 export const LayerSwitcherItem: React.FC<ILayerSwitcherItemProps> = ({
@@ -21,30 +24,35 @@ export const LayerSwitcherItem: React.FC<ILayerSwitcherItemProps> = ({
 		(state) => state.map.activeIdLayerList
 	)
 
+	const idLayer = layer.get('idLayer')
+	const title = layer.get('title')
+	const minzoom = layer.getMinZoom()
+	const maxzoom = layer.getMaxZoom()
+
 	const checked = useMemo(() => {
-		return !!activeIdLayerList.find((i) => i === +layer.id)
-	}, [layer, activeIdLayerList])
+		return !!activeIdLayerList.find((i) => i === +idLayer)
+	}, [idLayer, activeIdLayerList])
 
 	const disabled = useMemo(() => {
 		if (currentZoom === undefined) {
 			return false
 		}
 
-		return currentZoom < layer.minzoom || currentZoom > layer.maxzoom
-	}, [currentZoom, layer])
+		return currentZoom < minzoom || currentZoom > maxzoom
+	}, [currentZoom, minzoom, maxzoom])
 
 	const handleChange = useCallback(() => {
 		if (checked) {
 			dispatch(
 				mapActions.setActiveIdLayerList(
-					activeIdLayerList.filter((i) => +i !== layer.id)
+					activeIdLayerList.filter((i) => +i !== +idLayer)
 				)
 			)
 			return
 		}
 
-		dispatch(mapActions.setActiveIdLayerList([...activeIdLayerList, +layer.id]))
-	}, [checked, activeIdLayerList, layer])
+		dispatch(mapActions.setActiveIdLayerList([...activeIdLayerList, +idLayer]))
+	}, [checked, activeIdLayerList, idLayer])
 
 	return (
 		<FormControlLabel
@@ -62,7 +70,7 @@ export const LayerSwitcherItem: React.FC<ILayerSwitcherItemProps> = ({
 					fontSize={14}
 					color={disabled ? theme.palette.text.disabled : 'inherit'}
 				>
-					{layer.name}
+					{title}
 				</Typography>
 			}
 			sx={{ my: '3.5px' }}

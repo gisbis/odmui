@@ -4,13 +4,13 @@ import { Box, Checkbox, Collapse, Stack, Typography } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
 import { useAppDispatch, useAppSelector } from 'shared/model'
-import { ILayersGroup } from 'entities/select'
 
 import { LayerSwitcherItem } from '../layer-switcher-item'
 import { mapActions } from '../../../../../model'
+import type { IMapLayersGroup } from '../../../../../lib'
 
 interface ILayerSwitcherGroupProps {
-	group: ILayersGroup
+	group: IMapLayersGroup
 	defaultGroupIsOpen: boolean
 }
 export const LayerSwitcherGroup: React.FC<ILayerSwitcherGroupProps> = ({
@@ -32,13 +32,13 @@ export const LayerSwitcherGroup: React.FC<ILayerSwitcherGroupProps> = ({
 	}
 
 	const checkedGroup = useMemo(() => {
-		const ids = group.layers.map((i) => i.id)
+		const ids = group.layers.map((i) => i.get('idLayer'))
 		const uncheckedIds = ids.filter((i) => !activeIdLayerList.includes(+i))
 		return !uncheckedIds.length
 	}, [group, activeIdLayerList])
 
 	const indeterminate = useMemo(() => {
-		const ids = group.layers.map((i) => i.id)
+		const ids = group.layers.map((i) => i.get('idLayer'))
 		const uncheckedIds = ids.filter((i) => !activeIdLayerList.includes(+i))
 
 		return (
@@ -51,7 +51,7 @@ export const LayerSwitcherGroup: React.FC<ILayerSwitcherGroupProps> = ({
 			dispatch(
 				mapActions.setActiveIdLayerList([
 					...activeIdLayerList.filter(
-						(i) => !group.layers.map((x) => +x.id).includes(+i)
+						(i) => !group.layers.map((x) => +x.get('idLayer')).includes(+i)
 					),
 				])
 			)
@@ -63,9 +63,9 @@ export const LayerSwitcherGroup: React.FC<ILayerSwitcherGroupProps> = ({
 			dispatch(
 				mapActions.setActiveIdLayerList([
 					...activeIdLayerList.filter(
-						(i) => !group.layers.map((x) => +x.id).includes(+i)
+						(i) => !group.layers.map((x) => +x.get('idlayer')).includes(+i)
 					),
-					...group.layers.map((i) => +i.id),
+					...group.layers.map((i) => +i.get('idLayer')),
 				])
 			)
 		}
@@ -103,7 +103,7 @@ export const LayerSwitcherGroup: React.FC<ILayerSwitcherGroupProps> = ({
 			<Collapse in={open} timeout="auto" unmountOnExit>
 				<Stack sx={{ pl: 3, py: 0.5 }}>
 					{group.layers.map((layer) => (
-						<LayerSwitcherItem key={layer.id} layer={layer} />
+						<LayerSwitcherItem key={layer.get('idlayer')} layer={layer} />
 					))}
 				</Stack>
 			</Collapse>

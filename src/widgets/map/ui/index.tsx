@@ -2,10 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Box } from '@mui/material'
 
-import { useActionCreators } from 'shared/model'
-
 import { MapContextProvider } from '../context'
-import { mapActions } from '../model'
 
 import { OnSingleClick, OnMoveend } from './events'
 import { InitLayers } from './init-layers'
@@ -21,8 +18,6 @@ interface IMapWidgetProps {
 }
 
 export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
-	const actions = useActionCreators(mapActions)
-
 	const [map, setMap] = useState<Map | null>(null)
 	const mapRef = useRef<HTMLDivElement>(null)
 
@@ -37,7 +32,6 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 			view: new ol.View({
 				center,
 				zoom,
-				enableRotation: true,
 			}),
 			layers: [],
 			controls: [],

@@ -93,8 +93,8 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 	}, [rightSidebarContentType])
 
 	const props = {
-		leftSidebarWidth: 415,
-		rightSidebarWidth: 415,
+		leftSidebarWidth: 410,
+		rightSidebarWidth: 410,
 		leftSidebarComponent: renderLeftSidebarContent(),
 		rightSidebarComponent: renderRightSidebarContent(),
 		isOpenRightSidebar,

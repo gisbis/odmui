@@ -22,6 +22,10 @@ export const OnMoveend = () => {
 	}, [map])
 
 	const handleMoveend = () => {
+		setCurrentZoom()
+	}
+
+	const setCurrentZoom = () => {
 		if (!map) {
 			return
 		}

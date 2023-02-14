@@ -24,9 +24,11 @@ export const createImgLayer = (
 			title: layer.name,
 			idLayer: layer.id,
 			type: isBase ? 'base' : 'overlay',
+			autoload: layer.autoload,
+			group: layer.LayerGroup,
 		},
 		zIndex: layer.zindex,
-		visible: false,
+		visible: isBase ? false : !!layer.autoload,
 		minZoom: layer.minzoom,
 		maxZoom: layer.maxzoom,
 	})

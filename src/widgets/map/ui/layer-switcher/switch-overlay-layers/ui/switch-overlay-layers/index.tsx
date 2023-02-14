@@ -8,9 +8,12 @@ import {
 } from '@mui/material'
 
 import { LayerSwitcherGroup } from '../layer-switcher-group'
-import { groupedLayers } from '../../../../../lib'
+import { groupedMapLayers } from '../../../../../lib'
+import type { IMapLayersGroup } from '../../../../../lib'
 
-import { ILayer } from 'entities/select'
+import type { Layer } from 'ol/layer'
+import type { Source } from 'ol/source'
+import LayerRenderer from 'ol/renderer/Layer'
 
 const cmpTheme = createTheme({
 	components: {
@@ -26,14 +29,15 @@ const cmpTheme = createTheme({
 
 interface ISwitchOverlayLayersProps {
 	query: string
-	layerList: ILayer[]
+	layerList: Layer<Source, LayerRenderer<any>>[]
 }
+
 export const SwitchOverlayLayers: React.FC<ISwitchOverlayLayersProps> = ({
 	query,
 	layerList,
 }) => {
-	const groupedLayerList = useMemo(() => {
-		return groupedLayers(layerList)
+	const groupedLayerList: IMapLayersGroup[] = useMemo(() => {
+		return groupedMapLayers(layerList)
 	}, [layerList])
 
 	return (

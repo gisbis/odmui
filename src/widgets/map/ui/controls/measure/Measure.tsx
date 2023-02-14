@@ -259,9 +259,8 @@ export const Measure = () => {
 
 		if (evt.code === 'Escape') {
 			clear()
+			setMeasureMode(undefined)
 		}
-
-		setMeasureMode(undefined)
 	}
 
 	const clear = () => {

@@ -1,22 +1,25 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 
 import { useAppSelector } from 'shared/model'
 
 import { useMapContext } from '../../../context'
-import { filterBaseLayers, filterOverlayLayers } from '../../../lib'
 
 import { FilterLayers } from '../filter-layers'
-import { SwitchBaseLayer } from '../switch-base-layer'
 import { SwitchOverlayLayers } from '../switch-overlay-layers'
 import { UncheckAll } from '../uncheck-all'
 
+import LayerRenderer from 'ol/renderer/Layer'
+import type { Layer } from 'ol/layer'
+import type { Source } from 'ol/source'
+
 export const LayerSwitcherWrapper = () => {
 	const [query, setQuery] = useState('')
+	const [layerList, setLayerList] = useState<
+		Layer<Source, LayerRenderer<any>>[]
+	>([])
 
 	const { map } = useMapContext()
-
-	const layerList = useAppSelector((state) => state.select.layerList)
 
 	const activeIdLayerList = useAppSelector(
 		(state) => state.map.activeIdLayerList
@@ -27,32 +30,41 @@ export const LayerSwitcherWrapper = () => {
 			return
 		}
 
-		map.getAllLayers().forEach(function (layer) {
-			const type = layer.get('type')
+		map.on('rendercomplete', () => {
+			const layers = map
+				.getAllLayers()
+				.filter(
+					(i) => !i.get('autoload') && i.get('type').toLowerCase() === 'overlay'
+				)
+			setLayerList(layers)
+		})
+	}, [map])
+
+	useEffect(() => {
+		layerList.forEach(function (layer) {
 			const idLayer = layer.get('idLayer')
 
-			if (type === 'base') {
-				return
-			}
-
 			const layerIsVisible = activeIdLayerList.map((i) => +i).includes(+idLayer)
+
 			layer.setVisible(layerIsVisible)
 		})
-	}, [activeIdLayerList, map])
+	}, [activeIdLayerList, layerList])
 
 	const baseLayerList = useMemo(() => {
-		return filterBaseLayers(layerList)
+		return layerList.filter((i) => i.get('type').toLowerCase() === 'base')
 	}, [layerList])
 
 	const overlayLayerList = useMemo(() => {
-		return filterOverlayLayers(layerList)
+		return layerList.filter((i) => i.get('type').toLowerCase() === 'overlay')
 	}, [layerList])
 
 	const filteredOverlayLayerList = useMemo(() => {
 		return overlayLayerList.filter((i) =>
-			i.name.toLowerCase().includes(query.toLowerCase())
+			i.get('title').toLowerCase().includes(query.toLowerCase())
 		)
 	}, [overlayLayerList, query])
+
+	console.log('layerList', { layerList })
 
 	return (
 		<>
@@ -61,8 +73,6 @@ export const LayerSwitcherWrapper = () => {
 			</Box>
 
 			<Box sx={{ flexGrow: 1, overflowY: 'auto', px: 3, py: 3 }}>
-				<SwitchBaseLayer layerList={baseLayerList} />
-
 				<SwitchOverlayLayers
 					query={query}
 					layerList={filteredOverlayLayerList}
