@@ -1,13 +1,13 @@
 import { PropsWithChildren, useEffect } from 'react'
 
 import { useAppDispatch } from 'shared/model'
-import { getLayerList } from 'entities/select'
+import { getSettings } from 'shared/settings'
 
-export const MapData: React.FC<PropsWithChildren> = ({ children }) => {
+export const PostAuthData: React.FC<PropsWithChildren> = ({ children }) => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		dispatch(getLayerList())
+		dispatch(getSettings())
 	}, [])
 
 	return <>{children}</>

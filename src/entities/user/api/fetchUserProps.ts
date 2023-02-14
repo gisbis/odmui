@@ -4,7 +4,7 @@ import { convertersLib, requestLib } from 'shared/lib'
 import type { IUserProperties } from '../model'
 
 export const fetchUserProps = (params: {
-	idUser: string
+	idUser: number
 }): Promise<IUserProperties> =>
 	axiosInstance
 		.get('user-service/admin/UserProperties', {

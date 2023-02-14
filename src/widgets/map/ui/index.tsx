@@ -7,7 +7,7 @@ import { useActionCreators } from 'shared/model'
 import { MapContextProvider } from '../context'
 import { mapActions } from '../model'
 
-import { OnSingleClick } from './events'
+import { OnSingleClick, OnMoveend } from './events'
 import { InitLayers } from './init-layers'
 import { MapControlsLayout, MapPageLayout } from './layouts'
 
@@ -37,6 +37,7 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 			view: new ol.View({
 				center,
 				zoom,
+				enableRotation: true,
 			}),
 			layers: [],
 			controls: [],
@@ -58,23 +59,13 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 		map?.getView().setCenter(center)
 	}, [center])
 
-	useEffect(() => {
-		if (!map) {
-			return
-		}
-
-		map.on('moveend', () => {
-			const zoom = map.getView().getZoom()
-			actions.setCurrentZoom(zoom)
-		})
-	}, [map])
-
 	return (
 		<>
 			<MapContextProvider value={{ map }}>
 				<InitLayers />
 
 				<OnSingleClick />
+				<OnMoveend />
 
 				<MapPageLayout>
 					<Box

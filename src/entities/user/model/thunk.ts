@@ -6,5 +6,5 @@ export const getUserInfo = createAsyncThunk('user/getUserInfo', () =>
 )
 export const getUserProps = createAsyncThunk(
 	'user/getUserProps',
-	(params: { idUser: string }) => fetchUserProps(params)
+	(params: { idUser: number }) => fetchUserProps(params)
 )

@@ -1,6 +1,6 @@
 export interface IUser {
 	loged: number
-	uid: string
+	uid: number
 	nameUser: string
 	isadmin: number
 	groupId: number[]
