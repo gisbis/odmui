@@ -1,15 +1,18 @@
 import { withProviders } from 'app/providers'
 
 import { Routing } from 'pages'
-import { AppDataContainer } from 'widgets/data-containers'
+import { AppData } from 'containers'
+import { AuthByUsername } from 'widgets/auth'
 
 import 'app/index.scss'
 
 const App = () => {
 	return (
-		<AppDataContainer>
-			<Routing />
-		</AppDataContainer>
+		<AppData>
+			<AuthByUsername>
+				<Routing />
+			</AuthByUsername>
+		</AppData>
 	)
 }
 

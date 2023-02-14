@@ -7,6 +7,8 @@ import { useActionCreators } from 'shared/model'
 import { MapContextProvider } from '../context'
 import { mapActions } from '../model'
 
+import { OnSingleClick } from './events'
+import { InitLayers } from './init-layers'
 import { MapControlsLayout, MapPageLayout } from './layouts'
 
 import type { Map } from 'ol'
@@ -14,14 +16,17 @@ import { fromLonLat } from 'ol/proj'
 import * as ol from 'ol'
 
 interface IMapWidgetProps {
-	center: number[]
+	coords: number[]
 	zoom: number
 }
 
-export const MapWidget: React.FC<IMapWidgetProps> = ({ center, zoom }) => {
+export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 	const actions = useActionCreators(mapActions)
+
 	const [map, setMap] = useState<Map | null>(null)
 	const mapRef = useRef<HTMLDivElement>(null)
+
+	const center = fromLonLat(coords)
 
 	useEffect(() => {
 		if (!mapRef.current) {
@@ -50,7 +55,7 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ center, zoom }) => {
 	}, [zoom])
 
 	useEffect(() => {
-		map?.getView().setCenter(fromLonLat(center))
+		map?.getView().setCenter(center)
 	}, [center])
 
 	useEffect(() => {
@@ -67,6 +72,10 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ center, zoom }) => {
 	return (
 		<>
 			<MapContextProvider value={{ map }}>
+				<InitLayers />
+
+				<OnSingleClick />
+
 				<MapPageLayout>
 					<Box
 						ref={mapRef}

@@ -1,9 +1,9 @@
 import { axiosInstance } from 'shared/api'
 import { convertersLib, requestLib } from 'shared/lib'
 
-import type { IAppSetting } from '../model'
+import type { ISetting } from '../model'
 
-export const fetchAppSettings = (): Promise<IAppSetting[]> =>
+export const fetchAppSettings = (): Promise<ISetting[]> =>
 	axiosInstance
 		.get('util-service/Setting')
 		.then((response) => response.data)

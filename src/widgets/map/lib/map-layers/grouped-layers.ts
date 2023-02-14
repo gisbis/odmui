@@ -1,4 +1,4 @@
-import type { ILayer, ILayersGroup } from 'entities/map'
+import { ILayer, ILayersGroup } from 'entities/select'
 
 export const groupedLayers = (layerList: ILayer[]) => {
 	return layerList.reduce((acc: ILayersGroup[], value) => {

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { getAppSettings } from './thunk'
+import { getSettings } from './thunk'
 import type { ISetting } from './types'
 
 interface I18nState {
@@ -14,16 +14,16 @@ const state = createSlice({
 	name: 'settings',
 	initialState,
 	reducers: {
-		setAppSettingList(state, action: PayloadAction<ISetting[]>) {
+		setSettingList(state, action: PayloadAction<ISetting[]>) {
 			state.settingList = action.payload
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(getAppSettings.fulfilled, (state, action) => {
+		builder.addCase(getSettings.fulfilled, (state, action) => {
 			state.settingList = action.payload
 		})
-		builder.addCase(getAppSettings.rejected, (state, action) => {})
-		builder.addCase(getAppSettings.pending, (state) => {})
+		builder.addCase(getSettings.rejected, (state, action) => {})
+		builder.addCase(getSettings.pending, (state) => {})
 	},
 })
 

@@ -70,7 +70,10 @@ const state = createSlice({
 		) {
 			state.leftSidebarContentType = action.payload
 		},
-		setRightSidebarType(state, action: PayloadAction<RightSidebarContentType>) {
+		setRightSidebarContentType(
+			state,
+			action: PayloadAction<RightSidebarContentType>
+		) {
 			state.rightSidebarContentType = action.payload
 		},
 		setMapinfoData(state, action: PayloadAction<IMapInfoRowData[] | null>) {

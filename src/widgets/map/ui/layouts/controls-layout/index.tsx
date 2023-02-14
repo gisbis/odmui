@@ -1,16 +1,16 @@
 import { Box } from '@mui/material'
 
+import {
+	Measure,
+	ToggleLayerSwitcher,
+	ToggleLeftSidebar,
+	ToggleSymbolList,
+	ZoomGroup,
+} from '../../controls'
+
 import './index.scss'
 
-interface IMapControlsLayoutProps {
-	leftControls?: JSX.Element
-	rightControls?: JSX.Element
-}
-
-export const MapControlsLayout: React.FC<IMapControlsLayoutProps> = ({
-	leftControls,
-	rightControls,
-}) => {
+export const MapControlsLayout = () => {
 	return (
 		<Box className="map-controls-layout">
 			<Box
@@ -24,7 +24,8 @@ export const MapControlsLayout: React.FC<IMapControlsLayoutProps> = ({
 					rowGap: 1.5,
 				}}
 			>
-				{leftControls}
+				<ToggleLeftSidebar />
+				<Measure />
 			</Box>
 
 			<Box
@@ -38,7 +39,9 @@ export const MapControlsLayout: React.FC<IMapControlsLayoutProps> = ({
 					rowGap: 1.5,
 				}}
 			>
-				{rightControls}
+				<ToggleLayerSwitcher />
+				<ZoomGroup />
+				<ToggleSymbolList />
 			</Box>
 		</Box>
 	)

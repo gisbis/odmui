@@ -1,8 +1,16 @@
 import { useMemo } from 'react'
-import { Box, createTheme, Stack, ThemeProvider } from '@mui/material'
+import {
+	Box,
+	createTheme,
+	Stack,
+	ThemeProvider,
+	Typography,
+} from '@mui/material'
 
-import { ILayer, mapLib } from 'entities/map'
 import { LayerSwitcherGroup } from '../layer-switcher-group'
+import { groupedLayers } from '../../../../../lib'
+
+import { ILayer } from 'entities/select'
 
 const cmpTheme = createTheme({
 	components: {
@@ -25,21 +33,25 @@ export const SwitchOverlayLayers: React.FC<ISwitchOverlayLayersProps> = ({
 	layerList,
 }) => {
 	const groupedLayerList = useMemo(() => {
-		return mapLib.groupedLayers(layerList)
+		return groupedLayers(layerList)
 	}, [layerList])
 
 	return (
 		<ThemeProvider theme={cmpTheme}>
 			<Box>
-				<Stack spacing={1}>
-					{groupedLayerList.map((group) => (
-						<LayerSwitcherGroup
-							group={group}
-							key={group.idLayerGroup}
-							defaultGroupIsOpen={!!query}
-						/>
-					))}
-				</Stack>
+				{!layerList.length ? (
+					<Typography variant="body2">Empty layer list</Typography>
+				) : (
+					<Stack spacing={1}>
+						{groupedLayerList.map((group) => (
+							<LayerSwitcherGroup
+								group={group}
+								key={group.idLayerGroup}
+								defaultGroupIsOpen={!!query}
+							/>
+						))}
+					</Stack>
+				)}
 			</Box>
 		</ThemeProvider>
 	)

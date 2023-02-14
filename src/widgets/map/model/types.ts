@@ -22,3 +22,5 @@ export type MapModeType = 'measure' | 'edit' | undefined
 
 export type LeftSidebarContentType = 'map-data' | 'home-screen'
 export type RightSidebarContentType = 'layer-switcher' | 'symbol-list'
+
+export type MeasureModeType = 'LineString' | 'Polygon' | undefined

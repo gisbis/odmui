@@ -1,10 +1,11 @@
 import { Button } from '@mui/material'
 
-import { mapActions } from 'entities/map'
 import { useAppDispatch, useAppSelector } from 'shared/model'
+import { mapActions } from '../../../model'
 
 export const UncheckAll = () => {
 	const dispatch = useAppDispatch()
+
 	const activeIdLayerList = useAppSelector(
 		(state) => state.map.activeIdLayerList
 	)
@@ -13,7 +14,11 @@ export const UncheckAll = () => {
 		dispatch(mapActions.setActiveIdLayerList([]))
 	}
 	return (
-		<Button onClick={handleClick} disabled={!activeIdLayerList.length}>
+		<Button
+			variant="contained"
+			onClick={handleClick}
+			disabled={!activeIdLayerList.length}
+		>
 			uncheck
 		</Button>
 	)

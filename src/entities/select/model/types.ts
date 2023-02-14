@@ -69,7 +69,7 @@ export interface ISelectSearchField {
 	isBranch?: number
 }
 
-export interface ISelectRecord {
+export interface ISelectRecord extends Record<string, any> {
 	key: string
 	metaName: string
 	map: string
@@ -112,4 +112,10 @@ export interface ILayer {
 	}
 	noLegend?: number
 	legendStyle?: string
+}
+
+export interface ILayersGroup {
+	idLayerGroup: string
+	nameLayerGroup: string
+	layers: ILayer[]
 }

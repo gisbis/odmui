@@ -1,4 +1,4 @@
-import { ILayer } from 'entities/map'
+import { ILayer } from 'entities/select'
 
 interface ISwitchBaseLayers {
 	layerList: ILayer[]

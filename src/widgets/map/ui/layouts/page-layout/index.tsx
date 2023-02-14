@@ -1,10 +1,14 @@
 import { PropsWithChildren, useCallback } from 'react'
 import { Box } from '@mui/material'
 
-import { WithSidebarsLayout, FullScreenPageLayout } from 'shared/ui/layouts'
+import { WithSidebarsLayout, FullScreenPageLayout } from 'shared/ui'
 import { useAppSelector } from 'shared/model'
+import { theme } from 'shared/theme'
 
-import { LayerSwitcher } from '../../layer-switcher'
+import { LayerSwitcherWrapper } from '../../layer-switcher'
+import { SymbolsWrapper } from '../../symbols'
+import { Bio } from '../../bio'
+import { ClearData, MapDataWrapper } from '../../map-data'
 
 export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 	const isOpenLeftSidebar = useAppSelector(
@@ -22,11 +26,35 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 
 	const renderLeftSidebarContent = useCallback(() => {
 		if (leftSidebarContentType === 'home-screen') {
-			return <div>Home screen</div>
+			return (
+				<Box sx={{ height: '100%', overflowY: 'auto' }}>
+					<Box sx={{ p: 3 }}>
+						<Bio />
+					</Box>
+				</Box>
+			)
 		}
 
 		if (leftSidebarContentType === 'map-data') {
-			return <div>Map info data</div>
+			return (
+				<Box
+					sx={{
+						height: '100%',
+						overflowY: 'hidden',
+						bgcolor: theme.palette.action.hover,
+						display: 'flex',
+						flexDirection: 'column',
+					}}
+				>
+					<Box sx={{ flexGrow: 1, overflowY: 'auto', p: 3 }}>
+						<MapDataWrapper />
+					</Box>
+
+					<Box sx={{ p: 3 }}>
+						<ClearData />
+					</Box>
+				</Box>
+			)
 		}
 
 		return null
@@ -35,14 +63,30 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 	const renderRightSidebarContent = useCallback(() => {
 		if (rightSidebarContentType === 'layer-switcher') {
 			return (
-				<Box>
-					<LayerSwitcher />
+				<Box
+					sx={{
+						height: '100%',
+						overflow: 'hidden',
+						display: 'flex',
+						flexDirection: 'column',
+					}}
+				>
+					<LayerSwitcherWrapper />
 				</Box>
 			)
 		}
 
 		if (rightSidebarContentType === 'symbol-list') {
-			return <div>Symbol list</div>
+			return (
+				<Box
+					sx={{
+						height: '100%',
+						overflow: 'auto',
+					}}
+				>
+					<SymbolsWrapper />
+				</Box>
+			)
 		}
 
 		return null

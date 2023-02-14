@@ -4,11 +4,10 @@ import { Box, Checkbox, Collapse, Stack, Typography } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
 import { useAppDispatch, useAppSelector } from 'shared/model'
-import { ILayersGroup } from 'entities/map'
-
-import { mapActions } from 'entities/map'
+import { ILayersGroup } from 'entities/select'
 
 import { LayerSwitcherItem } from '../layer-switcher-item'
+import { mapActions } from '../../../../../model'
 
 interface ILayerSwitcherGroupProps {
 	group: ILayersGroup
@@ -93,7 +92,7 @@ export const LayerSwitcherGroup: React.FC<ILayerSwitcherGroupProps> = ({
 						alignItems: 'center',
 					}}
 				>
-					<Typography variant="body2" fontWeight={500}>
+					<Typography variant="body1" fontWeight={500} fontSize={14}>
 						{group.nameLayerGroup}
 					</Typography>
 
@@ -102,7 +101,7 @@ export const LayerSwitcherGroup: React.FC<ILayerSwitcherGroupProps> = ({
 			</Stack>
 
 			<Collapse in={open} timeout="auto" unmountOnExit>
-				<Stack sx={{ pl: 3 }}>
+				<Stack sx={{ pl: 3, py: 0.5 }}>
 					{group.layers.map((layer) => (
 						<LayerSwitcherItem key={layer.id} layer={layer} />
 					))}

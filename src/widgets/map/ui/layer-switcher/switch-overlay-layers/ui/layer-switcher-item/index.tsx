@@ -3,8 +3,9 @@ import { Checkbox, FormControlLabel, Typography } from '@mui/material'
 
 import { theme } from 'shared/theme'
 import { useAppDispatch, useAppSelector } from 'shared/model'
+import { ILayer } from 'entities/select'
 
-import { ILayer, mapActions } from 'entities/map'
+import { mapActions } from '../../../../../model'
 
 interface ILayerSwitcherItemProps {
 	layer: ILayer
@@ -64,7 +65,7 @@ export const LayerSwitcherItem: React.FC<ILayerSwitcherItemProps> = ({
 					{layer.name}
 				</Typography>
 			}
-			sx={{ my: '1.5px' }}
+			sx={{ my: '3.5px' }}
 		/>
 	)
 }
