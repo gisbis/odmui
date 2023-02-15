@@ -15,7 +15,9 @@ import ShareIcon from '@mui/icons-material/Share'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 import { ISelectRecord, ISelectUserField } from 'entities/select'
-import { MapDataTable } from 'widgets/map/ui/map-data/map-data-table'
+
+import { MapDataTable } from '../map-data-table'
+import { DocumentsGallery } from '../../documents'
 
 interface ExpandMoreProps extends IconButtonProps {
 	expand: boolean
@@ -106,6 +108,10 @@ export const MapDataRecord: React.FC<{
 				>
 					<MapDataTable record={record} userFields={userFields} />
 				</CardContent>
+
+				{!!record.doclist.length && (
+					<DocumentsGallery documents={record.doclist} />
+				)}
 			</Collapse>
 		</Card>
 	)

@@ -1,27 +1,46 @@
-import { PropsWithChildren, useEffect } from 'react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from 'shared/model'
-
-import { login } from 'features/auth/api'
+import { useAppDispatch } from 'shared/model'
 import { getUserInfo } from 'entities/user'
+import { authApi } from 'features/auth'
 
-export const AuthByUsername: React.FC<PropsWithChildren> = ({ children }) => {
+export const AuthByGetParams = () => {
 	const dispatch = useAppDispatch()
-	const sessId = useAppSelector((state) => state.user.sessId)
+	const navigate = useNavigate()
 
 	const [searchParams] = useSearchParams()
 	const username = searchParams.get('username')
+	const logout = searchParams.get('logout')
 
 	useEffect(() => {
-		if (!!sessId || !username) {
+		if (!username) {
 			return
 		}
 
-		login({ username }).then(() => {
+		authApi.login({ username }).then(() => {
 			dispatch(getUserInfo())
+				.unwrap()
+				.then(() => {
+					navigate('/')
+				})
 		})
-	}, [sessId, username])
+	}, [username])
 
-	return <>{children}</>
+	useEffect(() => {
+		if (!logout) {
+			return
+		}
+
+		authApi.logout().then(() => {
+			dispatch(getUserInfo())
+				.unwrap()
+				.then(() => {
+					navigate('/login')
+				})
+		})
+	}, [logout])
+
+	return null
 }

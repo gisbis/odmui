@@ -1,4 +1,4 @@
-import { ILayer, ILayersGroup } from 'entities/select'
+import type { ILayer, ILayersGroup } from 'entities/user'
 import { Layer } from 'ol/layer'
 import { Source } from 'ol/source'
 import LayerRenderer from 'ol/renderer/Layer'

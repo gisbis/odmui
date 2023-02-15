@@ -1,4 +1,5 @@
-export * from './get-active-overlay-layers'
+export * from './get-map-active-overlay-layers'
+export * from './get-map-overlay-lyers'
 export * from './grouped-layers'
 export * from './filter-base-layers'
 export * from './filter-overlay-layers'

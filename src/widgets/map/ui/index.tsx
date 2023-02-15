@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 
 import { MapContextProvider } from '../context'
 
-import { OnSingleClick, OnMoveend } from './events'
+import { OnSingleClick, OnMoveend, OnRenderComplete } from './events'
 import { InitLayers } from './init-layers'
 import { MapControlsLayout, MapPageLayout } from './layouts'
 
@@ -60,6 +60,7 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 
 				<OnSingleClick />
 				<OnMoveend />
+				<OnRenderComplete />
 
 				<MapPageLayout>
 					<Box

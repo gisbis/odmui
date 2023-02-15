@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material'
-import { ILayer } from 'entities/select'
+import type { ILayer } from 'entities/user'
 
 import { LAYER_SOURCE_URL } from '../../../config'
 
@@ -27,6 +27,7 @@ export const SymbolsLayer: React.FC<{ layer: ILayer }> = ({ layer }) => {
 						}&legend_options=forceLabels:on;fontName:Arimo%20;fontAntiAliasing:true;fontSize:15${
 							!!layer.legendStyle ? `?style=${layer.legendStyle}` : ''
 						}`}
+						alt={layer.name}
 					/>
 				</Box>
 			)}

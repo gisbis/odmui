@@ -1,27 +1,28 @@
 import { useEffect, useMemo, useState } from 'react'
 
 import { useAppSelector } from 'shared/model'
-import { ILayer } from 'entities/select'
+import type { ILayer } from 'entities/user'
 
 import { useMapContext } from '../../../context'
-import { getActiveOverlayLayers, groupedLayers } from '../../../lib'
+import { getMapActiveOverlayLayers, groupedLayers } from '../../../lib'
 import { Stack } from '@mui/material'
 import { SymbolsGroup } from 'widgets/map/ui/symbols/symbols-group'
 
 export const SymbolsWrapper = () => {
 	const { map } = useMapContext()
-	const layerList = useAppSelector((state) => state.select.layerList)
+	const mapIsRendered = useAppSelector((state) => state.map.mapIsRendered)
 	const currentZoom = useAppSelector((state) => state.map.currentZoom)
+	const layerList = useAppSelector((state) => state.user.layerList)
 
 	const [symbolLayers, setSymbolLayers] = useState<ILayer[]>([])
 
 	useEffect(() => {
-		if (!map || !currentZoom) {
+		if (!map || !currentZoom || !mapIsRendered) {
 			setSymbolLayers([])
 			return
 		}
 
-		const activeLayers = getActiveOverlayLayers({ map, zoom: currentZoom })
+		const activeLayers = getMapActiveOverlayLayers({ map, zoom: currentZoom })
 
 		const symbolLayers: ILayer[] = []
 
@@ -40,7 +41,7 @@ export const SymbolsWrapper = () => {
 		})
 
 		setSymbolLayers(symbolLayers)
-	}, [map, currentZoom, layerList])
+	}, [map, mapIsRendered, currentZoom, layerList])
 
 	const groupedSymbolLayers = useMemo(() => {
 		return groupedLayers(symbolLayers)

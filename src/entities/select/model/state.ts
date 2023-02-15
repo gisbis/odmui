@@ -1,28 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { getLayerList, getSelectList } from './thunk'
-import type { ILayer, ISelectGroup } from './types'
+import { getSelectList } from './thunk'
+import type { ISelectGroup } from './types'
+
+import { RequestStatus } from 'shared/model'
+import { convertersLib } from 'shared/lib'
 
 interface ISelectState {
-	layerList: ILayer[]
 	selectList: ISelectGroup[]
+	status: RequestStatus
+	errorMsg: string | null
 }
 
 const initialState: ISelectState = {
-	layerList: [],
 	selectList: [],
+	status: undefined,
+	errorMsg: null,
 }
 
 const slice = createSlice({
 	name: 'select',
 	initialState,
-	reducers: {},
+	reducers: {
+		resetState: () => initialState,
+	},
 	extraReducers: (builder) => {
-		builder.addCase(getLayerList.fulfilled, (state, action) => {
-			state.layerList = action.payload
+		builder.addCase(getSelectList.pending, (state, action) => {
+			state.errorMsg = null
+			state.status = 'loading'
 		})
 		builder.addCase(getSelectList.fulfilled, (state, action) => {
+			state.status = 'success'
 			state.selectList = action.payload
+		})
+		builder.addCase(getSelectList.rejected, (state, action) => {
+			state.status = 'error'
+			state.errorMsg = convertersLib.errorToString(action.error.message)
+			state.selectList = []
 		})
 	},
 })

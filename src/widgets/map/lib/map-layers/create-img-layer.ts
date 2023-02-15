@@ -1,7 +1,7 @@
 import ImageLayer from 'ol/layer/Image'
 import { ImageWMS } from 'ol/source'
 
-import type { ILayer } from 'entities/select'
+import type { ILayer } from 'entities/user'
 import { LAYER_SOURCE_URL } from '../../config'
 
 export const createImgLayer = (

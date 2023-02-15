@@ -5,7 +5,7 @@ import { BackdropSpinner } from 'shared/ui'
 
 import { useMapContext } from '../../../context'
 import { getMapInfo, mapActions } from '../../../model'
-import { getActiveOverlayLayers } from '../../../lib'
+import { getMapActiveOverlayLayers } from '../../../lib'
 
 import type { MapBrowserEvent } from 'ol'
 import BaseEvent from 'ol/events/Event'
@@ -49,7 +49,7 @@ export const OnSingleClick = () => {
 			const lat = lnglat[1]
 
 			const zoom = Math.round(currentZoom)
-			const activeLayers = getActiveOverlayLayers({ map, zoom: currentZoom })
+			const activeLayers = getMapActiveOverlayLayers({ map, zoom: currentZoom })
 
 			if (!activeLayers.length) {
 				return

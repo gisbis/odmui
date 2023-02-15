@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { getLocaleList } from './thunk'
 import type { I18nLng, I18nLocale } from './types'
 
 interface I18nState {
@@ -25,19 +24,9 @@ const state = createSlice({
 		setLngList(state, action: PayloadAction<I18nLng[]>) {
 			state.lngList = action.payload
 		},
-		setCurrentLng(state, action: PayloadAction<string>) {
+		setCurrentLng(state, action: PayloadAction<string | null>) {
 			state.currentLng = action.payload
 		},
-	},
-	extraReducers: (builder) => {
-		builder.addCase(getLocaleList.fulfilled, (state, action) => {
-			const { localeList, lngList, currentLng } = action.payload
-			state.localeList = localeList
-			state.lngList = lngList
-			state.currentLng = currentLng
-		})
-		builder.addCase(getLocaleList.rejected, (state, action) => {})
-		builder.addCase(getLocaleList.pending, (state) => {})
 	},
 })
 

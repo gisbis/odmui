@@ -103,7 +103,7 @@ export const LayerSwitcherGroup: React.FC<ILayerSwitcherGroupProps> = ({
 			<Collapse in={open} timeout="auto" unmountOnExit>
 				<Stack sx={{ pl: 3, py: 0.5 }}>
 					{group.layers.map((layer) => (
-						<LayerSwitcherItem key={layer.get('idlayer')} layer={layer} />
+						<LayerSwitcherItem key={layer.get('idLayer')} layer={layer} />
 					))}
 				</Stack>
 			</Collapse>

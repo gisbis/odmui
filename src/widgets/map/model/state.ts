@@ -24,6 +24,7 @@ interface IMapState {
 	leftSidebarContentType: LeftSidebarContentType
 	rightSidebarContentType: RightSidebarContentType
 	mapInfoData: IMapInfoRowData[] | null
+	mapIsRendered: boolean
 	status: RequestStatus
 	errorMsg: string | null
 }
@@ -37,6 +38,7 @@ const initialState: IMapState = {
 	isOpenRightSidebar: false,
 	leftSidebarContentType: 'home-screen',
 	rightSidebarContentType: 'layer-switcher',
+	mapIsRendered: false,
 	mapInfoData: null,
 	errorMsg: null,
 	status: undefined,
@@ -75,6 +77,9 @@ const state = createSlice({
 			action: PayloadAction<RightSidebarContentType>
 		) {
 			state.rightSidebarContentType = action.payload
+		},
+		setMapIsRendered(state, action: PayloadAction<boolean>) {
+			state.mapIsRendered = action.payload
 		},
 		setMapinfoData(state, action: PayloadAction<IMapInfoRowData[] | null>) {
 			state.mapInfoData = action.payload

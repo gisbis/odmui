@@ -1,21 +1,16 @@
 import { useAppSelector } from 'shared/model'
-import { getSettingById } from 'shared/settings'
+import { getSettingById } from 'entities/user'
 
 import { MapWidget } from 'widgets/map'
-import { MapData } from 'containers'
 
 const MapPage = () => {
+	console.log('render map page')
+
 	const zoom = useAppSelector(getSettingById(15)) || 9
 	const lat = useAppSelector(getSettingById(13)) || 0
 	const lng = useAppSelector(getSettingById(14)) || 0
 
-	console.log({ zoom, lat, lng })
-
-	return (
-		<MapData>
-			<MapWidget zoom={+zoom} coords={[+lng, +lat]} />
-		</MapData>
-	)
+	return <MapWidget zoom={+zoom} coords={[+lng, +lat]} />
 }
 
 export default MapPage

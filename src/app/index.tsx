@@ -1,20 +1,22 @@
 import { withProviders } from 'app/providers'
 
 import { Routing } from 'pages'
-import { PostAuthData, PreAuthData } from 'containers'
-import { AuthByUsername } from 'widgets/auth'
+import { AppDataContainer, UserDataContainer } from './containers'
+import { ExtendSession } from 'processes'
 
 import 'app/index.scss'
 
 const App = () => {
 	return (
-		<PreAuthData>
-			<AuthByUsername>
-				<PostAuthData>
+		<>
+			<ExtendSession />
+
+			<AppDataContainer>
+				<UserDataContainer>
 					<Routing />
-				</PostAuthData>
-			</AuthByUsername>
-		</PreAuthData>
+				</UserDataContainer>
+			</AppDataContainer>
+		</>
 	)
 }
 

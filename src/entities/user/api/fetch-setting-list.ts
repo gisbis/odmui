@@ -3,7 +3,7 @@ import { convertersLib, requestLib } from 'shared/lib'
 
 import type { ISetting } from '../model'
 
-export const fetchAppSettings = (): Promise<ISetting[]> =>
+export const fetchSettingList = (): Promise<ISetting[]> =>
 	axiosInstance
 		.get('util-service/Setting')
 		.then((response) => response.data)
@@ -13,5 +13,5 @@ export const fetchAppSettings = (): Promise<ISetting[]> =>
 			return convertersLib.anyToArray(response?.Settings?.Setting)
 		})
 		.catch((e) => {
-			throw new Error(e.message)
+			throw e
 		})

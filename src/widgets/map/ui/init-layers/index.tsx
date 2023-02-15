@@ -12,7 +12,7 @@ import { useMapContext } from '../../context'
 export const InitLayers = () => {
 	const { map } = useMapContext()
 
-	const layerList = useAppSelector((state) => state.select.layerList)
+	const layerList = useAppSelector((state) => state.user.layerList)
 
 	const tileLayerList = useMemo(() => {
 		return layerList.filter((i) => !!i.tiled)
