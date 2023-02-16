@@ -1,7 +1,7 @@
 import { Button } from '@mui/material'
 
 import { useAppDispatch, useAppSelector } from 'shared/model'
-import { mapActions } from '../../../model'
+import { mapActions } from 'widgets/map'
 
 export const UncheckAll = () => {
 	const dispatch = useAppDispatch()

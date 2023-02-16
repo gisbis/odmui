@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { DOC_PREVIEW_URL } from 'shared/config'
-import { IAttachment } from 'entities/select'
+import type { IAttachment } from 'shared/api/documents'
 
 import { DocumentsCarousel } from '../documents-carousel'
 

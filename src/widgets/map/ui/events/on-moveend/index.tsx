@@ -2,8 +2,7 @@ import { useEffect } from 'react'
 
 import { useAppDispatch } from 'shared/model'
 
-import { useMapContext } from '../../../context'
-import { mapActions } from '../../../model'
+import { useMapContext, mapActions } from 'widgets/map'
 
 export const OnMoveend = () => {
 	const dispatch = useAppDispatch()

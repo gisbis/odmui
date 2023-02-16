@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Box } from '@mui/material'
 
-import { MapContextProvider } from '../context'
+import { useAppSelector } from 'shared/model'
+import { MapContextProvider, mapSelectors } from 'widgets/map'
 
-import { OnSingleClick, OnMoveend, OnRenderComplete } from './events'
+import { OnSingleClick, OnMoveend, OnLoadEnd } from './events'
 import { InitLayers } from './init-layers'
 import { MapControlsLayout, MapPageLayout } from './layouts'
 
@@ -18,6 +19,7 @@ interface IMapWidgetProps {
 }
 
 export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
+	const mapOnLoaded = useAppSelector(mapSelectors.selectMapOnLoadEnd)
 	const [map, setMap] = useState<Map | null>(null)
 	const mapRef = useRef<HTMLDivElement>(null)
 
@@ -57,10 +59,10 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 		<>
 			<MapContextProvider value={{ map }}>
 				<InitLayers />
-
-				<OnSingleClick />
+				<OnLoadEnd />
 				<OnMoveend />
-				<OnRenderComplete />
+
+				{mapOnLoaded && <OnSingleClick />}
 
 				<MapPageLayout>
 					<Box

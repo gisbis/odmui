@@ -1,6 +1,7 @@
 import { Button } from '@mui/material'
-import { mapActions } from '../../../model'
+
 import { useAppDispatch } from 'shared/model'
+import { mapActions } from 'widgets/map'
 
 export const ClearData = () => {
 	const dispatch = useAppDispatch()

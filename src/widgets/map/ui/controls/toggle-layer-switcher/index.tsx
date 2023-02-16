@@ -5,7 +5,7 @@ import LayersIcon from '@mui/icons-material/Layers'
 import { useAppSelector, useAppDispatch } from 'shared/model'
 import { MapIconButton } from 'shared/ui'
 
-import { mapActions } from '../../../model'
+import { mapActions } from 'widgets/map'
 
 export const ToggleLayerSwitcher = () => {
 	const dispatch = useAppDispatch()

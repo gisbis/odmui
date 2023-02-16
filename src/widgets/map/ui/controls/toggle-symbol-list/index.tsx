@@ -4,7 +4,7 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 import { useAppDispatch, useAppSelector } from 'shared/model'
 import { MapIconButton } from 'shared/ui'
 
-import { mapActions } from '../../../model'
+import { mapActions } from 'widgets/map'
 
 export const ToggleSymbolList = () => {
 	const dispatch = useAppDispatch()

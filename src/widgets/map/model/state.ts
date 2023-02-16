@@ -8,9 +8,9 @@ import type {
 	LeftSidebarContentType,
 	MapModeType,
 	RightSidebarContentType,
-} from '../model'
+} from 'widgets/map/api'
 
-import { getMapInfo } from '../model'
+import { getMapInfo } from './thunk'
 
 import { Coordinate } from 'ol/coordinate'
 
@@ -24,7 +24,7 @@ interface IMapState {
 	leftSidebarContentType: LeftSidebarContentType
 	rightSidebarContentType: RightSidebarContentType
 	mapInfoData: IMapInfoRowData[] | null
-	mapIsRendered: boolean
+	mapOnLoadEnd: boolean
 	status: RequestStatus
 	errorMsg: string | null
 }
@@ -38,7 +38,7 @@ const initialState: IMapState = {
 	isOpenRightSidebar: false,
 	leftSidebarContentType: 'home-screen',
 	rightSidebarContentType: 'layer-switcher',
-	mapIsRendered: false,
+	mapOnLoadEnd: false,
 	mapInfoData: null,
 	errorMsg: null,
 	status: undefined,
@@ -78,8 +78,8 @@ const state = createSlice({
 		) {
 			state.rightSidebarContentType = action.payload
 		},
-		setMapIsRendered(state, action: PayloadAction<boolean>) {
-			state.mapIsRendered = action.payload
+		setMapOnLoadEnd(state, action: PayloadAction<boolean>) {
+			state.mapOnLoadEnd = action.payload
 		},
 		setMapinfoData(state, action: PayloadAction<IMapInfoRowData[] | null>) {
 			state.mapInfoData = action.payload

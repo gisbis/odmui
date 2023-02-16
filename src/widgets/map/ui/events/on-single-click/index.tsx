@@ -3,9 +3,7 @@ import { useCallback, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'shared/model'
 import { BackdropSpinner } from 'shared/ui'
 
-import { useMapContext } from '../../../context'
-import { getMapInfo, mapActions } from '../../../model'
-import { getMapActiveOverlayLayers } from '../../../lib'
+import { useMapContext, mapModel, mapActions, mapLib } from 'widgets/map'
 
 import type { MapBrowserEvent } from 'ol'
 import BaseEvent from 'ol/events/Event'
@@ -49,7 +47,10 @@ export const OnSingleClick = () => {
 			const lat = lnglat[1]
 
 			const zoom = Math.round(currentZoom)
-			const activeLayers = getMapActiveOverlayLayers({ map, zoom: currentZoom })
+			const activeLayers = mapLib.getMapActiveOverlayLayers({
+				map,
+				zoom: currentZoom,
+			})
 
 			if (!activeLayers.length) {
 				return
@@ -58,7 +59,7 @@ export const OnSingleClick = () => {
 			const layers = activeLayers.map((i) => i.get('idLayer')).join(',')
 
 			dispatch(
-				getMapInfo({
+				mapModel.getMapInfo({
 					lat,
 					lng,
 					zoom,
@@ -74,5 +75,5 @@ export const OnSingleClick = () => {
 		[map, currentZoom]
 	)
 
-	return status === 'loading' ? <BackdropSpinner open={true} /> : null
+	return status === 'loading' ? <BackdropSpinner /> : null
 }

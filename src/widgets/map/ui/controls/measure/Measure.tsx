@@ -4,14 +4,12 @@ import { ButtonGroup } from '@mui/material'
 
 import { useAppDispatch } from 'shared/model'
 
+import { useMapContext, mapLib, mapActions } from 'widgets/map'
+import type { MeasureModeType } from 'widgets/map/api'
+
 import { LineMeasure } from './LineMeasure'
 import { PolygonMeasure } from './PolygonMeasure'
 import { CloseMeasure } from './CloseMeasure'
-
-import { useMapContext } from '../../../context'
-import { formatArea, formatLength } from '../../../lib'
-import type { MeasureModeType } from '../../../model'
-import { mapActions } from '../../../model'
 
 import { FeatureLike } from 'ol/Feature'
 import { Fill, RegularShape, Stroke, Style, Text } from 'ol/style'
@@ -155,13 +153,13 @@ function styleFunction(
 		if (type === 'Polygon') {
 			// @ts-ignore
 			point = geometry.getInteriorPoint()
-			label = formatArea(geometry)
+			label = mapLib.formatArea(geometry)
 			// @ts-ignore
 			line = new LineString(geometry.getCoordinates()[0])
 		} else if (type === 'LineString') {
 			// @ts-ignore
 			point = new Point(geometry.getLastCoordinate())
-			label = formatLength(geometry)
+			label = mapLib.formatLength(geometry)
 			line = geometry
 		}
 	}
@@ -170,7 +168,7 @@ function styleFunction(
 		// @ts-ignore
 		line.forEachSegment(function (a, b) {
 			const segment = new LineString([a, b])
-			const label = formatLength(segment)
+			const label = mapLib.formatLength(segment)
 			if (segmentStyles.length - 1 < count) {
 				segmentStyles.push(segmentStyle.clone())
 			}
@@ -209,7 +207,9 @@ export const Measure = () => {
 	const dispatch = useAppDispatch()
 
 	const { map } = useMapContext()
+
 	const drawRef = useRef<Draw | null>(null)
+
 	const [measureMode, setMeasureMode] = useState<MeasureModeType>(undefined)
 
 	useEffect(() => {
@@ -236,7 +236,7 @@ export const Measure = () => {
 		return () => {
 			clear()
 		}
-	}, [measureMode, map])
+	}, [map, measureMode])
 
 	useEffect(() => {
 		if (!map) {

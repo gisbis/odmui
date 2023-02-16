@@ -1,23 +1,11 @@
-import { withProviders } from 'app/providers'
+import { withProviders } from './providers'
 
 import { Routing } from 'pages'
-import { AppDataContainer, UserDataContainer } from './containers'
-import { ExtendSession } from 'processes'
 
-import 'app/index.scss'
+import './index.scss'
 
 const App = () => {
-	return (
-		<>
-			<ExtendSession />
-
-			<AppDataContainer>
-				<UserDataContainer>
-					<Routing />
-				</UserDataContainer>
-			</AppDataContainer>
-		</>
-	)
+	return <Routing />
 }
 
 export default withProviders(App)

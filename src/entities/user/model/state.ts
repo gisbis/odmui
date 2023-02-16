@@ -1,10 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import type { IUser, IUserProperties, ILayer, ISetting } from './types'
-import { getUserInfo, getUserData } from './thunk'
+import type { ILayer, ISetting, IUser, IUserProperties } from 'shared/api/user'
+import type { RequestStatus } from 'shared/model'
 
-import { RequestStatus } from 'shared/model'
-import { convertersLib } from 'shared/lib'
+import {
+	getLayerList,
+	getSettingList,
+	getUserInfo,
+	getUserProps,
+} from './thunk'
 
 interface IUserState {
 	user: IUser | null
@@ -54,43 +58,25 @@ const slice = createSlice({
 		resetState: () => initialState,
 	},
 	extraReducers: (builder) => {
-		builder.addCase(getUserInfo.pending, (state, action) => {
-			state.errorMsg = null
-			state.status = 'loading'
-		})
 		builder.addCase(getUserInfo.fulfilled, (state, action) => {
-			state.status = 'success'
-
 			const { user, sessId } = action.payload
+			if (!user?.uid) {
+				state.user = null
+				state.sessId = null
+				return
+			}
+
 			state.user = user
 			state.sessId = sessId
 		})
-		builder.addCase(getUserInfo.rejected, (state, action) => {
-			state.status = 'error'
-			state.errorMsg = convertersLib.errorToString(action.error.message)
-
-			state.user = null
-			state.sessId = null
+		builder.addCase(getUserProps.fulfilled, (state, action) => {
+			state.userProperties = action.payload
 		})
-		builder.addCase(getUserData.pending, (state, action) => {
-			state.errorMsg = null
-			state.status = 'loading'
+		builder.addCase(getLayerList.fulfilled, (state, action) => {
+			state.layerList = action.payload
 		})
-		builder.addCase(getUserData.fulfilled, (state, action) => {
-			state.status = 'success'
-			const [layerList, settingList, userProps] = action.payload
-
-			state.settingList = settingList
-			state.layerList = layerList
-			state.userProperties = userProps
-		})
-		builder.addCase(getUserData.rejected, (state, action) => {
-			state.status = 'error'
-			state.errorMsg = convertersLib.errorToString(action.error.message)
-
-			state.settingList = []
-			state.layerList = []
-			state.userProperties = null
+		builder.addCase(getSettingList.fulfilled, (state, action) => {
+			state.settingList = action.payload
 		})
 	},
 })

@@ -8,8 +8,9 @@ import {
 } from '@mui/material'
 
 import { LayerSwitcherGroup } from '../layer-switcher-group'
-import { groupedMapLayers } from '../../../../../lib'
-import type { IMapLayersGroup } from '../../../../../lib'
+
+import { mapLib } from 'widgets/map'
+import type { IMapLayersGroup } from 'widgets/map/lib'
 
 import type { Layer } from 'ol/layer'
 import type { Source } from 'ol/source'
@@ -37,7 +38,7 @@ export const SwitchOverlayLayers: React.FC<ISwitchOverlayLayersProps> = ({
 	layerList,
 }) => {
 	const groupedLayerList: IMapLayersGroup[] = useMemo(() => {
-		return groupedMapLayers(layerList)
+		return mapLib.groupedMapLayers(layerList)
 	}, [layerList])
 
 	return (

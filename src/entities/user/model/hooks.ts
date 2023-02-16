@@ -1,12 +1,10 @@
 import { useAppSelector } from 'shared/model'
+import { userSelectors } from 'entities/user/model/index'
 
-export const useUser = () => {
-	const sessId = useAppSelector((state) => state.user.sessId)
-	const user = useAppSelector((state) => state.user.user)
+export const useUser = () => useAppSelector(userSelectors.selectUserInfo)
 
-	return {
-		isAuth: !!user?.uid,
-		sessId,
-		user,
-	}
+export const useUserIsAuth = () => {
+	const user = useUser()
+
+	return !!user?.uid
 }

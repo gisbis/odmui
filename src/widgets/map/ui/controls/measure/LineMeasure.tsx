@@ -1,7 +1,7 @@
 import StraightenIcon from '@mui/icons-material/Straighten'
 import { MapIconButton } from 'shared/ui/buttons'
 
-import { MeasureModeType } from '../../../model'
+import type { MeasureModeType } from 'widgets/map/api'
 
 interface ILineMeasureProps {
 	cbcOnClick: (val: MeasureModeType) => void

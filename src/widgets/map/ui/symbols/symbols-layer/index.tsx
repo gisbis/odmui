@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material'
-import type { ILayer } from 'entities/user'
 
-import { LAYER_SOURCE_URL } from '../../../config'
+import { ILayer } from 'shared/api/user'
+import { LAYER_SOURCE_URL } from 'shared/config'
 
 import './index.scss'
 

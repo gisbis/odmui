@@ -1,5 +1,6 @@
-export * from './types'
+import * as userModel from './thunk'
+import * as userSelectors from './selectors'
+
+export { userModel, userSelectors }
 export * from './state'
-export * from './thunk'
 export * from './hooks'
-export * from './selectors'

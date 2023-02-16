@@ -8,7 +8,8 @@ import {
 	TableRow,
 	Typography,
 } from '@mui/material'
-import { ISelectRecord, ISelectUserField } from 'entities/select'
+
+import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
 
 const StyledTableRow = styled(TableRow)(() => ({
 	'&:last-child td, &:last-child th': {

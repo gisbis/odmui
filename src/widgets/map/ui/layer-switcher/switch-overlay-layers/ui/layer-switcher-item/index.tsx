@@ -4,7 +4,7 @@ import { Checkbox, FormControlLabel, Typography } from '@mui/material'
 import { theme } from 'shared/theme'
 import { useAppDispatch, useAppSelector } from 'shared/model'
 
-import { mapActions } from '../../../../../model'
+import { mapActions } from 'widgets/map'
 
 import { Layer } from 'ol/layer'
 import { Source } from 'ol/source'

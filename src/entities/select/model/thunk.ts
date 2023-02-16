@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchSelectList } from '../api'
+import { selectApi } from 'shared/api'
 
 export const getSelectList = createAsyncThunk('select/getSelectList', () =>
-	fetchSelectList()
+	selectApi.fetchSelectList()
 )

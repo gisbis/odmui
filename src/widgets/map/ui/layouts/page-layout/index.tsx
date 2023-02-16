@@ -5,27 +5,24 @@ import { WithSidebarsLayout, FullScreenPageLayout } from 'shared/ui'
 import { useAppSelector } from 'shared/model'
 import { theme } from 'shared/theme'
 
+import { mapSelectors } from 'widgets/map'
+
 import { LayerSwitcherWrapper } from '../../layer-switcher'
 import { SymbolsWrapper } from '../../symbols'
 import { Bio } from '../../bio'
 import { ClearData, MapDataWrapper } from '../../map-data'
 
 export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
-	const isOpenLeftSidebar = useAppSelector(
-		(state) => state.map.isOpenLeftSidebar
-	)
-	const isOpenRightSidebar = useAppSelector(
-		(state) => state.map.isOpenRightSidebar
-	)
-	const leftSidebarContentType = useAppSelector(
-		(state) => state.map.leftSidebarContentType
-	)
-	const rightSidebarContentType = useAppSelector(
-		(state) => state.map.rightSidebarContentType
-	)
+	const rightSidebarData = useAppSelector(mapSelectors.selectRightSidebarData)
+	const leftSidebarData = useAppSelector(mapSelectors.selectLeftSidebarData)
+	const mapOnLoadEnd = useAppSelector(mapSelectors.selectMapOnLoadEnd)
 
 	const renderLeftSidebarContent = useCallback(() => {
-		if (leftSidebarContentType === 'home-screen') {
+		if (!mapOnLoadEnd) {
+			return null
+		}
+
+		if (leftSidebarData.contentType === 'home-screen') {
 			return (
 				<Box sx={{ height: '100%', overflowY: 'auto' }}>
 					<Box sx={{ p: 3 }}>
@@ -35,7 +32,7 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 			)
 		}
 
-		if (leftSidebarContentType === 'map-data') {
+		if (leftSidebarData.contentType === 'map-data') {
 			return (
 				<Box
 					sx={{
@@ -58,10 +55,14 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 		}
 
 		return null
-	}, [leftSidebarContentType])
+	}, [leftSidebarData.contentType, mapOnLoadEnd])
 
 	const renderRightSidebarContent = useCallback(() => {
-		if (rightSidebarContentType === 'layer-switcher') {
+		if (!mapOnLoadEnd) {
+			return null
+		}
+
+		if (rightSidebarData.contentType === 'layer-switcher') {
 			return (
 				<Box
 					sx={{
@@ -76,7 +77,7 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 			)
 		}
 
-		if (rightSidebarContentType === 'symbol-list') {
+		if (rightSidebarData.contentType === 'symbol-list') {
 			return (
 				<Box
 					sx={{
@@ -90,15 +91,15 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 		}
 
 		return null
-	}, [rightSidebarContentType])
+	}, [rightSidebarData.contentType, mapOnLoadEnd])
 
 	const props = {
 		leftSidebarWidth: 410,
 		rightSidebarWidth: 410,
 		leftSidebarComponent: renderLeftSidebarContent(),
 		rightSidebarComponent: renderRightSidebarContent(),
-		isOpenRightSidebar,
-		isOpenLeftSidebar,
+		isOpenRightSidebar: rightSidebarData.isOpen,
+		isOpenLeftSidebar: leftSidebarData.isOpen,
 	}
 
 	return (

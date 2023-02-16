@@ -1,5 +1,6 @@
-import { useAppSelector } from 'shared/model'
 import { Stack, Typography } from '@mui/material'
+
+import { useAppSelector } from 'shared/model'
 
 import { MapDataRow } from '../map-data-row'
 

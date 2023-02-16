@@ -1,13 +1,11 @@
 import { useEffect, useMemo } from 'react'
 
 import { useAppSelector } from 'shared/model'
+import { mapLib, useMapContext } from 'widgets/map'
 
 import TileLayer from 'ol/layer/Tile'
 import { ImageWMS, OSM, TileWMS, XYZ } from 'ol/source'
 import ImageLayer from 'ol/layer/Image'
-
-import { createImgLayer, createTileLayer } from '../../lib'
-import { useMapContext } from '../../context'
 
 export const InitLayers = () => {
 	const { map } = useMapContext()
@@ -31,7 +29,7 @@ export const InitLayers = () => {
 
 		tileLayerList.forEach((layer) => {
 			const isBase = !!layer.type && +layer.type === 3
-			const tileLayer = createTileLayer(layer, isBase)
+			const tileLayer = mapLib.createTileLayer(layer, isBase)
 
 			map.addLayer(tileLayer)
 
@@ -54,7 +52,7 @@ export const InitLayers = () => {
 
 		imgLayerList.forEach((layer) => {
 			const isBase = !!layer.type && +layer.type === 3
-			const imgLayer = createImgLayer(layer, isBase)
+			const imgLayer = mapLib.createImgLayer(layer, isBase)
 
 			map.addLayer(imgLayer)
 

@@ -1,3 +1,4 @@
-export * from './types'
+import * as selectModel from './thunk'
+
+export { selectModel }
 export * from './state'
-export * from './thunk'

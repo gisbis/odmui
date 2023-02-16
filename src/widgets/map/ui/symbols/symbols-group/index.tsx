@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
-import type { ILayersGroup } from 'entities/user'
 
+import { ILayersGroup } from 'shared/api/user'
 import { SymbolsLayer } from '../symbols-layer'
 
 export const SymbolsGroup: React.FC<{ group: ILayersGroup }> = ({ group }) => {

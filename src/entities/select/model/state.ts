@@ -1,21 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { getSelectList } from './thunk'
-import type { ISelectGroup } from './types'
+import type { ISelectGroup } from 'shared/api/select'
 
-import { RequestStatus } from 'shared/model'
-import { convertersLib } from 'shared/lib'
+import { getSelectList } from './thunk'
 
 interface ISelectState {
 	selectList: ISelectGroup[]
-	status: RequestStatus
-	errorMsg: string | null
 }
 
 const initialState: ISelectState = {
 	selectList: [],
-	status: undefined,
-	errorMsg: null,
 }
 
 const slice = createSlice({
@@ -25,18 +19,8 @@ const slice = createSlice({
 		resetState: () => initialState,
 	},
 	extraReducers: (builder) => {
-		builder.addCase(getSelectList.pending, (state, action) => {
-			state.errorMsg = null
-			state.status = 'loading'
-		})
 		builder.addCase(getSelectList.fulfilled, (state, action) => {
-			state.status = 'success'
 			state.selectList = action.payload
-		})
-		builder.addCase(getSelectList.rejected, (state, action) => {
-			state.status = 'error'
-			state.errorMsg = convertersLib.errorToString(action.error.message)
-			state.selectList = []
 		})
 	},
 })

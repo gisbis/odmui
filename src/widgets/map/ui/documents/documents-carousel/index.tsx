@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSwipeable } from 'react-swipeable'
 
-import { IAttachment } from 'entities/select'
+import type { IAttachment } from 'shared/api/documents'
 import { DOC_PREVIEW_URL } from 'shared/config'
 
 const NEXT = 'NEXT'

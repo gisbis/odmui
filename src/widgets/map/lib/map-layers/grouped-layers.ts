@@ -1,7 +1,8 @@
-import type { ILayer, ILayersGroup } from 'entities/user'
 import { Layer } from 'ol/layer'
 import { Source } from 'ol/source'
 import LayerRenderer from 'ol/renderer/Layer'
+
+import type { ILayer, ILayersGroup } from 'shared/api/user'
 
 export interface IMapLayersGroup {
 	idLayerGroup: string

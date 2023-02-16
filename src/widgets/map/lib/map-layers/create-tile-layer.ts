@@ -1,8 +1,8 @@
 import { Tile as TileLayer } from 'ol/layer'
 import { TileWMS } from 'ol/source'
 
-import type { ILayer } from 'entities/user'
-import { LAYER_SOURCE_URL } from 'widgets/map/config'
+import type { ILayer } from 'shared/api/user'
+import { LAYER_SOURCE_URL } from 'shared/config'
 
 export const createTileLayer = (
 	layer: ILayer,

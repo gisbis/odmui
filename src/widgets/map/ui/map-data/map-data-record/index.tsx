@@ -14,7 +14,7 @@ import {
 import ShareIcon from '@mui/icons-material/Share'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
-import { ISelectRecord, ISelectUserField } from 'entities/select'
+import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
 
 import { MapDataTable } from '../map-data-table'
 import { DocumentsGallery } from '../../documents'

@@ -4,10 +4,12 @@ import { Skeleton, Stack } from '@mui/material'
 import { RequestStatus } from 'shared/model'
 import { convertersLib } from 'shared/lib'
 
-import { ISelectRecord, ISelectUserField, selectApi } from 'entities/select'
+import { selectApi } from 'shared/api'
+import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
+
+import type { IMapInfoRowData } from 'widgets/map/api'
 
 import { MapDataRecord } from '../map-data-record'
-import { IMapInfoRowData } from '../../../model'
 
 export const MapDataRow: React.FC<{ dataRow: IMapInfoRowData }> = ({
 	dataRow,

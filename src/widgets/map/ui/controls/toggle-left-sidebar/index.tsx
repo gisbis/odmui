@@ -4,7 +4,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import { useAppDispatch, useAppSelector } from 'shared/model'
 import { MapIconButton } from 'shared/ui'
 
-import { mapActions } from '../../../model'
+import { mapActions } from 'widgets/map'
 
 export const ToggleLeftSidebar: React.FC = () => {
 	const dispatch = useAppDispatch()

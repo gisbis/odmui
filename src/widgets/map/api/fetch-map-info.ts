@@ -1,6 +1,7 @@
 import { axiosInstance } from 'shared/api'
 import { convertersLib, requestLib } from 'shared/lib'
-import { IMapInfoRowData } from '../model'
+
+import { IMapInfoRowData } from './types'
 
 export interface IFetchMapInfoParams {
 	layers: string

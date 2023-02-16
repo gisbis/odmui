@@ -1,50 +1,48 @@
 import { useEffect, useMemo, useState } from 'react'
-
-import { useAppSelector } from 'shared/model'
-import type { ILayer } from 'entities/user'
-
-import { useMapContext } from '../../../context'
-import { getMapActiveOverlayLayers, groupedLayers } from '../../../lib'
 import { Stack } from '@mui/material'
-import { SymbolsGroup } from 'widgets/map/ui/symbols/symbols-group'
+
+import type { ILayer } from 'shared/api/user'
+import { useAppSelector } from 'shared/model'
+
+import { useMapContext, mapLib } from 'widgets/map'
+
+import { SymbolsGroup } from '../symbols-group'
 
 export const SymbolsWrapper = () => {
 	const { map } = useMapContext()
-	const mapIsRendered = useAppSelector((state) => state.map.mapIsRendered)
+
 	const currentZoom = useAppSelector((state) => state.map.currentZoom)
 	const layerList = useAppSelector((state) => state.user.layerList)
 
 	const [symbolLayers, setSymbolLayers] = useState<ILayer[]>([])
 
 	useEffect(() => {
-		if (!map || !currentZoom || !mapIsRendered) {
-			setSymbolLayers([])
+		if (!map || !currentZoom) {
 			return
 		}
 
-		const activeLayers = getMapActiveOverlayLayers({ map, zoom: currentZoom })
+		const activeLayers = mapLib.getMapActiveOverlayLayers({
+			map,
+			zoom: currentZoom,
+		})
 
 		const symbolLayers: ILayer[] = []
 
 		layerList.forEach((layer) => {
-			const isActiveLayer = !!activeLayers.find(
+			const layerIsActiveOnMap = !!activeLayers.find(
 				(i) => String(i.get('idLayer')) === String(layer.id)
 			)
 
-			if (
-				(isActiveLayer || layer.autoload) &&
-				(+layer.type === 1 || +layer.type === 2) &&
-				!layer.noLegend
-			) {
+			if (layerIsActiveOnMap && !layer.noLegend) {
 				symbolLayers.push(layer)
 			}
 		})
 
 		setSymbolLayers(symbolLayers)
-	}, [map, mapIsRendered, currentZoom, layerList])
+	}, [map, currentZoom, layerList])
 
 	const groupedSymbolLayers = useMemo(() => {
-		return groupedLayers(symbolLayers)
+		return mapLib.groupedLayers(symbolLayers)
 	}, [symbolLayers])
 
 	return (

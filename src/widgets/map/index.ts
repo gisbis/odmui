@@ -2,5 +2,6 @@ import * as mapApi from './api'
 import * as mapLib from './lib'
 import { MapWidget } from './ui'
 
-export { mapApi, mapLib, MapWidget }
 export * from './model'
+export * from './context'
+export { mapApi, mapLib, MapWidget }

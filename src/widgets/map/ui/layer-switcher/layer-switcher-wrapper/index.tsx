@@ -3,8 +3,7 @@ import { Box } from '@mui/material'
 
 import { useAppSelector } from 'shared/model'
 
-import { useMapContext } from '../../../context'
-import { getMapOverlayLyers } from '../../../lib'
+import { useMapContext, mapLib, mapSelectors } from 'widgets/map'
 
 import { FilterLayers } from '../filter-layers'
 import { SwitchOverlayLayers } from '../switch-overlay-layers'
@@ -13,21 +12,20 @@ import { UncheckAll } from '../uncheck-all'
 export const LayerSwitcherWrapper = () => {
 	const { map } = useMapContext()
 
-	const mapIsRendered = useAppSelector((state) => state.map.mapIsRendered)
+	const mapOnLoadEnd = useAppSelector(mapSelectors.selectMapOnLoadEnd)
+	const activeIdLayerList = useAppSelector(mapSelectors.selectActiveIdLayerList)
 
-	const activeIdLayerList = useAppSelector(
-		(state) => state.map.activeIdLayerList
-	)
+	console.log({ mapOnLoadEnd })
 
 	const [query, setQuery] = useState('')
 
 	const overlayLayerList = useMemo(() => {
-		if (!map || !mapIsRendered) {
+		if (!map) {
 			return []
 		}
 
-		return getMapOverlayLyers({ map }).filter((i) => !i.get('autoload'))
-	}, [map, mapIsRendered])
+		return mapLib.getMapOverlayLyers({ map }).filter((i) => !i.get('autoload'))
+	}, [map])
 
 	const filteredOverlayLayerList = useMemo(() => {
 		return overlayLayerList.filter((i) =>

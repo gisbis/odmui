@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 
 import { MapIconButton } from 'shared/ui/buttons'
 
-import { useMapContext } from '../../../context'
+import { useMapContext } from 'widgets/map'
 
 import { easeOut } from 'ol/easing'
 

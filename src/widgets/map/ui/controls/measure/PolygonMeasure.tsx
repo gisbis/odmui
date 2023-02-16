@@ -1,7 +1,8 @@
 import SquareFootIcon from '@mui/icons-material/SquareFoot'
+
 import { MapIconButton } from 'shared/ui/buttons'
 
-import { MeasureModeType } from '../../../model'
+import type { MeasureModeType } from 'widgets/map/api'
 
 interface IPolygonMeasureProps {
 	cbcOnClick: (val: MeasureModeType) => void

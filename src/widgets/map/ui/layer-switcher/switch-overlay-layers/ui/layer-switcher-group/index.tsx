@@ -5,9 +5,10 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material'
 
 import { useAppDispatch, useAppSelector } from 'shared/model'
 
+import { mapActions } from 'widgets/map'
+import type { IMapLayersGroup } from 'widgets/map/lib'
+
 import { LayerSwitcherItem } from '../layer-switcher-item'
-import { mapActions } from '../../../../../model'
-import type { IMapLayersGroup } from '../../../../../lib'
 
 interface ILayerSwitcherGroupProps {
 	group: IMapLayersGroup
