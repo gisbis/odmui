@@ -10,7 +10,7 @@ import { mapSelectors } from 'widgets/map'
 import { LayerSwitcherWrapper } from '../../layer-switcher'
 import { SymbolsWrapper } from '../../symbols'
 import { Bio } from '../../bio'
-import { ClearData, MapDataWrapper } from '../../map-data'
+import { ClearData, MapData } from '../../map-data'
 
 export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 	const rightSidebarData = useAppSelector(mapSelectors.selectRightSidebarData)
@@ -44,7 +44,7 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 					}}
 				>
 					<Box sx={{ flexGrow: 1, overflowY: 'auto', p: 3 }}>
-						<MapDataWrapper />
+						<MapData />
 					</Box>
 
 					<Box sx={{ p: 3 }}>

@@ -9,12 +9,13 @@ import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
 
 import type { IMapInfoRowData } from 'widgets/map/api'
 
-import { MapDataRecord } from '../map-data-record'
+import { RecordData } from '../record-data'
 
-export const MapDataRow: React.FC<{ dataRow: IMapInfoRowData }> = ({
+export const SelectData: React.FC<{ dataRow: IMapInfoRowData }> = ({
 	dataRow,
 }) => {
 	const { selectInfo, id } = dataRow
+
 	const [userFields, setUserFields] = useState<ISelectUserField[]>([])
 	const [recordList, setRecordList] = useState<ISelectRecord[]>([])
 	const [errorMsg, setErrorMsg] = useState<string | null>(null)
@@ -64,11 +65,7 @@ export const MapDataRow: React.FC<{ dataRow: IMapInfoRowData }> = ({
 	return (
 		<Stack spacing={1.5}>
 			{recordList.map((record) => (
-				<MapDataRecord
-					key={record.key}
-					record={record}
-					userFields={userFields}
-				/>
+				<RecordData key={record.key} record={record} userFields={userFields} />
 			))}
 		</Stack>
 	)

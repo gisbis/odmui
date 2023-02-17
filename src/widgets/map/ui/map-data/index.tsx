@@ -1,10 +1,9 @@
 import { Stack, Typography } from '@mui/material'
 
 import { useAppSelector } from 'shared/model'
+import { SelectData } from './select-data'
 
-import { MapDataRow } from '../map-data-row'
-
-export const MapDataWrapper = () => {
+export const MapData = () => {
 	const mapInfoData = useAppSelector((state) => state.map.mapInfoData) || []
 
 	if (!mapInfoData.length) {
@@ -14,8 +13,10 @@ export const MapDataWrapper = () => {
 	return (
 		<Stack spacing={1.5}>
 			{mapInfoData.map((dataRow) => (
-				<MapDataRow key={dataRow.id} dataRow={dataRow} />
+				<SelectData key={dataRow.id} dataRow={dataRow} />
 			))}
 		</Stack>
 	)
 }
+
+export { ClearData } from './clear-data'

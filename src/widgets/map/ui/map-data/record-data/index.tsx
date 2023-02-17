@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+	Box,
 	Card,
 	CardActions,
 	CardContent,
@@ -16,8 +17,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
 
-import { MapDataTable } from '../map-data-table'
-import { DocumentsGallery } from '../../documents'
+import { TableData } from '../table-data'
+import { RecordDocGallery } from '../record-doc-gallery'
 
 interface ExpandMoreProps extends IconButtonProps {
 	expand: boolean
@@ -34,7 +35,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 	}),
 }))
 
-export const MapDataRecord: React.FC<{
+export const RecordData: React.FC<{
 	record: ISelectRecord
 	userFields: ISelectUserField[]
 }> = ({ record, userFields }) => {
@@ -79,6 +80,15 @@ export const MapDataRecord: React.FC<{
 				}
 			/>
 
+			{!!record.doclist.length && (
+				<CardContent
+					onClick={(evt) => evt.stopPropagation()}
+					sx={{ cursor: 'default' }}
+				>
+					<RecordDocGallery documents={record.doclist} />
+				</CardContent>
+			)}
+
 			<CardActions sx={{ pt: 0 }} disableSpacing>
 				<IconButton size="small" aria-label="share" onClick={handleSharedClick}>
 					<ShareIcon sx={{ fontSize: '16px' }} />
@@ -106,12 +116,8 @@ export const MapDataRecord: React.FC<{
 						cursor: 'default',
 					}}
 				>
-					<MapDataTable record={record} userFields={userFields} />
+					<TableData record={record} userFields={userFields} />
 				</CardContent>
-
-				{!!record.doclist.length && (
-					<DocumentsGallery documents={record.doclist} />
-				)}
 			</Collapse>
 		</Card>
 	)

@@ -1,9 +1,10 @@
-import { Box } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 
 import {
 	Measure,
 	ToggleLayerSwitcher,
 	ToggleLeftSidebar,
+	ToggleMapDataFilter,
 	ToggleSymbolList,
 	ZoomGroup,
 } from '../../controls'
@@ -18,7 +19,7 @@ export const MapControlsLayout = () => {
 					position: 'absolute',
 					left: '1rem',
 					top: '1rem',
-					width: '40px',
+					width: 'auto',
 					display: 'flex',
 					flexDirection: 'column',
 					rowGap: 1.5,
@@ -33,13 +34,17 @@ export const MapControlsLayout = () => {
 					position: 'absolute',
 					right: '1rem',
 					top: '1rem',
-					width: '40px',
+					width: 'auto',
 					display: 'flex',
 					flexDirection: 'column',
+					alignItems: 'end',
 					rowGap: 1.5,
 				}}
 			>
+				<ToggleMapDataFilter />
+
 				<ToggleLayerSwitcher />
+
 				<ZoomGroup />
 				<ToggleSymbolList />
 			</Box>

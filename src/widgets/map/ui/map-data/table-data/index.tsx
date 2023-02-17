@@ -20,7 +20,7 @@ const StyledTableRow = styled(TableRow)(() => ({
 	},
 }))
 
-export const MapDataTable: React.FC<{
+export const TableData: React.FC<{
 	record: ISelectRecord
 	userFields: ISelectUserField[]
 }> = ({ record, userFields }) => {

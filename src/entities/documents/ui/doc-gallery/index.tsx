@@ -1,9 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react'
-
-import { DOC_PREVIEW_URL } from 'shared/config'
-import type { IAttachment } from 'shared/api/documents'
-
-import { DocumentsSwiper } from '../documents-swiper'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import LightGalleryReact from 'lightgallery/react'
 
@@ -16,12 +11,18 @@ import type { GalleryItem } from 'lightgallery/lg-utils'
 
 import 'lightgallery/css/lightgallery-bundle.min.css'
 
-interface IDocumentsGalleryProps {
+import type { IAttachment } from 'shared/api/documents'
+import { DOC_PREVIEW_URL } from 'shared/config'
+import { DocSwiper } from 'entities/documents/ui/doc-swiper'
+
+interface IDocGalleryProps {
 	documents: IAttachment[]
+	viewMode: 'swiper'
 }
 
-export const DocumentsGallery: React.FC<IDocumentsGalleryProps> = ({
+export const DocGallery: React.FC<IDocGalleryProps> = ({
 	documents,
+	viewMode,
 }) => {
 	const LGRef = useRef<LightGallery | null>(null)
 
@@ -89,7 +90,9 @@ export const DocumentsGallery: React.FC<IDocumentsGalleryProps> = ({
 			dynamic={true}
 			dynamicEl={LGItems}
 		>
-			<DocumentsSwiper documents={documents} openInGallery={openInGallery} />
+			{viewMode === 'swiper' && (
+				<DocSwiper documents={documents} handleDocClick={openInGallery} />
+			)}
 		</LightGalleryReact>
 	)
 }
