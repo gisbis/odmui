@@ -86,15 +86,28 @@ export interface ILayer {
 	geometryType: number
 	hint?: string
 	toBaseLayer?: string
-	LayerGroup: {
-		idLayerGroup: string
-		nameLayerGroup: string
-	}
-	layerSourceWMS?: {
-		name: string
-	}
+	LayerGroup: ILayerGroup
+	layerSourceWMS?: ILayerSourceWMS
 	noLegend?: number
 	legendStyle?: string
+	classifierFilterRules: {
+		cfr: ILayerClassifierFilterRule
+	}
+}
+
+export interface ILayerGroup {
+	idLayerGroup: string
+	nameLayerGroup: string
+}
+
+export interface ILayerSourceWMS {
+	name: string
+}
+
+export interface ILayerClassifierFilterRule {
+	cfrName: string
+	cfrLF: string
+	cfrCID: string
 }
 
 export interface ILayersGroup {

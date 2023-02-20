@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react'
-import { Checkbox, FormControlLabel, Typography } from '@mui/material'
+import { Checkbox, FormControlLabel, Stack, Typography } from '@mui/material'
+import FilterListIcon from '@mui/icons-material/FilterList'
 
 import { theme } from 'shared/theme'
 import { useAppDispatch, useAppSelector } from 'shared/model'
@@ -65,13 +66,19 @@ export const LayerSwitcherItem: React.FC<ILayerSwitcherItemProps> = ({
 				/>
 			}
 			label={
-				<Typography
-					variant="body1"
-					fontSize={14}
-					color={disabled ? theme.palette.text.disabled : 'inherit'}
-				>
-					{title}
-				</Typography>
+				<Stack direction="row" alignItems="center" spacing={1.5}>
+					<Typography
+						variant="body1"
+						fontSize={14}
+						color={disabled ? theme.palette.text.disabled : 'inherit'}
+					>
+						{title}
+					</Typography>
+
+					{!!layer.get('cfrCID') && (
+						<FilterListIcon fontSize="small" color="disabled" />
+					)}
+				</Stack>
 			}
 			sx={{ my: '3.5px' }}
 		/>

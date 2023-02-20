@@ -1,19 +1,19 @@
-import { Box, Stack } from '@mui/material'
+import { Box } from '@mui/material'
 
 import {
 	Measure,
 	ToggleLayerSwitcher,
 	ToggleLeftSidebar,
-	ToggleMapDataFilter,
+	ToggleCRFFilterSearch,
 	ToggleSymbolList,
 	ZoomGroup,
 } from '../../controls'
 
-import './index.scss'
+import { CRFFilterResult } from '../../crf-data-filter'
 
 export const MapControlsLayout = () => {
 	return (
-		<Box className="map-controls-layout">
+		<>
 			<Box
 				sx={{
 					position: 'absolute',
@@ -32,7 +32,7 @@ export const MapControlsLayout = () => {
 			<Box
 				sx={{
 					position: 'absolute',
-					right: '1rem',
+					right: 'calc(1rem + 100px)',
 					top: '1rem',
 					width: 'auto',
 					display: 'flex',
@@ -41,13 +41,27 @@ export const MapControlsLayout = () => {
 					rowGap: 1.5,
 				}}
 			>
-				<ToggleMapDataFilter />
+				<ToggleCRFFilterSearch />
+				<CRFFilterResult />
+			</Box>
 
+			<Box
+				sx={{
+					position: 'absolute',
+					right: '1rem',
+					top: '1rem',
+					width: '50px',
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'end',
+					rowGap: 1.5,
+				}}
+			>
 				<ToggleLayerSwitcher />
 
 				<ZoomGroup />
 				<ToggleSymbolList />
 			</Box>
-		</Box>
+		</>
 	)
 }

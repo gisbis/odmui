@@ -70,6 +70,7 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 						overflow: 'hidden',
 						display: 'flex',
 						flexDirection: 'column',
+						bgcolor: theme.palette.action.hover,
 					}}
 				>
 					<LayerSwitcherWrapper />

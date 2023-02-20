@@ -23,9 +23,11 @@ export const createImgLayer = (
 		properties: {
 			title: layer.name,
 			idLayer: layer.id,
+			id: layer.id,
 			type: isBase ? 'base' : 'overlay',
 			autoload: layer.autoload,
 			group: layer.LayerGroup,
+			cfrCID: layer?.classifierFilterRules?.cfr?.cfrCID,
 		},
 		zIndex: layer.zindex,
 		visible: isBase ? false : !!layer.autoload,

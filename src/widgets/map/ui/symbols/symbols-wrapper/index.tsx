@@ -21,24 +21,26 @@ export const SymbolsWrapper = () => {
 			return
 		}
 
-		const activeLayers = mapLib.getMapActiveOverlayLayers({
-			map,
-			zoom: currentZoom,
-		})
+		setTimeout(() => {
+			const activeLayers = mapLib.getMapActiveOverlayLayers({
+				map,
+				zoom: currentZoom,
+			})
 
-		const symbolLayers: ILayer[] = []
+			const symbolLayers: ILayer[] = []
 
-		layerList.forEach((layer) => {
-			const layerIsActiveOnMap = !!activeLayers.find(
-				(i) => String(i.get('idLayer')) === String(layer.id)
-			)
+			layerList.forEach((layer) => {
+				const layerIsActiveOnMap = !!activeLayers.find(
+					(i) => String(i.get('idLayer')) === String(layer.id)
+				)
 
-			if (layerIsActiveOnMap && !layer.noLegend) {
-				symbolLayers.push(layer)
-			}
-		})
+				if (layerIsActiveOnMap && !layer.noLegend) {
+					symbolLayers.push(layer)
+				}
+			})
 
-		setSymbolLayers(symbolLayers)
+			setSymbolLayers(symbolLayers)
+		}, 0)
 	}, [map, currentZoom, layerList])
 
 	const groupedSymbolLayers = useMemo(() => {

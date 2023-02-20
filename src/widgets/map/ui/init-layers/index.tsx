@@ -72,7 +72,7 @@ export const InitLayers = () => {
 		}
 
 		const osm = new TileLayer({
-			properties: { title: 'OSM', type: 'base' },
+			properties: { title: 'OSM', type: 'base', id: 'osm' },
 			source: new OSM(),
 			visible: true,
 			zIndex: 0,
@@ -80,7 +80,7 @@ export const InitLayers = () => {
 		osm.setZIndex(0)
 
 		const google = new TileLayer({
-			properties: { title: 'google', type: 'base' },
+			properties: { title: 'google', type: 'base', id: 'google' },
 			source: new XYZ({
 				crossOrigin: 'anonymous',
 				url: 'https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
@@ -91,7 +91,7 @@ export const InitLayers = () => {
 		google.setZIndex(0)
 
 		const yandex = new TileLayer({
-			properties: { title: 'yandex', type: 'base' },
+			properties: { title: 'yandex', type: 'base', id: 'yandex' },
 			source: new XYZ({
 				crossOrigin: 'anonymous',
 				url: 'https://sat01.maps.yandex.net/tiles?l=sat&v=3.249.0&x={x}&y={y}&z={z}&lang=tr_TR',

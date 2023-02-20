@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RequestStatus } from 'shared/model'
 import { convertersLib } from 'shared/lib'
 
+import type { IClassifierValue } from 'shared/api/classifier'
 import type {
 	IMapInfoRowData,
 	LeftSidebarContentType,
@@ -12,10 +13,19 @@ import type {
 
 import { getMapInfo } from './thunk'
 
-import { Coordinate } from 'ol/coordinate'
+import type { Coordinate } from 'ol/coordinate'
+import { ILayer } from 'shared/api/user'
+
+export interface ICRFClassifierValue extends IClassifierValue {
+	nameGroup: string
+	idLayer: number
+}
 
 interface IMapState {
 	activeIdLayerList: number[]
+	crfUserLayerList: ILayer[]
+	crfClassifierValues: ICRFClassifierValue[]
+	isOpenCrfFilterSearch: boolean
 	currentZoom?: number
 	currentCoords?: Coordinate
 	currenMapModeType: MapModeType
@@ -31,6 +41,9 @@ interface IMapState {
 
 const initialState: IMapState = {
 	activeIdLayerList: [],
+	crfUserLayerList: [],
+	crfClassifierValues: [],
+	isOpenCrfFilterSearch: true,
 	currenMapModeType: undefined,
 	currentCoords: undefined,
 	currentZoom: undefined,
@@ -59,6 +72,18 @@ const state = createSlice({
 		},
 		setActiveIdLayerList(state, action: PayloadAction<number[]>) {
 			state.activeIdLayerList = action.payload
+		},
+		setCRFUserLayerList(state, action: PayloadAction<ILayer[]>) {
+			state.crfUserLayerList = action.payload
+		},
+		setCRFClassifierValues(
+			state,
+			action: PayloadAction<ICRFClassifierValue[]>
+		) {
+			state.crfClassifierValues = action.payload
+		},
+		setIsOpenCRFFilterSearch(state, action: PayloadAction<boolean>) {
+			state.isOpenCrfFilterSearch = action.payload
 		},
 		setIsOpenLeftSidebar(state, action: PayloadAction<boolean>) {
 			state.isOpenLeftSidebar = action.payload

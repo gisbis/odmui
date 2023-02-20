@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { convertersLib } from 'shared/lib'
 import { userApi } from 'shared/api'
+import { useAppDispatch } from 'shared/model'
+import { userActions } from 'entities/user'
 
 export const withExtendSession =
 	(Component: new () => React.Component) => () => {
+		const dispatch = useAppDispatch()
 		const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
 		const timer = useRef<NodeJS.Timer | null>(null)
@@ -13,10 +15,13 @@ export const withExtendSession =
 				clearInterval(timer.current)
 			}
 
-			timer.current = setInterval(() => {
-				userApi.fetchUserInfo().catch((e) => {
-					setErrorMsg(convertersLib.errorToString(e))
-				})
+			timer.current = setInterval(async () => {
+				const { user } = await userApi.fetchUserInfo()
+
+				if (!user || !user?.uid) {
+					dispatch(userActions.setUser(null))
+					dispatch(userActions.setSessId(null))
+				}
 			}, 900000)
 
 			return () => {

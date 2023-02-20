@@ -15,9 +15,10 @@ export const UncheckAll = () => {
 	}
 	return (
 		<Button
-			variant="contained"
+			variant="text"
 			onClick={handleClick}
 			disabled={!activeIdLayerList.length}
+			size="small"
 		>
 			uncheck
 		</Button>

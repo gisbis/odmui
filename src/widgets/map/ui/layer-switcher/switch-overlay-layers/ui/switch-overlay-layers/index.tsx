@@ -21,7 +21,7 @@ const cmpTheme = createTheme({
 		MuiCheckbox: {
 			styleOverrides: {
 				root: {
-					padding: '0 10px 5px',
+					padding: '2.5px 10px',
 				},
 			},
 		},

@@ -8,6 +8,7 @@ import { MapContextProvider, mapSelectors } from 'widgets/map'
 import { OnSingleClick, OnMoveend, OnLoadEnd } from './events'
 import { InitLayers } from './init-layers'
 import { MapControlsLayout, MapPageLayout } from './layouts'
+import { ObserveCrfLayerList } from './observe'
 
 import type { Map } from 'ol'
 import { fromLonLat } from 'ol/proj'
@@ -63,6 +64,7 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 				<OnMoveend />
 
 				{mapOnLoaded && <OnSingleClick />}
+				{mapOnLoaded && <ObserveCrfLayerList />}
 
 				<MapPageLayout>
 					<Box
@@ -74,7 +76,7 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 							position: 'relative',
 						}}
 					>
-						<MapControlsLayout />
+						{mapOnLoaded && <MapControlsLayout />}
 					</Box>
 				</MapPageLayout>
 			</MapContextProvider>

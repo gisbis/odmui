@@ -13,7 +13,6 @@ export const OnLoadEnd = () => {
 		}
 
 		map.on('loadend', () => {
-			console.log('is rendered')
 			dispatch(mapActions.setMapOnLoadEnd(true))
 		})
 
