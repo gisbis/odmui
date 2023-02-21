@@ -90,9 +90,7 @@ export interface ILayer {
 	layerSourceWMS?: ILayerSourceWMS
 	noLegend?: number
 	legendStyle?: string
-	classifierFilterRules: {
-		cfr: ILayerClassifierFilterRule
-	}
+	classifierFilterRules: ILayerClassifierFilterRule[]
 }
 
 export interface ILayerGroup {

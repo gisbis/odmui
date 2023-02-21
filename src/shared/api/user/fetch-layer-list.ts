@@ -10,7 +10,18 @@ export const fetchLayerList = (): Promise<ILayer[]> =>
 		.then((response) => response?.LayerUserList)
 		.then((response) => {
 			requestLib.throwResponseError(response)
-			return convertersLib.anyToArray(response?.Layers?.row)
+
+			const layerList = convertersLib.anyToArray(response?.Layers?.row)
+
+			layerList.forEach((layer) => {
+				if (layer?.classifierFilterRules?.cfr) {
+					layer.classifierFilterRules = convertersLib.anyToArray(
+						layer.classifierFilterRules.cfr
+					)
+				}
+			})
+
+			return layerList
 		})
 		.catch((e) => {
 			throw e

@@ -26,7 +26,6 @@ export const createTileLayer = (
 			type: isBase ? 'base' : 'overlay',
 			autoload: layer.autoload,
 			group: layer.LayerGroup,
-			cfrCID: layer?.classifierFilterRules?.cfr?.cfrCID,
 		},
 		zIndex: layer.zindex,
 		visible: isBase ? false : !!layer.autoload,

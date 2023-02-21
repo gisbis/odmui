@@ -1,18 +1,27 @@
 import { useCallback, useState } from 'react'
-import { Autocomplete, IconButton, Stack } from '@mui/material'
-
-import CloseIcon from '@mui/icons-material/Close'
+import { Autocomplete, Stack } from '@mui/material'
 
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
 
-import type { IClassifierValue } from 'shared/api/classifier'
-import type { ICRFClassifierValue } from 'widgets/map'
+import type {
+	IClassifierValue,
+	IFetchClassifierValuesParams,
+} from 'shared/api/classifier'
 
 import { theme } from 'shared/theme'
 import { classifierApi } from 'shared/api'
+import { BaseInput } from 'shared/ui'
 import { useAppDispatch, useAppSelector } from 'shared/model'
-import { mapActions, mapSelectors } from 'widgets/map'
+import { ICRFClassifierValue, mapActions, mapSelectors } from 'widgets/map'
+
+interface IFetchClassifierValuesData {
+	nameGroup: string
+	idLayer: number
+	crfCID: number
+	crfLF: string
+	fn: Promise<IClassifierValue[]>
+}
 
 export const CRFFilterSearch = () => {
 	const dispatch = useAppDispatch()
@@ -21,39 +30,58 @@ export const CRFFilterSearch = () => {
 	const crfUserLayers = useAppSelector(mapSelectors.selectCRFUserLayerList)
 
 	const [inputValue, setInputValue] = useState('')
-	const [options, setOptions] = useState<any[]>([])
+	const [options, setOptions] = useState<ICRFClassifierValue[]>([])
 
 	const getOptions = useCallback(async () => {
-		const promises: Promise<IClassifierValue[]>[] = []
+		const fetchData: IFetchClassifierValuesData[] = []
 
-		crfUserLayers.forEach((i) => {
-			promises.push(
-				classifierApi.fetchClassifierValues({
-					classifier: i.classifierFilterRules.cfr.cfrCID,
-					all: 1,
-				})
-			)
-		})
+		for (let i = 0; i < crfUserLayers.length; i++) {
+			const rules = crfUserLayers[i].classifierFilterRules
 
-		Promise.all(promises)
-			.then((response) => {
-				let allOptions: ICRFClassifierValue[] = []
-
-				for (let i = 0; i < response.length; i++) {
-					const options: ICRFClassifierValue[] = response[i].map((option) => ({
-						nameGroup: crfUserLayers[i].classifierFilterRules.cfr.cfrName,
-						idLayer: crfUserLayers[i].id,
-						...option,
-					}))
-					allOptions = [...allOptions, ...options]
+			rules.forEach((rule) => {
+				const obj: IFetchClassifierValuesData = {
+					nameGroup: crfUserLayers[i]?.LayerGroup?.nameLayerGroup || 'untitled',
+					idLayer: crfUserLayers[i].id,
+					crfCID: +rule.cfrCID,
+					crfLF: rule.cfrLF,
+					fn: fetchClassifierValues({
+						classifier: rule.cfrCID,
+						all: 1,
+					}),
 				}
 
-				return allOptions
+				fetchData.push(obj)
 			})
-			.then((response) => {
-				setOptions(response)
-			})
+		}
+
+		const promises: Promise<IClassifierValue[]>[] = fetchData.map((i) => i.fn)
+
+		try {
+			const response = await Promise.all(promises)
+
+			const options: ICRFClassifierValue[] = response
+				.map((values, idx) => {
+					const data = fetchData[idx]
+
+					return values.map((val) => ({
+						crfLF: data.crfLF,
+						crfCID: data.crfCID,
+						idLayer: data.idLayer,
+						nameGroup: data.nameGroup,
+						...val,
+					}))
+				})
+				.flat()
+
+			setOptions(options)
+		} catch (e) {
+			console.log(e)
+		}
 	}, [crfUserLayers])
+
+	const fetchClassifierValues = (params: IFetchClassifierValuesParams) => {
+		return classifierApi.fetchClassifierValues(params)
+	}
 
 	if (!crfUserLayers.length) {
 		return null
@@ -63,24 +91,7 @@ export const CRFFilterSearch = () => {
 		<Stack direction="row" sx={{ width: '100%' }}>
 			<Autocomplete
 				id="map-data-filter-search"
-				sx={{
-					display: 'inline-block',
-					flexGrow: 1,
-					'& input': {
-						'&:focus': {
-							border: 'none',
-							outlin: 'none',
-						},
-						height: '40px',
-						lineHeight: '40px',
-						border: 'none',
-						outline: 'none',
-						width: '100%',
-						bgcolor: 'transparent',
-						color: (theme) =>
-							theme.palette.getContrastText(theme.palette.background.paper),
-					},
-				}}
+				sx={{ flexGrow: 1 }}
 				value={crfValues}
 				inputValue={inputValue}
 				options={options}
@@ -115,7 +126,7 @@ export const CRFFilterSearch = () => {
 				renderTags={() => null}
 				renderInput={(params) => (
 					<div ref={params.InputProps.ref}>
-						<input {...params.inputProps} placeholder="filter data..." />
+						<BaseInput {...params.inputProps} placeholder="filter data..." />
 					</div>
 				)}
 				multiple
@@ -133,12 +144,6 @@ export const CRFFilterSearch = () => {
 					}
 				}}
 			/>
-
-			{!!inputValue && (
-				<IconButton>
-					<CloseIcon />
-				</IconButton>
-			)}
 		</Stack>
 	)
 }

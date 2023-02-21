@@ -1,9 +1,10 @@
-import { Box, Chip } from '@mui/material'
-import { useAppDispatch, useAppSelector } from 'shared/model'
-import { mapSelectors, mapActions } from 'widgets/map'
-
-import type { ICRFClassifierValue } from 'widgets/map/model'
 import { useEffect } from 'react'
+import { Box, Chip } from '@mui/material'
+
+import { useAppDispatch, useAppSelector } from 'shared/model'
+
+import { mapSelectors, mapActions } from 'widgets/map'
+import type { ICRFClassifierValue } from 'widgets/map'
 
 export const CRFFilterResult = () => {
 	const dispatch = useAppDispatch()
@@ -44,6 +45,7 @@ export const CRFFilterResult = () => {
 				width: '100%',
 				maxWidth: '326px',
 				bgcolor: '#ffffff70',
+				backdropFilter: 'blur(5px)',
 				p: 1.5,
 				borderRadius: '14px',
 				boxShadow: '0 2px 6px 0 rgba(0,0,0,0.2)',
@@ -53,8 +55,8 @@ export const CRFFilterResult = () => {
 				sx={{
 					display: 'flex',
 					flexWrap: 'wrap',
-					columnGap: 1,
-					rowGap: 1,
+					columnGap: 0.5,
+					rowGap: 0.5,
 					mb: 1.5,
 				}}
 			>

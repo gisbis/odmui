@@ -1,5 +1,5 @@
 export interface IMapInfoRowData {
-	layerInfo: ILayerinfo
+	layerInfo: ILayerInfo
 	selectInfo: ISelectInfo
 	sys: number
 	geom: string
@@ -8,7 +8,7 @@ export interface IMapInfoRowData {
 	metafield: string
 }
 
-interface ILayerinfo {
+interface ILayerInfo {
 	layerID: number
 	layerName: string
 }

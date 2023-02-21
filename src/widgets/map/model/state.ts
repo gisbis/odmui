@@ -14,14 +14,17 @@ import type {
 import { getMapInfo } from './thunk'
 
 import type { Coordinate } from 'ol/coordinate'
-import { ILayer } from 'shared/api/user'
+import type { ILayer } from 'shared/api/user'
 
 export interface ICRFClassifierValue extends IClassifierValue {
 	nameGroup: string
 	idLayer: number
+	crfCID: number
+	crfLF: string
 }
 
 interface IMapState {
+	defaultBaseLayerId: string
 	activeIdLayerList: number[]
 	crfUserLayerList: ILayer[]
 	crfClassifierValues: ICRFClassifierValue[]
@@ -40,6 +43,7 @@ interface IMapState {
 }
 
 const initialState: IMapState = {
+	defaultBaseLayerId: 'google',
 	activeIdLayerList: [],
 	crfUserLayerList: [],
 	crfClassifierValues: [],
@@ -61,6 +65,9 @@ const state = createSlice({
 	name: 'map',
 	initialState,
 	reducers: {
+		setDefaultBaseLayerId(state, action: PayloadAction<string>) {
+			state.defaultBaseLayerId = action.payload
+		},
 		setCurrentZoom(state, action: PayloadAction<number | undefined>) {
 			state.currentZoom = action.payload
 		},

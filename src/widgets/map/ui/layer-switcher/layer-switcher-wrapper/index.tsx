@@ -9,9 +9,7 @@ import {
 	ThemeProvider,
 } from '@mui/material'
 
-import { useAppSelector } from 'shared/model'
-
-import { useMapContext, mapLib, mapSelectors } from 'widgets/map'
+import { useMapContext, mapLib } from 'widgets/map'
 
 import { SwitchBaseLayers } from '../switch-base-layers'
 import { SwitchOverlayLayers } from '../switch-overlay-layers'
@@ -50,8 +48,6 @@ const cmpTheme = createTheme({
 export const LayerSwitcherWrapper = () => {
 	const { map } = useMapContext()
 
-	const activeIdLayerList = useAppSelector(mapSelectors.selectActiveIdLayerList)
-
 	const [query, setQuery] = useState('')
 
 	const overlayLayerList = useMemo(() => {
@@ -82,23 +78,12 @@ export const LayerSwitcherWrapper = () => {
 		)
 	}, [baseLayerList, query])
 
-	useEffect(() => {
-		overlayLayerList.forEach(function (layer) {
-			const idLayer = layer.get('idLayer')
-
-			const layerInActiveList = activeIdLayerList
-				.map((i) => +i)
-				.includes(+idLayer)
-			layer.setVisible(layerInActiveList)
-		})
-	}, [activeIdLayerList, overlayLayerList])
-
 	return (
 		<>
 			<ThemeProvider theme={cmpTheme}>
 				<Box sx={{ px: 3, py: 1.5 }}>
 					<Card variant="outlined">
-						<CardContent>
+						<CardContent sx={{ py: 0, '&:last-child': { pb: 0 } }}>
 							<FilterLayers query={query} setQuery={setQuery} />
 						</CardContent>
 					</Card>

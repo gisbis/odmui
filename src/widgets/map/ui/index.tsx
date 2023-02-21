@@ -3,12 +3,17 @@ import { useEffect, useRef, useState } from 'react'
 import { Box } from '@mui/material'
 
 import { useAppSelector } from 'shared/model'
+import { userSelectors } from 'entities/user'
 import { MapContextProvider, mapSelectors } from 'widgets/map'
 
 import { OnSingleClick, OnMoveend, OnLoadEnd } from './events'
 import { InitLayers } from './init-layers'
 import { MapControlsLayout, MapPageLayout } from './layouts'
-import { ObserveCrfLayerList } from './observe'
+import {
+	ObserveCrfLayers,
+	ObserveActiveIdLayers,
+	ObserveCrfValues,
+} from './observe'
 
 import type { Map } from 'ol'
 import { fromLonLat } from 'ol/proj'
@@ -21,6 +26,7 @@ interface IMapWidgetProps {
 
 export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 	const mapOnLoaded = useAppSelector(mapSelectors.selectMapOnLoadEnd)
+	const userLayerList = useAppSelector(userSelectors.selectUserLayerList)
 	const [map, setMap] = useState<Map | null>(null)
 	const mapRef = useRef<HTMLDivElement>(null)
 
@@ -59,12 +65,16 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 	return (
 		<>
 			<MapContextProvider value={{ map }}>
-				<InitLayers />
 				<OnLoadEnd />
 				<OnMoveend />
 
+				<InitLayers userLayerList={userLayerList} />
+
 				{mapOnLoaded && <OnSingleClick />}
-				{mapOnLoaded && <ObserveCrfLayerList />}
+
+				{mapOnLoaded && <ObserveActiveIdLayers />}
+				{mapOnLoaded && <ObserveCrfLayers />}
+				{mapOnLoaded && <ObserveCrfValues />}
 
 				<MapPageLayout>
 					<Box

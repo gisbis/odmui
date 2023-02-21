@@ -1,5 +1,4 @@
-import { InputAdornment, TextField, IconButton } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
+import { BaseInput } from 'shared/ui'
 
 interface IFilterLayersProps {
 	query: string
@@ -10,22 +9,10 @@ export const FilterLayers: React.FC<IFilterLayersProps> = ({
 	setQuery,
 }) => {
 	return (
-		<TextField
+		<BaseInput
 			value={query}
 			onChange={(evt) => setQuery(evt.target.value)}
-			fullWidth
-			variant="outlined"
-			placeholder="Search"
-			size="small"
-			InputProps={{
-				endAdornment: (
-					<InputAdornment position="end">
-						<IconButton edge="end">
-							<SearchIcon />
-						</IconButton>
-					</InputAdornment>
-				),
-			}}
+			placeholder="Search..."
 		/>
 	)
 }

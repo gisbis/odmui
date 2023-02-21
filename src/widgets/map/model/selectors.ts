@@ -23,3 +23,6 @@ export const selectIsOpenCRFFilterSearch = (state: RootState) =>
 
 export const selectCRFClassifierValues = (state: RootState) =>
 	state.map.crfClassifierValues
+
+export const selectDefaultBaseLayerId = (state: RootState) =>
+	state.map.defaultBaseLayerId

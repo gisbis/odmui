@@ -13,6 +13,8 @@ import { Layer } from 'ol/layer'
 import { Source } from 'ol/source'
 import LayerRenderer from 'ol/renderer/Layer'
 import { useEffect, useState } from 'react'
+import { useMapContext } from 'widgets/map/context'
+import { mapLib } from 'widgets/map/index'
 
 const cmpTheme = createTheme({
 	components: {
@@ -26,15 +28,27 @@ const cmpTheme = createTheme({
 	},
 })
 
-const defaultValue = 'yandex'
-
 interface ISwitchBaselLayerListProps {
 	layerList: Layer<Source, LayerRenderer<any>>[]
 }
 export const SwitchBaseLayers: React.FC<ISwitchBaselLayerListProps> = ({
 	layerList,
 }) => {
-	const [value, setValue] = useState(defaultValue)
+	const { map } = useMapContext()
+
+	const [value, setValue] = useState('')
+
+	useEffect(() => {
+		if (!map) {
+			return
+		}
+
+		const baseLayers = mapLib.getMapBaseLayers({ map })
+		const visibleLayer = baseLayers.find((i) => i.getVisible())
+		const idVisibleLayer = visibleLayer?.get('idLayer') || ''
+
+		setValue(idVisibleLayer)
+	}, [map])
 
 	useEffect(() => {
 		setVisibleLayer(value)
@@ -47,7 +61,7 @@ export const SwitchBaseLayers: React.FC<ISwitchBaselLayerListProps> = ({
 	const setVisibleLayer = (id: string) => {
 		layerList.forEach((layer) => {
 			layer.setVisible(
-				String(layer.get('id')).toLowerCase() === String(id).toLowerCase()
+				String(layer.get('idLayer')).toLowerCase() === String(id).toLowerCase()
 			)
 		})
 	}
@@ -65,8 +79,8 @@ export const SwitchBaseLayers: React.FC<ISwitchBaselLayerListProps> = ({
 				>
 					{layerList.map((layer) => (
 						<FormControlLabel
-							key={layer.get('id')}
-							value={layer.get('id')}
+							key={layer.get('idLayer')}
+							value={layer.get('idLayer')}
 							control={<Radio size="small" />}
 							label={layer.get('title')}
 						/>
