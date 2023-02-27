@@ -8,7 +8,6 @@ import { selectModel } from 'entities/select'
 import { userModel, useUser } from 'entities/user'
 
 export const withAppData = (Component: new () => React.Component) => () => {
-	console.log('with app data')
 	const dispatch = useAppDispatch()
 
 	const [status, setStatus] = useState<RequestStatus>(undefined)

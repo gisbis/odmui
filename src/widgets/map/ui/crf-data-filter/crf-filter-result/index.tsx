@@ -15,10 +15,6 @@ export const CRFFilterResult = () => {
 
 	const crfUserLayers = useAppSelector(mapSelectors.selectCRFUserLayerList)
 
-	useEffect(() => {
-		console.log({ crfClassifierValues })
-	}, [crfClassifierValues])
-
 	if (!crfClassifierValues.length) {
 		return null
 	}

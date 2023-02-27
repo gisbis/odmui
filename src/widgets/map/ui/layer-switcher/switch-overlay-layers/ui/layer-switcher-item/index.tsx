@@ -75,7 +75,7 @@ export const LayerSwitcherItem: React.FC<ILayerSwitcherItemProps> = ({
 						{title}
 					</Typography>
 
-					{!!layer.get('cfrCID') && (
+					{!!layer.get('classifierFilterRules') && (
 						<FilterListIcon fontSize="small" color="disabled" />
 					)}
 				</Stack>

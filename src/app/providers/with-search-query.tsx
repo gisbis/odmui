@@ -18,8 +18,6 @@ export const withSearchQuery = (Component: new () => React.Component) => () => {
 	const username = searchParams.get('username')
 	const logout = searchParams.get('logout')
 
-	console.log('with search params', { username, logout })
-
 	const [status, setStatus] = useState<RequestStatus>(undefined)
 	const [errorMsg, setErrorMsg] = useState<string | null>(null)
 

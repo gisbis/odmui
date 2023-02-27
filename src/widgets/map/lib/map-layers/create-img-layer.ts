@@ -27,6 +27,7 @@ export const createImgLayer = (
 			type: isBase ? 'base' : 'overlay',
 			autoload: layer.autoload,
 			group: layer.LayerGroup,
+			classifierFilterRules: layer.classifierFilterRules,
 		},
 		zIndex: layer.zindex,
 		visible: isBase ? false : !!layer.autoload,

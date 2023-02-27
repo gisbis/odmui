@@ -24,7 +24,7 @@ export const InitBaseLayers: React.FC<{ layerList: ILayer[] }> = ({
 		if (!map || !tileLayerList.length) {
 			return
 		}
-		console.log('render base tile')
+
 		const mapLayerList: TileLayer<TileWMS>[] = []
 
 		tileLayerList.forEach((layer) => {
@@ -47,7 +47,7 @@ export const InitBaseLayers: React.FC<{ layerList: ILayer[] }> = ({
 		if (!map || !imgLayerList.length) {
 			return
 		}
-		console.log('render base img')
+
 		const mapLayerList: ImageLayer<ImageWMS>[] = []
 
 		imgLayerList.forEach((layer) => {

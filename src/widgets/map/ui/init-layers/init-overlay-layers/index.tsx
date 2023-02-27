@@ -1,7 +1,8 @@
 import { useEffect, useMemo } from 'react'
 
-import { useMapContext, mapLib } from 'widgets/map'
 import type { ILayer } from 'shared/api/user'
+
+import { useMapContext, mapLib } from 'widgets/map'
 
 import TileLayer from 'ol/layer/Tile'
 import { ImageWMS, TileWMS } from 'ol/source'
@@ -24,7 +25,7 @@ export const InitOverlayLayers: React.FC<{ layerList: ILayer[] }> = ({
 		if (!map || !tileLayerList.length) {
 			return
 		}
-		console.log('render overlay tile')
+
 		const mapLayerList: TileLayer<TileWMS>[] = []
 
 		tileLayerList.forEach((layer) => {
@@ -47,7 +48,7 @@ export const InitOverlayLayers: React.FC<{ layerList: ILayer[] }> = ({
 		if (!map || !imgLayerList.length) {
 			return
 		}
-		console.log('render overlay img')
+
 		const mapLayerList: ImageLayer<ImageWMS>[] = []
 
 		imgLayerList.forEach((layer) => {

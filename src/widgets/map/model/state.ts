@@ -43,7 +43,7 @@ interface IMapState {
 }
 
 const initialState: IMapState = {
-	defaultBaseLayerId: 'google',
+	defaultBaseLayerId: 'osm',
 	activeIdLayerList: [],
 	crfUserLayerList: [],
 	crfClassifierValues: [],
