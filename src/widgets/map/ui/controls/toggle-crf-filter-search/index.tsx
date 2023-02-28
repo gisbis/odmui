@@ -50,7 +50,7 @@ export const ToggleCRFFilterSearch = () => {
 				timeout="auto"
 				unmountOnExit
 			>
-				<Stack direction="row" sx={{ width: 300, pl: 1.5 }}>
+				<Stack direction="row" sx={{ width: 250, pl: 1.5 }}>
 					<CRFFilterSearch />
 
 					<Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />

@@ -80,9 +80,9 @@ const cmpTheme = createTheme({
 
 export const RecordData: React.FC<{
 	record: ISelectRecord
-	handleGeomOnMapClick: () => void
+	geom: string
 	userFields: ISelectUserField[]
-}> = ({ record, userFields, handleGeomOnMapClick }) => {
+}> = ({ record, userFields, geom }) => {
 	const [expanded, setExpanded] = useState(false)
 
 	const handleExpandClick = () => {
@@ -132,7 +132,7 @@ export const RecordData: React.FC<{
 						<ShareIcon sx={{ fontSize: '16px' }} />
 					</IconButton>
 
-					<GeomOnMap handleGeomOnMapClick={handleGeomOnMapClick} />
+					<GeomOnMap geom={geom} />
 
 					<ExpandMore
 						expand={expanded}

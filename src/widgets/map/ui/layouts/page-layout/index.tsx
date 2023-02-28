@@ -4,6 +4,7 @@ import { Box } from '@mui/material'
 import { WithSidebarsLayout, FullScreenPageLayout } from 'shared/ui'
 import { useAppSelector } from 'shared/model'
 import { theme } from 'shared/theme'
+import { DEFAULT_SIDEBAR_WIDTH } from 'shared/config'
 
 import { mapSelectors } from 'widgets/map'
 
@@ -24,8 +25,14 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 
 		if (leftSidebarData.contentType === 'home-screen') {
 			return (
-				<Box sx={{ height: '100%', overflowY: 'auto' }}>
-					<Box sx={{ p: 3 }}>
+				<Box
+					sx={{
+						height: '100%',
+						overflowY: 'auto',
+						bgcolor: theme.palette.action.hover,
+					}}
+				>
+					<Box sx={{ p: 3, mt: '60px' }}>
 						<Bio />
 					</Box>
 				</Box>
@@ -43,7 +50,7 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 						flexDirection: 'column',
 					}}
 				>
-					<Box sx={{ flexGrow: 1, overflowY: 'auto', p: 3 }}>
+					<Box sx={{ flexGrow: 1, overflowY: 'auto', p: 3, mt: '60px' }}>
 						<MapData />
 					</Box>
 
@@ -95,8 +102,8 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 	}, [rightSidebarData.contentType, mapOnLoadEnd])
 
 	const props = {
-		leftSidebarWidth: 410,
-		rightSidebarWidth: 410,
+		leftSidebarWidth: DEFAULT_SIDEBAR_WIDTH,
+		rightSidebarWidth: DEFAULT_SIDEBAR_WIDTH,
 		leftSidebarComponent: renderLeftSidebarContent(),
 		rightSidebarComponent: renderRightSidebarContent(),
 		isOpenRightSidebar: rightSidebarData.isOpen,

@@ -63,3 +63,12 @@ export interface ISelectRecord extends Record<string, any> {
 	idSelect: string
 	isRelated: 0 | 1
 }
+
+export interface ISearchGlobalValue {
+	idSelect: number
+	nameSelect: string
+	id: number
+	meta: string
+	sys: number
+	idLayer: number
+}

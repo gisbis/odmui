@@ -21,6 +21,7 @@ import * as ol from 'ol'
 import VectorSource from 'ol/source/Vector'
 import { Geometry } from 'ol/geom'
 import VectorLayer from 'ol/layer/Vector'
+import { GlobalSearch } from 'widgets/map/ui/global-search'
 
 interface IMapWidgetProps {
 	coords: number[]
@@ -83,6 +84,8 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 				{mapOnLoaded && <ObserveActiveIdLayers />}
 				{mapOnLoaded && <ObserveCrfLayers />}
 				{mapOnLoaded && <ObserveCrfValues />}
+
+				<GlobalSearch />
 
 				<MapPageLayout>
 					<Box

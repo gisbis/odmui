@@ -18,16 +18,13 @@ export const MapControlsLayout = () => {
 				sx={{
 					position: 'absolute',
 					left: '1rem',
-					top: '1rem',
+					top: '7rem',
 					width: 'auto',
 					display: 'flex',
 					flexDirection: 'column',
-					rowGap: 1.5,
+					rowGap: 3,
 				}}
-			>
-				<ToggleLeftSidebar />
-				<Measure />
-			</Box>
+			></Box>
 
 			<Box
 				sx={{
@@ -38,7 +35,7 @@ export const MapControlsLayout = () => {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'end',
-					rowGap: 1.5,
+					rowGap: 3,
 				}}
 			>
 				<ToggleCRFFilterSearch />
@@ -54,12 +51,15 @@ export const MapControlsLayout = () => {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'end',
-					rowGap: 1.5,
+					rowGap: 3,
 				}}
 			>
 				<ToggleLayerSwitcher />
 
 				<ZoomGroup />
+
+				<Measure />
+
 				<ToggleSymbolList />
 			</Box>
 		</>

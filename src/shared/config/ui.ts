@@ -1,1 +1,1 @@
-export const DEFAULT_SIDEBAR_WIDTH = 450
+export const DEFAULT_SIDEBAR_WIDTH = 410
