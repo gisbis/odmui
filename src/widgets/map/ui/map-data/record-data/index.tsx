@@ -21,6 +21,7 @@ import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
 
 import { TableData } from '../table-data'
 import { RecordDocGallery } from '../record-doc-gallery'
+import { GeomOnMap } from '../geom-on-map'
 
 interface ExpandMoreProps extends IconButtonProps {
 	expand: boolean
@@ -79,8 +80,9 @@ const cmpTheme = createTheme({
 
 export const RecordData: React.FC<{
 	record: ISelectRecord
+	handleGeomOnMapClick: () => void
 	userFields: ISelectUserField[]
-}> = ({ record, userFields }) => {
+}> = ({ record, userFields, handleGeomOnMapClick }) => {
 	const [expanded, setExpanded] = useState(false)
 
 	const handleExpandClick = () => {
@@ -129,6 +131,8 @@ export const RecordData: React.FC<{
 					>
 						<ShareIcon sx={{ fontSize: '16px' }} />
 					</IconButton>
+
+					<GeomOnMap handleGeomOnMapClick={handleGeomOnMapClick} />
 
 					<ExpandMore
 						expand={expanded}

@@ -1,8 +1,11 @@
 import type { Map } from 'ol'
 import { createContext, useContext } from 'react'
 
+import VectorSource from 'ol/source/Vector'
+
 interface IMapContext {
 	map: Map | null
+	dataInfoSource: VectorSource
 }
 
 const MapContext = createContext<IMapContext | null>(null)

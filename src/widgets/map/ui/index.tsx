@@ -18,6 +18,9 @@ import {
 import type { Map } from 'ol'
 import { fromLonLat } from 'ol/proj'
 import * as ol from 'ol'
+import VectorSource from 'ol/source/Vector'
+import { Geometry } from 'ol/geom'
+import VectorLayer from 'ol/layer/Vector'
 
 interface IMapWidgetProps {
 	coords: number[]
@@ -27,8 +30,11 @@ interface IMapWidgetProps {
 export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 	const mapOnLoaded = useAppSelector(mapSelectors.selectMapOnLoadEnd)
 	const userLayerList = useAppSelector(userSelectors.selectUserLayerList)
+
 	const [map, setMap] = useState<Map | null>(null)
+
 	const mapRef = useRef<HTMLDivElement>(null)
+	const dataInfoSourceRef = useRef<VectorSource>(new VectorSource())
 
 	const center = fromLonLat(coords)
 
@@ -64,7 +70,9 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 
 	return (
 		<>
-			<MapContextProvider value={{ map }}>
+			<MapContextProvider
+				value={{ map, dataInfoSource: dataInfoSourceRef.current }}
+			>
 				<OnLoadEnd />
 				<OnMoveend />
 

@@ -35,6 +35,7 @@ export const createTileLayer = (
 	})
 
 	tileLayer.setZIndex(layer.zindex)
+	tileLayer.setVisible(isBase ? false : !!layer.autoload)
 
 	return tileLayer
 }
