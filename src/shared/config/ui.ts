@@ -1,1 +1,4 @@
 export const DEFAULT_SIDEBAR_WIDTH = 410
+export const CARD_BORDER_RADIUS = 14
+export const BUTTON_BORDER_RADIUS = 32
+export const INPUT_BORDER_RADIUS = 14

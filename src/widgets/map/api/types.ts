@@ -10,12 +10,12 @@ export interface IMapInfoRowData {
 
 interface ILayerInfo {
 	layerID: number
-	layerName: string
+	layerName?: string
 }
 
 interface ISelectInfo {
 	selectID: number
-	selectName: string
+	selectName?: string
 }
 
 export type MapModeType = 'measure' | 'edit' | undefined

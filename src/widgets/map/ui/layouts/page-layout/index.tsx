@@ -32,7 +32,7 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 						bgcolor: theme.palette.action.hover,
 					}}
 				>
-					<Box sx={{ p: 3, mt: '60px' }}>
+					<Box sx={{ py: 1.5, px: 1.5, mt: '80px' }}>
 						<Bio />
 					</Box>
 				</Box>
@@ -44,18 +44,12 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 				<Box
 					sx={{
 						height: '100%',
-						overflowY: 'hidden',
+						overflowY: 'auto',
 						bgcolor: theme.palette.action.hover,
-						display: 'flex',
-						flexDirection: 'column',
 					}}
 				>
-					<Box sx={{ flexGrow: 1, overflowY: 'auto', p: 3, mt: '60px' }}>
+					<Box sx={{ py: 1.5, px: 1.5, mt: '80px' }}>
 						<MapData />
-					</Box>
-
-					<Box sx={{ p: 3 }}>
-						<ClearData />
 					</Box>
 				</Box>
 			)
@@ -75,9 +69,6 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 					sx={{
 						height: '100%',
 						overflow: 'hidden',
-						display: 'flex',
-						flexDirection: 'column',
-						bgcolor: theme.palette.action.hover,
 					}}
 				>
 					<LayerSwitcherWrapper />

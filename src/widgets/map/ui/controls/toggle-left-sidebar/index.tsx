@@ -16,7 +16,7 @@ export const ToggleLeftSidebar: React.FC = () => {
 	}
 
 	return (
-		<MapIconButton onClick={handleOnClick} sx={{ boxShadow: 'none' }}>
+		<MapIconButton onClick={handleOnClick}>
 			{isOpen ? <ArrowLeftIcon /> : <ArrowRightIcon />}
 		</MapIconButton>
 	)

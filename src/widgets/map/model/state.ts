@@ -23,6 +23,13 @@ export interface ICRFClassifierValue extends IClassifierValue {
 	crfLF: string
 }
 
+export interface IInfoMapGeom {
+	sys: number
+	idLayer: number
+	idSelect: number
+	geom: string
+}
+
 interface IMapState {
 	defaultBaseLayerId: string
 	activeIdLayerList: number[]
@@ -38,6 +45,7 @@ interface IMapState {
 	rightSidebarContentType: RightSidebarContentType
 	mapInfoData: IMapInfoRowData[] | null
 	mapOnLoadEnd: boolean
+	infoMapGeoms: IInfoMapGeom[] | null
 	status: RequestStatus
 	errorMsg: string | null
 }
@@ -47,7 +55,7 @@ const initialState: IMapState = {
 	activeIdLayerList: [],
 	crfUserLayerList: [],
 	crfClassifierValues: [],
-	isOpenCrfFilterSearch: true,
+	isOpenCrfFilterSearch: false,
 	currenMapModeType: undefined,
 	currentCoords: undefined,
 	currentZoom: undefined,
@@ -57,6 +65,7 @@ const initialState: IMapState = {
 	rightSidebarContentType: 'layer-switcher',
 	mapOnLoadEnd: false,
 	mapInfoData: null,
+	infoMapGeoms: null,
 	errorMsg: null,
 	status: undefined,
 }
@@ -115,6 +124,9 @@ const state = createSlice({
 		},
 		setMapinfoData(state, action: PayloadAction<IMapInfoRowData[] | null>) {
 			state.mapInfoData = action.payload
+		},
+		setInfoMapGeoms(state, action: PayloadAction<IInfoMapGeom[] | null>) {
+			state.infoMapGeoms = action.payload
 		},
 		setErrorMsg(state, action: PayloadAction<string | null>) {
 			state.errorMsg = action.payload

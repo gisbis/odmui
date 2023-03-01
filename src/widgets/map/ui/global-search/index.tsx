@@ -1,12 +1,55 @@
-import { Box, Card, CardContent, Stack } from '@mui/material'
-
-import { DEFAULT_SIDEBAR_WIDTH } from 'shared/config'
-import { BaseInput } from 'shared/ui'
+import { Box, Stack } from '@mui/material'
 
 import Logo from 'shared/assets/images/gb_3.svg'
 
+import { DEFAULT_SIDEBAR_WIDTH } from 'shared/config'
+import { useAppDispatch, useAppSelector } from 'shared/model'
+
+import type { ISearchGlobalValue } from 'shared/api/select'
+
+import { mapActions, mapApi, mapSelectors } from 'widgets/map'
+
+import type { IMapInfoRowData } from 'widgets/map/api'
+
+import { GsAutocomplete } from './gs-autocomplete'
+
 import { ToggleLeftSidebar } from '../controls'
+import { ClearData } from '../map-data'
+
 export const GlobalSearch = () => {
+	const dispatch = useAppDispatch()
+	const infoData = useAppSelector(mapSelectors.selectMapInfoData)
+
+	const handleSearchChange = async (value: ISearchGlobalValue | null) => {
+		if (!value) {
+			return
+		}
+
+		try {
+			const response = await mapApi.fetchGeom({
+				idLayer: value.idLayer,
+				syss: value.sys,
+			})
+
+			const infoData: IMapInfoRowData = {
+				sys: value.sys,
+				id: value.id,
+				layerInfo: {
+					layerID: value.idLayer,
+				},
+				selectInfo: {
+					selectID: value.idSelect,
+				},
+				geom: response[0].geom,
+				metafield: value.meta,
+			}
+
+			dispatch(mapActions.setMapinfoData([infoData]))
+			dispatch(mapActions.setLeftSidebarContentType('map-data'))
+			dispatch(mapActions.setIsOpenLeftSidebar(true))
+		} catch (e) {}
+	}
+
 	return (
 		<Box
 			sx={{
@@ -19,22 +62,34 @@ export const GlobalSearch = () => {
 		>
 			<Box
 				sx={{
-					px: 3,
+					px: 1.5,
 					py: '1rem',
 				}}
 			>
-				<Card
-					variant="outlined"
-					sx={{ borderRadius: '14px', borderColor: 'transparent' }}
+				<Stack
+					direction="row"
+					alignItems="center"
+					sx={{
+						borderRadius: '14px',
+						bgcolor: 'white',
+						position: 'relative',
+						px: 0.5,
+					}}
 				>
-					<Stack direction="row" alignItems="center" sx={{ pr: 1 }}>
-						<img src={Logo} width={50} height={50} />
+					<img src={Logo} width={50} height={50} />
 
-						<BaseInput placeholder="Search..." />
+					<Box sx={{ flexGrow: 1 }}>
+						<GsAutocomplete handleSearchChange={handleSearchChange} />
+					</Box>
 
-						<ToggleLeftSidebar />
-					</Stack>
-				</Card>
+					{infoData !== null && <ClearData />}
+				</Stack>
+			</Box>
+
+			<Box
+				sx={{ position: 'absolute', right: '-64px', top: 'calc(1rem + 5px)' }}
+			>
+				<ToggleLeftSidebar />
 			</Box>
 		</Box>
 	)

@@ -80,10 +80,12 @@ const cmpTheme = createTheme({
 
 export const RecordData: React.FC<{
 	record: ISelectRecord
-	geom: string
+	handleGeomOnMapClick: () => void
+	geomOnMap: boolean
 	userFields: ISelectUserField[]
-}> = ({ record, userFields, geom }) => {
-	const [expanded, setExpanded] = useState(false)
+	isExpanded: boolean
+}> = ({ record, userFields, handleGeomOnMapClick, geomOnMap, isExpanded }) => {
+	const [expanded, setExpanded] = useState(isExpanded)
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded)
@@ -95,11 +97,7 @@ export const RecordData: React.FC<{
 
 	return (
 		<ThemeProvider theme={cmpTheme}>
-			<Card
-				variant="outlined"
-				onClick={handleExpandClick}
-				sx={{ boxShadow: expanded ? '0 2px 10px 0 rgba(0,0,0,0.2)' : 'none' }}
-			>
+			<Card variant="outlined" onClick={handleExpandClick}>
 				<CardHeader
 					title={
 						<Typography
@@ -132,7 +130,10 @@ export const RecordData: React.FC<{
 						<ShareIcon sx={{ fontSize: '16px' }} />
 					</IconButton>
 
-					<GeomOnMap geom={geom} />
+					<GeomOnMap
+						handleGeomOnMapClick={handleGeomOnMapClick}
+						geomOnMap={geomOnMap}
+					/>
 
 					<ExpandMore
 						expand={expanded}

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Autocomplete, Stack } from '@mui/material'
+import { useCallback, useState } from 'react'
+import { Autocomplete } from '@mui/material'
 
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
@@ -88,62 +88,60 @@ export const CRFFilterSearch = () => {
 	}
 
 	return (
-		<Stack direction="row" sx={{ width: '100%' }}>
-			<Autocomplete
-				id="map-data-filter-search"
-				sx={{ flexGrow: 1 }}
-				value={crfValues}
-				inputValue={inputValue}
-				options={options}
-				isOptionEqualToValue={(option, value) =>
-					option.key === value.key && option.value === value.value
-				}
-				groupBy={(option) => option.nameGroup}
-				getOptionLabel={(option) => option.value}
-				renderOption={(props, option, { inputValue }) => {
-					const matches = match(option.value, inputValue, { insideWords: true })
-					const parts = parse(option.value, matches)
+		<Autocomplete
+			id="map-data-filter-search"
+			sx={{ flexGrow: 1 }}
+			value={crfValues}
+			inputValue={inputValue}
+			options={options}
+			isOptionEqualToValue={(option, value) =>
+				option.key === value.key && option.value === value.value
+			}
+			groupBy={(option) => option.nameGroup}
+			getOptionLabel={(option) => option.value}
+			renderOption={(props, option, { inputValue }) => {
+				const matches = match(option.value, inputValue, { insideWords: true })
+				const parts = parse(option.value, matches)
 
-					return (
-						<li {...props}>
-							<div>
-								{parts.map((part, index) => (
-									<span
-										key={index}
-										style={{
-											color: part.highlight
-												? theme.palette.warning.dark
-												: 'inherit',
-										}}
-									>
-										{part.text}
-									</span>
-								))}
-							</div>
-						</li>
-					)
-				}}
-				renderTags={() => null}
-				renderInput={(params) => (
-					<div ref={params.InputProps.ref}>
-						<BaseInput {...params.inputProps} placeholder="filter data..." />
-					</div>
-				)}
-				multiple
-				disableCloseOnSelect={true}
-				disableClearable={true}
-				onOpen={getOptions}
-				onChange={(_, value) => {
-					dispatch(mapActions.setCRFClassifierValues(value))
-				}}
-				onInputChange={(event, value, reason) => {
-					if (event && event.type === 'blur') {
-						setInputValue('')
-					} else if (reason !== 'reset') {
-						setInputValue(value)
-					}
-				}}
-			/>
-		</Stack>
+				return (
+					<li {...props}>
+						<div>
+							{parts.map((part, index) => (
+								<span
+									key={index}
+									style={{
+										color: part.highlight
+											? theme.palette.warning.dark
+											: 'inherit',
+									}}
+								>
+									{part.text}
+								</span>
+							))}
+						</div>
+					</li>
+				)
+			}}
+			renderTags={() => null}
+			renderInput={(params) => (
+				<div ref={params.InputProps.ref}>
+					<BaseInput {...params.inputProps} placeholder="filter data..." />
+				</div>
+			)}
+			multiple
+			disableCloseOnSelect={true}
+			disableClearable={true}
+			onOpen={getOptions}
+			onChange={(_, value) => {
+				dispatch(mapActions.setCRFClassifierValues(value))
+			}}
+			onInputChange={(event, value, reason) => {
+				if (event && event.type === 'blur') {
+					setInputValue('')
+				} else if (reason !== 'reset') {
+					setInputValue(value)
+				}
+			}}
+		/>
 	)
 }

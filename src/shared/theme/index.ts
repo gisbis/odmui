@@ -1,11 +1,30 @@
 import { createTheme } from '@mui/material'
+import {
+	BUTTON_BORDER_RADIUS,
+	CARD_BORDER_RADIUS,
+	INPUT_BORDER_RADIUS,
+} from 'shared/config'
 
 export const theme = createTheme({
 	components: {
 		MuiButton: {
 			styleOverrides: {
 				root: {
-					borderRadius: '14px',
+					borderRadius: BUTTON_BORDER_RADIUS,
+				},
+			},
+		},
+		MuiCard: {
+			styleOverrides: {
+				root: {
+					borderRadius: CARD_BORDER_RADIUS,
+				},
+			},
+		},
+		MuiTextField: {
+			styleOverrides: {
+				root: {
+					borderRadius: INPUT_BORDER_RADIUS,
 				},
 			},
 		},

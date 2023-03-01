@@ -93,7 +93,7 @@ export const LayerSwitcherGroup: React.FC<ILayerSwitcherGroupProps> = ({
 						alignItems: 'center',
 					}}
 				>
-					<Typography variant="body1" fontWeight={500} fontSize={14}>
+					<Typography variant="body1" fontSize={14}>
 						{group.nameLayerGroup}
 					</Typography>
 

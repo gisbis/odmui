@@ -9,19 +9,20 @@ import { MapContextProvider, mapSelectors } from 'widgets/map'
 import { OnSingleClick, OnMoveend, OnLoadEnd } from './events'
 import { InitLayers } from './init-layers'
 import { MapControlsLayout, MapPageLayout } from './layouts'
+
 import {
 	ObserveCrfLayers,
 	ObserveActiveIdLayers,
 	ObserveCrfValues,
+	ObserveInfoMapGeoms,
 } from './observe'
+
+import { GlobalSearch } from './global-search'
 
 import type { Map } from 'ol'
 import { fromLonLat } from 'ol/proj'
 import * as ol from 'ol'
 import VectorSource from 'ol/source/Vector'
-import { Geometry } from 'ol/geom'
-import VectorLayer from 'ol/layer/Vector'
-import { GlobalSearch } from 'widgets/map/ui/global-search'
 
 interface IMapWidgetProps {
 	coords: number[]
@@ -84,6 +85,7 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({ coords, zoom }) => {
 				{mapOnLoaded && <ObserveActiveIdLayers />}
 				{mapOnLoaded && <ObserveCrfLayers />}
 				{mapOnLoaded && <ObserveCrfValues />}
+				{mapOnLoaded && <ObserveInfoMapGeoms />}
 
 				<GlobalSearch />
 

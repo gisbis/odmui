@@ -12,8 +12,13 @@ export const MapData = () => {
 
 	return (
 		<Stack spacing={1.5}>
-			{mapInfoData.map((dataRow) => (
-				<SelectData key={dataRow.id} dataRow={dataRow} />
+			{mapInfoData.map((dataRow, index) => (
+				<SelectData
+					key={dataRow.id}
+					dataRow={dataRow}
+					idx={index}
+					isExpanded={mapInfoData.length === 1}
+				/>
 			))}
 		</Stack>
 	)

@@ -1,49 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
-import {
-	Box,
-	Card,
-	CardContent,
-	CardHeader,
-	createTheme,
-	Stack,
-	ThemeProvider,
-} from '@mui/material'
+import { useMemo, useState } from 'react'
+import { Box, Divider, Stack, Typography } from '@mui/material'
 
 import { useMapContext, mapLib } from 'widgets/map'
 
 import { SwitchBaseLayers } from '../switch-base-layers'
 import { SwitchOverlayLayers } from '../switch-overlay-layers'
 import { FilterLayers } from '../filter-layers'
-import { UncheckAll } from '../uncheck-all'
-
-const cmpTheme = createTheme({
-	components: {
-		MuiCard: {
-			styleOverrides: {
-				root: {
-					borderRadius: '14px',
-					borderColor: 'transparent',
-				},
-			},
-		},
-		MuiCardHeader: {
-			styleOverrides: {
-				root: {
-					paddingBottom: 0,
-				},
-			},
-		},
-		MuiCardContent: {
-			styleOverrides: {
-				root: {
-					'&:last-child': {
-						paddingBottom: 15,
-					},
-				},
-			},
-		},
-	},
-})
 
 export const LayerSwitcherWrapper = () => {
 	const { map } = useMapContext()
@@ -79,36 +41,35 @@ export const LayerSwitcherWrapper = () => {
 	}, [baseLayerList, query])
 
 	return (
-		<>
-			<ThemeProvider theme={cmpTheme}>
-				<Box sx={{ px: 3, py: 1.5 }}>
-					<Card variant="outlined">
-						<CardContent sx={{ py: 0, '&:last-child': { pb: 0 } }}>
-							<FilterLayers query={query} setQuery={setQuery} />
-						</CardContent>
-					</Card>
+		<Box
+			sx={{
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'column',
+			}}
+		>
+			<Box sx={{ p: 3, pt: '1rem' }}>
+				<FilterLayers query={query} setQuery={setQuery} />
+			</Box>
+
+			<Stack spacing={3} sx={{ flexGrow: 1, overflowY: 'auto', px: 3, pb: 3 }}>
+				<Box>
+					<Typography variant="body2" color="text.secondary" mb={1.5}>
+						Подложки
+					</Typography>
+					<SwitchBaseLayers layerList={filteredBaseLayerList} />
 				</Box>
 
-				<Stack spacing={1.5} sx={{ flexGrow: 1, overflowY: 'auto', px: 3 }}>
-					<Card variant="outlined">
-						<CardHeader subheader="Подложка" />
-						<CardContent>
-							<SwitchBaseLayers layerList={filteredBaseLayerList} />
-						</CardContent>
-					</Card>
-
-					<Card variant="outlined">
-						<CardHeader subheader="Слои" action={<UncheckAll />} />
-
-						<CardContent>
-							<SwitchOverlayLayers
-								query={query}
-								layerList={filteredOverlayLayerList}
-							/>
-						</CardContent>
-					</Card>
-				</Stack>
-			</ThemeProvider>
-		</>
+				<Box>
+					<Typography variant="body2" color="text.secondary" mb={1.5}>
+						Слои
+					</Typography>
+					<SwitchOverlayLayers
+						query={query}
+						layerList={filteredOverlayLayerList}
+					/>
+				</Box>
+			</Stack>
+		</Box>
 	)
 }

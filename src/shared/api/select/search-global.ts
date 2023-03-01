@@ -7,13 +7,13 @@ export interface ISearchGlobalParams {
 	onMap: 0 | 1
 }
 
-export const searchGloabal = (
+export const searchGlobal = (
 	params: ISearchGlobalParams
 ): Promise<ISearchGlobalValue[]> =>
 	axiosInstance
 		.post('SearchGloabal', requestLib.encodePostParams(params))
 		.then((response) => response.data)
-		.then((response) => response.SearchGlobal)
+		.then((response) => response.SearchGloabal)
 		.then((response) => {
 			requestLib.throwResponseError(response)
 

@@ -1,4 +1,6 @@
 import { BaseInput } from 'shared/ui'
+import { theme } from 'shared/theme'
+import { INPUT_BORDER_RADIUS } from 'shared/config'
 
 interface IFilterLayersProps {
 	query: string
@@ -12,7 +14,14 @@ export const FilterLayers: React.FC<IFilterLayersProps> = ({
 		<BaseInput
 			value={query}
 			onChange={(evt) => setQuery(evt.target.value)}
-			placeholder="Search..."
+			placeholder="Filter layers..."
+			sx={{
+				bgcolor: theme.palette.action.hover,
+				borderRadius: `${INPUT_BORDER_RADIUS}px`,
+				padding: '1px 15px',
+				width: 'calc(100% - 30px)',
+				height: '50px',
+			}}
 		/>
 	)
 }
