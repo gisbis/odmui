@@ -35,7 +35,7 @@ export const TableData: React.FC<{
 						(field) =>
 							getValue(record, +field.id) !== '' && (
 								<StyledTableRow key={field.id}>
-									<TableCell width="40%" align="right">
+									<TableCell width="35%" align="right">
 										<Typography variant="body2" color="text.secondary">
 											{field.name}
 										</Typography>

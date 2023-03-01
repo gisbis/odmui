@@ -29,7 +29,6 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 					sx={{
 						height: '100%',
 						overflowY: 'auto',
-						bgcolor: theme.palette.action.hover,
 					}}
 				>
 					<Box sx={{ py: 1.5, px: 1.5, mt: '80px' }}>
@@ -45,10 +44,9 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 					sx={{
 						height: '100%',
 						overflowY: 'auto',
-						bgcolor: theme.palette.action.hover,
 					}}
 				>
-					<Box sx={{ py: 1.5, px: 1.5, mt: '80px' }}>
+					<Box sx={{ pb: 1.5, px: 1.5, mt: '80px' }}>
 						<MapData />
 					</Box>
 				</Box>

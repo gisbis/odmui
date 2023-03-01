@@ -11,15 +11,17 @@ import {
 	PopperProps,
 } from '@mui/material'
 
+import { theme } from 'shared/theme'
 import { BaseInput } from 'shared/ui'
 import { selectApi } from 'shared/api'
 import type { ISearchGlobalValue } from 'shared/api/select'
-import { theme } from 'shared/theme'
+import { INPUT_BORDER_RADIUS } from 'shared/config'
 
 const CustomPopper = (props: PopperProps) => {
 	return (
 		<Popper
 			sx={{
+				left: '-20px!important',
 				width: '368px!important',
 			}}
 			{...props}
@@ -86,7 +88,11 @@ export const GsAutocomplete: React.FC<{
 					<BaseInput
 						{...params.inputProps}
 						placeholder="Search..."
-						sx={{ height: '50px' }}
+						sx={{
+							height: '50px',
+							bgcolor: 'transparent',
+							borderRadius: INPUT_BORDER_RADIUS,
+						}}
 					/>
 				</div>
 			)}

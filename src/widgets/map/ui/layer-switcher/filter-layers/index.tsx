@@ -16,7 +16,7 @@ export const FilterLayers: React.FC<IFilterLayersProps> = ({
 			onChange={(evt) => setQuery(evt.target.value)}
 			placeholder="Filter layers..."
 			sx={{
-				bgcolor: theme.palette.action.hover,
+				bgcolor: theme.palette.grey['200'],
 				borderRadius: `${INPUT_BORDER_RADIUS}px`,
 				padding: '1px 15px',
 				width: 'calc(100% - 30px)',

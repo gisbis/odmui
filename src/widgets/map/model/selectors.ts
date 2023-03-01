@@ -15,6 +15,9 @@ export const selectLeftSidebarData = (state: RootState) => ({
 	contentType: state.map.leftSidebarContentType,
 })
 
+export const selectIsOpenLeftSidebar = (state: RootState) =>
+	state.map.isOpenLeftSidebar
+
 export const selectCRFUserLayerList = (state: RootState) =>
 	state.map.crfUserLayerList
 

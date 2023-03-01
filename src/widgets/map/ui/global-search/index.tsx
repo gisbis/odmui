@@ -4,6 +4,7 @@ import Logo from 'shared/assets/images/gb_3.svg'
 
 import { DEFAULT_SIDEBAR_WIDTH } from 'shared/config'
 import { useAppDispatch, useAppSelector } from 'shared/model'
+import { theme } from 'shared/theme'
 
 import type { ISearchGlobalValue } from 'shared/api/select'
 
@@ -19,6 +20,7 @@ import { ClearData } from '../map-data'
 export const GlobalSearch = () => {
 	const dispatch = useAppDispatch()
 	const infoData = useAppSelector(mapSelectors.selectMapInfoData)
+	const isOpenLeftSidebar = useAppSelector(mapSelectors.selectIsOpenLeftSidebar)
 
 	const handleSearchChange = async (value: ISearchGlobalValue | null) => {
 		if (!value) {
@@ -71,14 +73,17 @@ export const GlobalSearch = () => {
 					alignItems="center"
 					sx={{
 						borderRadius: '14px',
-						bgcolor: 'white',
+						backgroundColor: isOpenLeftSidebar
+							? theme.palette.grey['200']
+							: 'white',
 						position: 'relative',
 						px: 0.5,
+						transition: 'background-color .25s ease-out',
 					}}
 				>
 					<img src={Logo} width={50} height={50} />
 
-					<Box sx={{ flexGrow: 1 }}>
+					<Box sx={{ flexGrow: 1, position: 'relative' }}>
 						<GsAutocomplete handleSearchChange={handleSearchChange} />
 					</Box>
 

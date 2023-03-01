@@ -22,6 +22,7 @@ import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
 import { TableData } from '../table-data'
 import { RecordDocGallery } from '../record-doc-gallery'
 import { GeomOnMap } from '../geom-on-map'
+import { theme } from 'shared/theme'
 
 interface ExpandMoreProps extends IconButtonProps {
 	expand: boolean
@@ -46,18 +47,11 @@ const cmpTheme = createTheme({
 					cursor: 'pointer',
 					borderRadius: '14px',
 					backgroundColor: 'white',
-					borderColor: 'transparent',
+					borderColor: theme.palette.grey['300'],
 					transition: 'box-shadow .1s ease-out,background-color .1s ease-out',
 					'&:hover': {
 						boxShadow: '0 2px 10px 0 rgba(0,0,0,0.2)',
 					},
-				},
-			},
-		},
-		MuiCardHeader: {
-			styleOverrides: {
-				root: {
-					paddingBottom: 5,
 				},
 			},
 		},
@@ -126,6 +120,7 @@ export const RecordData: React.FC<{
 						size="small"
 						aria-label="share"
 						onClick={handleSharedClick}
+						sx={{ mr: 0.5 }}
 					>
 						<ShareIcon sx={{ fontSize: '16px' }} />
 					</IconButton>
