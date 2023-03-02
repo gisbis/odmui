@@ -35,7 +35,7 @@ export const MapControlsLayout = () => {
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'end',
-					rowGap: 3,
+					rowGap: 1,
 				}}
 			>
 				<ToggleCRFFilterSearch />

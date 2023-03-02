@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Skeleton, Stack } from '@mui/material'
 
 import { RequestStatus, useAppDispatch, useAppSelector } from 'shared/model'
-import { convertersLib } from 'shared/lib'
+import { browserApi, convertersLib } from 'shared/lib'
 
 import { selectApi } from 'shared/api'
 import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
@@ -90,6 +90,19 @@ export const SelectData: React.FC<{
 		)
 	}
 
+	const handleSharedClick = async () => {
+		const url = new URL(window.location.href)
+		url.searchParams.append('idLayer', String(layerInfo.layerID))
+		url.searchParams.append('idSelect', String(selectInfo.selectID))
+		url.searchParams.append('sys', String(sys))
+
+		try {
+			await browserApi.copyToClipboard(url.href)
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
 	if (status === undefined) {
 		return null
 	}
@@ -110,6 +123,7 @@ export const SelectData: React.FC<{
 					record={record}
 					userFields={userFields}
 					handleGeomOnMapClick={handleGeomOnMapClick}
+					handleSharedClick={handleSharedClick}
 					geomOnMap={geomOnMap}
 					isExpanded={isExpanded && recordList.length === 1}
 				/>

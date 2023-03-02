@@ -1,23 +1,72 @@
 import { useCallback, useEffect } from 'react'
 
 import { useAppSelector } from 'shared/model'
-import { parsersLib } from 'shared/lib'
 
 import { useMapContext, mapSelectors, mapLib } from 'widgets/map'
 
 import { Fill, Stroke, Style } from 'ol/style'
 import VectorLayer from 'ol/layer/Vector'
 import { GeoJSON } from 'ol/format'
+import CircleStyle from 'ol/style/Circle'
 
-const polygonStyle = new Style({
+const image = new CircleStyle({
+	radius: 5,
+	fill: new Fill({
+		color: 'rgba(0, 0, 255, 0.1)',
+	}),
 	stroke: new Stroke({
 		color: 'blue',
 		width: 3,
 	}),
-	fill: new Fill({
-		color: 'rgba(0, 0, 255, 0.1)',
-	}),
 })
+
+const styles = {
+	Point: new Style({
+		image: image,
+	}),
+	LineString: new Style({
+		stroke: new Stroke({
+			color: 'blue',
+			lineDash: [4],
+			width: 3,
+		}),
+	}),
+	MultiLineString: new Style({
+		stroke: new Stroke({
+			color: 'blue',
+			lineDash: [4],
+			width: 3,
+		}),
+	}),
+	MultiPoint: new Style({
+		image: image,
+	}),
+	MultiPolygon: new Style({
+		stroke: new Stroke({
+			color: 'blue',
+			lineDash: [4],
+			width: 3,
+		}),
+		fill: new Fill({
+			color: 'rgba(0, 0, 255, 0.1)',
+		}),
+	}),
+	Polygon: new Style({
+		stroke: new Stroke({
+			color: 'blue',
+			lineDash: [4],
+			width: 3,
+		}),
+		fill: new Fill({
+			color: 'rgba(0, 0, 255, 0.1)',
+		}),
+	}),
+}
+
+const styleFunction = function (feature: any) {
+	// @ts-ignore
+	return styles[feature.getGeometry().getType()]
+}
 
 export const ObserveInfoMapGeoms = () => {
 	const { map, dataInfoSource } = useMapContext()
@@ -66,7 +115,7 @@ export const ObserveInfoMapGeoms = () => {
 
 			const geomLayer = new VectorLayer({
 				source: dataInfoSource,
-				style: polygonStyle,
+				style: styleFunction,
 				zIndex: 100,
 				properties: {
 					type: 'data-info-layer',
@@ -74,28 +123,8 @@ export const ObserveInfoMapGeoms = () => {
 			})
 
 			map.addLayer(geomLayer)
-			const parsedGeom = parsersLib.xmlToJson(geom) as any
 
-			if (parsedGeom === null) {
-				throw new Error('error parse geom')
-			}
-
-			const surfaceMember =
-				parsedGeom?.['gml:MultiSurface']?.['gml:surfaceMember']
-
-			if (!surfaceMember) {
-				throw new Error('error get surfaceMember')
-			}
-
-			let features = []
-
-			if (Array.isArray(surfaceMember)) {
-				surfaceMember.forEach((i) => {
-					features.push(mapLib.getPolygonFeature(i?.['gml:Polygon']))
-				})
-			} else {
-				features.push(mapLib.getPolygonFeature(surfaceMember?.['gml:Polygon']))
-			}
+			const features = mapLib.getFeaturesFromGeom(geom)
 
 			const geojsonObject = {
 				type: 'FeatureCollection',
@@ -110,9 +139,10 @@ export const ObserveInfoMapGeoms = () => {
 
 			dataInfoSource.addFeatures(new GeoJSON().readFeatures(geojsonObject))
 
-			const polygon = dataInfoSource.getFeatures()[0]?.getGeometry()
+			const geometry = dataInfoSource.getFeatures()[0]?.getGeometry()
+
 			// @ts-ignore
-			polygon && map?.getView().fit(polygon, { padding: [170, 50, 30, 150] })
+			geometry && map?.getView().fit(geometry, { maxZoom: 22, duration: 500 })
 		} catch (e) {
 			console.log(e)
 		}

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { BackdropSpinner } from 'shared/ui'
 import { RequestStatus, useAppDispatch } from 'shared/model'
 import { i18nModel } from 'shared/i18n'
 import { convertersLib } from 'shared/lib'
@@ -47,7 +46,7 @@ export const withPreRenderData =
 		}
 
 		if (status === 'loading') {
-			return <BackdropSpinner />
+			return null
 		}
 
 		if (status === 'error') {

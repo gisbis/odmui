@@ -4,3 +4,6 @@ export const getSettingById = (idSetting: number) => (state: RootState) =>
 export const selectUserInfo = (state: RootState) => state.user.user
 
 export const selectUserLayerList = (state: RootState) => state.user.layerList
+
+export const selectUserMapBoundBox = (state: RootState) =>
+	state.user.user?.boundBox

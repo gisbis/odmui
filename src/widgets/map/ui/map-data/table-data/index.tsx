@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+	Box,
 	styled,
 	Table,
 	TableBody,
@@ -12,6 +13,9 @@ import {
 import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
 
 const StyledTableRow = styled(TableRow)(() => ({
+	td: {
+		padding: '10px 0',
+	},
 	'&:last-child td, &:last-child th': {
 		border: 0,
 	},
@@ -35,16 +39,20 @@ export const TableData: React.FC<{
 						(field) =>
 							getValue(record, +field.id) !== '' && (
 								<StyledTableRow key={field.id}>
-									<TableCell width="35%" align="right">
-										<Typography variant="body2" color="text.secondary">
-											{field.name}
-										</Typography>
-									</TableCell>
-
 									<TableCell align="left">
+										<Box>
+											<Typography
+												variant="body2"
+												fontWeight={700}
+												sx={{ marginBottom: '2.5px' }}
+											>
+												{field.name}
+											</Typography>
+										</Box>
+
 										<Typography
 											variant="body1"
-											fontSize={14}
+											color="text.secondary"
 											sx={{
 												wordBreak: 'break-word',
 												whiteSpace: 'pre-line',

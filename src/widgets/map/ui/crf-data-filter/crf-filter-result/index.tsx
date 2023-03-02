@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Box, Chip } from '@mui/material'
 
 import { useAppDispatch, useAppSelector } from 'shared/model'
@@ -39,7 +38,7 @@ export const CRFFilterResult = () => {
 		<Box
 			sx={{
 				width: '100%',
-				maxWidth: '326px',
+				maxWidth: '276px',
 				bgcolor: '#ffffff70',
 				backdropFilter: 'blur(5px)',
 				p: 1.5,

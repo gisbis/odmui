@@ -5,7 +5,7 @@ export interface IMapInfoRowData {
 	geom: string
 	id: number
 	color?: string
-	metafield: string
+	metafield?: string
 }
 
 interface ILayerInfo {

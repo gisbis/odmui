@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import {
-	Box,
 	Card,
 	CardActions,
 	CardContent,
@@ -14,15 +13,15 @@ import {
 	Typography,
 } from '@mui/material'
 
-import ShareIcon from '@mui/icons-material/Share'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
+import { theme } from 'shared/theme'
 
 import { TableData } from '../table-data'
 import { RecordDocGallery } from '../record-doc-gallery'
 import { GeomOnMap } from '../geom-on-map'
-import { theme } from 'shared/theme'
+import { CopyRecordUrl } from '../copy-record-url'
 
 interface ExpandMoreProps extends IconButtonProps {
 	expand: boolean
@@ -75,18 +74,22 @@ const cmpTheme = createTheme({
 export const RecordData: React.FC<{
 	record: ISelectRecord
 	handleGeomOnMapClick: () => void
+	handleSharedClick: () => void
 	geomOnMap: boolean
 	userFields: ISelectUserField[]
 	isExpanded: boolean
-}> = ({ record, userFields, handleGeomOnMapClick, geomOnMap, isExpanded }) => {
+}> = ({
+	record,
+	userFields,
+	handleGeomOnMapClick,
+	handleSharedClick,
+	geomOnMap,
+	isExpanded,
+}) => {
 	const [expanded, setExpanded] = useState(isExpanded)
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded)
-	}
-
-	const handleSharedClick = (evt: React.MouseEvent) => {
-		evt.stopPropagation()
 	}
 
 	return (
@@ -116,14 +119,7 @@ export const RecordData: React.FC<{
 				)}
 
 				<CardActions disableSpacing>
-					<IconButton
-						size="small"
-						aria-label="share"
-						onClick={handleSharedClick}
-						sx={{ mr: 0.5 }}
-					>
-						<ShareIcon sx={{ fontSize: '16px' }} />
-					</IconButton>
+					<CopyRecordUrl handleSharedClick={handleSharedClick} />
 
 					<GeomOnMap
 						handleGeomOnMapClick={handleGeomOnMapClick}

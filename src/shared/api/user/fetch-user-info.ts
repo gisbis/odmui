@@ -20,6 +20,7 @@ export const fetchUserInfo = (): Promise<{
 			const user = userData as IUser
 			user.groupId = convertersLib.anyToArray(userData?.groupId)
 			user.userRight = convertersLib.anyToArray(userData?.userRight?.row)
+			user.boundBox = userData?.boundBox?.Box
 
 			return { user, sessId: response?.sessionId || null }
 		})

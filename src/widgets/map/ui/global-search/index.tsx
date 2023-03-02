@@ -1,7 +1,5 @@
 import { Box, Stack } from '@mui/material'
 
-import Logo from 'shared/assets/images/gb_3.svg'
-
 import { DEFAULT_SIDEBAR_WIDTH } from 'shared/config'
 import { useAppDispatch, useAppSelector } from 'shared/model'
 import { theme } from 'shared/theme'
@@ -13,6 +11,7 @@ import { mapActions, mapApi, mapSelectors } from 'widgets/map'
 import type { IMapInfoRowData } from 'widgets/map/api'
 
 import { GsAutocomplete } from './gs-autocomplete'
+import { GsLogo } from './gs-logo'
 
 import { ToggleLeftSidebar } from '../controls'
 import { ClearData } from '../map-data'
@@ -71,17 +70,18 @@ export const GlobalSearch = () => {
 				<Stack
 					direction="row"
 					alignItems="center"
+					spacing={1}
 					sx={{
 						borderRadius: '14px',
 						backgroundColor: isOpenLeftSidebar
 							? theme.palette.grey['200']
 							: 'white',
 						position: 'relative',
-						px: 0.5,
+						px: 1,
 						transition: 'background-color .25s ease-out',
 					}}
 				>
-					<img src={Logo} width={50} height={50} />
+					<GsLogo />
 
 					<Box sx={{ flexGrow: 1, position: 'relative' }}>
 						<GsAutocomplete handleSearchChange={handleSearchChange} />

@@ -1,8 +1,6 @@
-import { Navigate, useNavigate } from 'react-router'
 import { useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
-import { BackdropSpinner } from 'shared/ui'
 import { useAppDispatch } from 'shared/model'
 import type { RequestStatus } from 'shared/model'
 
@@ -75,7 +73,7 @@ export const withSearchQuery = (Component: new () => React.Component) => () => {
 	}
 
 	if (status === 'loading') {
-		return <BackdropSpinner />
+		return null
 	}
 
 	if (status === 'error') {

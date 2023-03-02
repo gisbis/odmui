@@ -17,7 +17,7 @@ export const GeomOnMap: React.FC<{
 			onClick={handleClick}
 			color={geomOnMap ? 'primary' : 'default'}
 		>
-			<MyLocationIcon sx={{ fontSize: '16px' }} />
+			<MyLocationIcon fontSize="small" />
 		</IconButton>
 	)
 }

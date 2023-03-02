@@ -8,6 +8,22 @@ export interface IUser {
 	lng: string
 	timeZone: string
 	userRight: Array<IUserRight>
+	boundBox?: IUserBoundBox
+}
+
+export interface IUserBoundBox {
+	max: {
+		Coordinate: {
+			lat: number
+			lng: number
+		}
+	}
+	min: {
+		Coordinate: {
+			lat: number
+			lng: number
+		}
+	}
 }
 
 export interface IUserRight {
