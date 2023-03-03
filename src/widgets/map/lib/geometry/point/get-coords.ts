@@ -1,16 +1,19 @@
-import { Coordinate } from 'ol/coordinate'
 import { fromLonLat } from 'ol/proj'
 
 export const getCoords = (posList: string) => {
 	try {
 		const parsedPosList = posList.split(' ')
 
-		const coords: Coordinate = fromLonLat([
-			+parsedPosList[1],
-			+parsedPosList[0],
-		])
+		const centerCoords = [+parsedPosList[1], +parsedPosList[0]]
 
-		return coords
+		const coords = [
+			fromLonLat([centerCoords[0] + 0.00002, centerCoords[1] + 0.00001]),
+			fromLonLat([centerCoords[0] - 0.00002, centerCoords[1] + 0.00001]),
+			fromLonLat([centerCoords[0] - 0.00002, centerCoords[1] - 0.00001]),
+			fromLonLat([centerCoords[0] + 0.00002, centerCoords[1] - 0.00001]),
+		]
+
+		return [coords]
 	} catch (e) {
 		return []
 	}

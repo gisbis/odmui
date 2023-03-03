@@ -15,7 +15,7 @@ export const GeomOnMap: React.FC<{
 			size="small"
 			aria-label="share"
 			onClick={handleClick}
-			color={geomOnMap ? 'primary' : 'default'}
+			color={geomOnMap ? 'info' : 'default'}
 		>
 			<MyLocationIcon fontSize="small" />
 		</IconButton>

@@ -31,7 +31,7 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 						overflowY: 'auto',
 					}}
 				>
-					<Box sx={{ py: 1.5, px: 1.5, mt: '80px' }}>
+					<Box sx={{ py: 2, px: 2, mt: '80px' }}>
 						<Bio />
 					</Box>
 				</Box>
@@ -46,7 +46,7 @@ export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 						overflowY: 'auto',
 					}}
 				>
-					<Box sx={{ pb: 1.5, px: 1.5, mt: '80px' }}>
+					<Box sx={{ pb: 2, pt: 0.5, px: 2, mt: '80px' }}>
 						<MapData />
 					</Box>
 				</Box>

@@ -28,6 +28,20 @@ export const theme = createTheme({
 				},
 			},
 		},
+		MuiCheckbox: {
+			styleOverrides: {
+				root: {
+					padding: '2.5px 10px',
+				},
+			},
+		},
+		MuiRadio: {
+			styleOverrides: {
+				root: {
+					padding: '5px 10px',
+				},
+			},
+		},
 	},
 	palette: {
 		primary: {

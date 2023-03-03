@@ -22,7 +22,7 @@ const CustomPopper = (props: PopperProps) => {
 		<Popper
 			sx={{
 				left: '-20px!important',
-				width: '368px!important',
+				width: '358px!important',
 			}}
 			{...props}
 		/>

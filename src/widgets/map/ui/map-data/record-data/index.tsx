@@ -5,11 +5,9 @@ import {
 	CardContent,
 	CardHeader,
 	Collapse,
-	createTheme,
 	IconButton,
 	IconButtonProps,
 	styled,
-	ThemeProvider,
 	Typography,
 } from '@mui/material'
 
@@ -38,39 +36,6 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 	}),
 }))
 
-const cmpTheme = createTheme({
-	components: {
-		MuiCard: {
-			styleOverrides: {
-				root: {
-					cursor: 'pointer',
-					borderRadius: '14px',
-					backgroundColor: 'white',
-					borderColor: theme.palette.grey['300'],
-					transition: 'box-shadow .1s ease-out,background-color .1s ease-out',
-					'&:hover': {
-						boxShadow: '0 2px 10px 0 rgba(0,0,0,0.2)',
-					},
-				},
-			},
-		},
-		MuiCardContent: {
-			styleOverrides: {
-				root: {
-					'&:last-child': { paddingBottom: 15 },
-				},
-			},
-		},
-		MuiCardActions: {
-			styleOverrides: {
-				root: {
-					paddingTop: 0,
-				},
-			},
-		},
-	},
-})
-
 export const RecordData: React.FC<{
 	record: ISelectRecord
 	handleGeomOnMapClick: () => void
@@ -93,64 +58,76 @@ export const RecordData: React.FC<{
 	}
 
 	return (
-		<ThemeProvider theme={cmpTheme}>
-			<Card variant="outlined" onClick={handleExpandClick}>
-				<CardHeader
-					title={
-						<Typography
-							variant="body1"
-							fontWeight={500}
-							dangerouslySetInnerHTML={{ __html: record.metaName }}
-							sx={{
-								wordBreak: 'break-word',
-								whiteSpace: 'pre-wrap',
-							}}
-						/>
-					}
+		<Card
+			variant="outlined"
+			onClick={handleExpandClick}
+			sx={{
+				cursor: 'pointer',
+				borderRadius: '14px',
+				backgroundColor: 'white',
+				borderColor: theme.palette.grey['300'],
+				transition: 'box-shadow .1s ease-out,background-color .1s ease-out',
+				'&:hover': {
+					boxShadow: '0 2px 10px 0 rgba(0,0,0,0.2)',
+				},
+			}}
+		>
+			<CardHeader
+				title={
+					<Typography
+						variant="body1"
+						fontWeight={500}
+						dangerouslySetInnerHTML={{ __html: record.metaName }}
+						sx={{
+							wordBreak: 'break-word',
+							whiteSpace: 'pre-wrap',
+						}}
+					/>
+				}
+			/>
+
+			{!!record.doclist.length && (
+				<CardContent
+					onClick={(evt) => evt.stopPropagation()}
+					sx={{ cursor: 'default', '&:Last-child': { pb: 2 } }}
+				>
+					<RecordDocGallery documents={record.doclist} />
+				</CardContent>
+			)}
+
+			<CardActions disableSpacing sx={{ pt: 0 }}>
+				<CopyRecordUrl handleSharedClick={handleSharedClick} />
+
+				<GeomOnMap
+					handleGeomOnMapClick={handleGeomOnMapClick}
+					geomOnMap={geomOnMap}
 				/>
 
-				{!!record.doclist.length && (
-					<CardContent
-						onClick={(evt) => evt.stopPropagation()}
-						sx={{ cursor: 'default' }}
-					>
-						<RecordDocGallery documents={record.doclist} />
-					</CardContent>
-				)}
+				<ExpandMore
+					expand={expanded}
+					size="small"
+					onClick={handleExpandClick}
+					aria-expanded={expanded}
+					aria-label="show more"
+				>
+					<ExpandMoreIcon />
+				</ExpandMore>
+			</CardActions>
 
-				<CardActions disableSpacing>
-					<CopyRecordUrl handleSharedClick={handleSharedClick} />
-
-					<GeomOnMap
-						handleGeomOnMapClick={handleGeomOnMapClick}
-						geomOnMap={geomOnMap}
-					/>
-
-					<ExpandMore
-						expand={expanded}
-						size="small"
-						onClick={handleExpandClick}
-						aria-expanded={expanded}
-						aria-label="show more"
-					>
-						<ExpandMoreIcon />
-					</ExpandMore>
-				</CardActions>
-
-				<Collapse in={expanded} timeout="auto" unmountOnExit>
-					<CardContent
-						onClick={(evt) => evt.stopPropagation()}
-						sx={{
-							borderTop: 1,
-							borderTopStyle: 'dashed',
-							borderTopColor: 'divider',
-							cursor: 'default',
-						}}
-					>
-						<TableData record={record} userFields={userFields} />
-					</CardContent>
-				</Collapse>
-			</Card>
-		</ThemeProvider>
+			<Collapse in={expanded} timeout="auto" unmountOnExit>
+				<CardContent
+					onClick={(evt) => evt.stopPropagation()}
+					sx={{
+						borderTop: 1,
+						borderTopStyle: 'dashed',
+						borderTopColor: 'divider',
+						cursor: 'default',
+						'&:Last-child': { pb: 2 },
+					}}
+				>
+					<TableData record={record} userFields={userFields} />
+				</CardContent>
+			</Collapse>
+		</Card>
 	)
 }

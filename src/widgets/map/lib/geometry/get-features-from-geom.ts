@@ -24,8 +24,6 @@ export const getFeaturesFromGeom = (geomStr: string) => {
 			(key) => parsedGeom[GeomTypes[key]]
 		)
 
-		console.log({ geomTypeKey })
-
 		let features = []
 
 		switch (geomTypeKey) {
@@ -145,9 +143,46 @@ export const getPoint = (parsedGeom: Record<string, any>) => {
 }
 
 export const getMultiLine = (parsedGeom: Record<string, any>) => {
-	return []
+	const features = [] as any[]
+
+	try {
+		const lineStringMember =
+			parsedGeom?.['gml:MultiLineString']?.['gml:lineStringMember']
+
+		if (!lineStringMember) {
+			throw new Error('Invalid gml:lineStringMember')
+		}
+
+		if (Array.isArray(lineStringMember)) {
+			lineStringMember.forEach((i) => {
+				if (i?.['gml:LineString']) {
+					features.push(mapLib.lineGeom.getFeature(i['gml:LineString']))
+				}
+			})
+		} else if (lineStringMember?.['gml:LineString']) {
+			features.push(
+				mapLib.lineGeom.getFeature(lineStringMember['gml:LineString'])
+			)
+		}
+	} catch (e) {
+		console.log(e)
+	} finally {
+		return features
+	}
 }
 
 export const getLine = (parsedGeom: Record<string, any>) => {
-	return []
+	const features = [] as any[]
+
+	try {
+		if (!parsedGeom?.['gml:LineString']) {
+			throw new Error('Invalid gml:LineString')
+		}
+
+		features.push(mapLib.lineGeom.getFeature(parsedGeom['gml:LineString']))
+	} catch (e) {
+		console.log(e)
+	} finally {
+		return features
+	}
 }

@@ -1,11 +1,5 @@
 import { useMemo } from 'react'
-import {
-	Box,
-	createTheme,
-	Stack,
-	ThemeProvider,
-	Typography,
-} from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 
 import { LayerSwitcherGroup } from '../layer-switcher-group'
 
@@ -15,18 +9,6 @@ import type { IMapLayersGroup } from 'widgets/map/lib'
 import type { Layer } from 'ol/layer'
 import type { Source } from 'ol/source'
 import LayerRenderer from 'ol/renderer/Layer'
-
-const cmpTheme = createTheme({
-	components: {
-		MuiCheckbox: {
-			styleOverrides: {
-				root: {
-					padding: '2.5px 10px',
-				},
-			},
-		},
-	},
-})
 
 interface ISwitchOverlayLayersProps {
 	query: string
@@ -42,22 +24,20 @@ export const SwitchOverlayLayers: React.FC<ISwitchOverlayLayersProps> = ({
 	}, [layerList])
 
 	return (
-		<ThemeProvider theme={cmpTheme}>
-			<Box>
-				{!layerList.length ? (
-					<Typography variant="body2">Empty layer list</Typography>
-				) : (
-					<Stack spacing={1}>
-						{groupedLayerList.map((group) => (
-							<LayerSwitcherGroup
-								group={group}
-								key={group.idLayerGroup}
-								defaultGroupIsOpen={!!query}
-							/>
-						))}
-					</Stack>
-				)}
-			</Box>
-		</ThemeProvider>
+		<Box>
+			{!layerList.length ? (
+				<Typography variant="body2">Empty layer list</Typography>
+			) : (
+				<Stack spacing={1}>
+					{groupedLayerList.map((group) => (
+						<LayerSwitcherGroup
+							group={group}
+							key={group.idLayerGroup}
+							defaultGroupIsOpen={!!query}
+						/>
+					))}
+				</Stack>
+			)}
+		</Box>
 	)
 }

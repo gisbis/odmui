@@ -22,10 +22,11 @@ import {
 
 import { GlobalSearch } from './global-search'
 
+import * as ol from 'ol'
 import type { Map } from 'ol'
 import { fromLonLat } from 'ol/proj'
-import * as ol from 'ol'
 import VectorSource from 'ol/source/Vector'
+import { ScaleLine } from 'ol/control'
 
 interface IMapWidgetProps {
 	coords: number[]
@@ -88,6 +89,15 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({
 	useEffect(() => {
 		map?.getView().setCenter(center)
 	}, [center])
+
+	useEffect(() => {
+		if (!map) {
+			return
+		}
+
+		const scaleLine = new ScaleLine({ bar: true, text: true, minWidth: 150 })
+		map.addControl(scaleLine)
+	}, [map])
 
 	return (
 		<>

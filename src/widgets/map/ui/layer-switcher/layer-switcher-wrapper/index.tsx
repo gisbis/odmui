@@ -52,7 +52,7 @@ export const LayerSwitcherWrapper = () => {
 				<FilterLayers query={query} setQuery={setQuery} />
 			</Box>
 
-			<Stack spacing={3} sx={{ flexGrow: 1, overflowY: 'auto', px: 3, pb: 3 }}>
+			<Stack spacing={2} sx={{ flexGrow: 1, overflowY: 'auto', px: 3, pb: 3 }}>
 				<Box>
 					<Typography variant="body2" color="text.secondary" mb={1.5}>
 						Подложки

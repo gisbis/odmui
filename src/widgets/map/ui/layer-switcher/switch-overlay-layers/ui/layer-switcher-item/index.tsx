@@ -63,6 +63,7 @@ export const LayerSwitcherItem: React.FC<ILayerSwitcherItemProps> = ({
 					checked={checked}
 					onChange={handleChange}
 					disabled={disabled}
+					color="info"
 				/>
 			}
 			label={

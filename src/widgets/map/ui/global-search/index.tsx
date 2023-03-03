@@ -63,7 +63,7 @@ export const GlobalSearch = () => {
 		>
 			<Box
 				sx={{
-					px: 1.5,
+					px: 2,
 					py: '1rem',
 				}}
 			>

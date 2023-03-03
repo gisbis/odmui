@@ -81,6 +81,7 @@ export const LayerSwitcherGroup: React.FC<ILayerSwitcherGroupProps> = ({
 					indeterminate={indeterminate}
 					edge="start"
 					onChange={handleChange}
+					color="primary"
 				/>
 
 				<Box

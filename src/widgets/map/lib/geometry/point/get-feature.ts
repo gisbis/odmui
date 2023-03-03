@@ -7,7 +7,7 @@ export const getFeature = (gml: any) => {
 		return {
 			type: 'Feature',
 			geometry: {
-				type: 'Point',
+				type: 'Polygon',
 				coordinates: getCoords(posList),
 			},
 		}

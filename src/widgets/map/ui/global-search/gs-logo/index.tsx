@@ -7,8 +7,8 @@ export const GsLogo = () => {
 		<Box
 			sx={{
 				bgcolor: theme.palette.primary.main,
-				width: '42px',
-				height: '42px',
+				width: '40px',
+				height: '40px',
 				borderRadius: '50%',
 			}}
 		>
