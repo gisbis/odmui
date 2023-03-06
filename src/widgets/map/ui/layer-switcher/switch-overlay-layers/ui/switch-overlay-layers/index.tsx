@@ -3,6 +3,8 @@ import { Box, Stack, Typography } from '@mui/material'
 
 import { LayerSwitcherGroup } from '../layer-switcher-group'
 
+import { useTranslate } from 'shared/i18n'
+
 import { mapLib } from 'widgets/map'
 import type { IMapLayersGroup } from 'widgets/map/lib'
 
@@ -19,6 +21,7 @@ export const SwitchOverlayLayers: React.FC<ISwitchOverlayLayersProps> = ({
 	query,
 	layerList,
 }) => {
+	const { translate } = useTranslate()
 	const groupedLayerList: IMapLayersGroup[] = useMemo(() => {
 		return mapLib.groupedMapLayers(layerList)
 	}, [layerList])
@@ -26,7 +29,7 @@ export const SwitchOverlayLayers: React.FC<ISwitchOverlayLayersProps> = ({
 	return (
 		<Box>
 			{!layerList.length ? (
-				<Typography variant="body2">Empty layer list</Typography>
+				<Typography variant="body2">{translate('Empty layer list')}</Typography>
 			) : (
 				<Stack spacing={1}>
 					{groupedLayerList.map((group) => (

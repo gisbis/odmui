@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
 	FormControl,
 	FormControlLabel,
@@ -6,12 +7,13 @@ import {
 	Typography,
 } from '@mui/material'
 
+import { useTranslate } from 'shared/i18n'
+
+import { useMapContext, mapLib } from 'widgets/map'
+
 import { Layer } from 'ol/layer'
 import { Source } from 'ol/source'
 import LayerRenderer from 'ol/renderer/Layer'
-import { useEffect, useState } from 'react'
-import { useMapContext } from 'widgets/map/context'
-import { mapLib } from 'widgets/map/index'
 
 interface ISwitchBaselLayerListProps {
 	layerList: Layer<Source, LayerRenderer<any>>[]
@@ -19,6 +21,7 @@ interface ISwitchBaselLayerListProps {
 export const SwitchBaseLayers: React.FC<ISwitchBaselLayerListProps> = ({
 	layerList,
 }) => {
+	const { translate } = useTranslate()
 	const { map } = useMapContext()
 
 	const [value, setValue] = useState('')
@@ -52,7 +55,7 @@ export const SwitchBaseLayers: React.FC<ISwitchBaselLayerListProps> = ({
 	}
 
 	return !layerList.length ? (
-		<Typography variant="body2">Empty layer list</Typography>
+		<Typography variant="body2">{translate('Empty layer list')}</Typography>
 	) : (
 		<FormControl>
 			<RadioGroup

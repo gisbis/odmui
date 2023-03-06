@@ -7,3 +7,5 @@ export const selectUserLayerList = (state: RootState) => state.user.layerList
 
 export const selectUserMapBoundBox = (state: RootState) =>
 	state.user.user?.boundBox
+
+export const selectLayerList = (state: RootState) => state.user.layerList

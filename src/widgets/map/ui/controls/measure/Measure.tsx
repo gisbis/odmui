@@ -18,6 +18,7 @@ import CircleStyle from 'ol/style/Circle'
 import { Geometry, LineString, Point } from 'ol/geom'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
+import { useTranslate } from 'shared/i18n'
 
 let tipPoint: Geometry
 
@@ -198,12 +199,14 @@ function styleFunction(
 
 const vector = new VectorLayer({
 	source: source,
+	zIndex: 9999,
 	style: function (feature) {
 		return styleFunction(feature)
 	},
 })
 
 export const Measure = () => {
+	const { translate } = useTranslate()
 	const dispatch = useAppDispatch()
 
 	const { map } = useMapContext()
@@ -288,11 +291,11 @@ export const Measure = () => {
 		map.addLayer(vector)
 		map.addInteraction(modify)
 
-		const activeTip =
-			'Click to continue drawing the ' +
-			(measureMode === 'Polygon' ? 'polygon' : 'line')
+		const activeTip = `${translate(
+			'Click to continue drawing the'
+		)} ${translate(measureMode === 'Polygon' ? 'polygon' : 'line')}`
 
-		const idleTip = 'Click to start measuring'
+		const idleTip = translate('Click to start measuring')
 		let tip = idleTip
 
 		const draw = new Draw({

@@ -13,6 +13,7 @@ import { theme } from 'shared/theme'
 import { classifierApi } from 'shared/api'
 import { BaseInput } from 'shared/ui'
 import { useAppDispatch, useAppSelector } from 'shared/model'
+import { useTranslate } from 'shared/i18n'
 import { ICRFClassifierValue, mapActions, mapSelectors } from 'widgets/map'
 
 interface IFetchClassifierValuesData {
@@ -24,6 +25,7 @@ interface IFetchClassifierValuesData {
 }
 
 export const CRFFilterSearch = () => {
+	const { translate } = useTranslate()
 	const dispatch = useAppDispatch()
 
 	const crfValues = useAppSelector(mapSelectors.selectCRFClassifierValues)
@@ -125,7 +127,7 @@ export const CRFFilterSearch = () => {
 			renderTags={() => null}
 			renderInput={(params) => (
 				<div ref={params.InputProps.ref}>
-					<BaseInput {...params.inputProps} placeholder="filter data..." />
+					<BaseInput {...params.inputProps} placeholder={translate('Filter')} />
 				</div>
 			)}
 			multiple

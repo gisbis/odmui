@@ -15,6 +15,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
 import { theme } from 'shared/theme'
+import { parsersLib } from 'shared/lib'
 
 import { TableData } from '../table-data'
 import { RecordDocGallery } from '../record-doc-gallery'
@@ -77,7 +78,9 @@ export const RecordData: React.FC<{
 					<Typography
 						variant="body1"
 						fontWeight={500}
-						dangerouslySetInnerHTML={{ __html: record.metaName }}
+						dangerouslySetInnerHTML={{
+							__html: parsersLib.clearString(record.metaName),
+						}}
 						sx={{
 							wordBreak: 'break-word',
 							whiteSpace: 'pre-wrap',

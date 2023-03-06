@@ -7,6 +7,8 @@ import { browserApi, convertersLib } from 'shared/lib'
 import { selectApi } from 'shared/api'
 import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
 
+import { userSelectors } from 'entities/user'
+
 import { mapActions, mapSelectors } from 'widgets/map'
 import type { IMapInfoRowData } from 'widgets/map/api'
 
@@ -19,6 +21,7 @@ export const SelectData: React.FC<{
 }> = ({ dataRow, idx, isExpanded }) => {
 	const dispatch = useAppDispatch()
 	const geomsOnMap = useAppSelector(mapSelectors.selectInfoMapGeoms)
+	const userInfo = useAppSelector(userSelectors.selectUserInfo)
 
 	const { selectInfo, id, geom, layerInfo, sys } = dataRow
 
@@ -91,7 +94,9 @@ export const SelectData: React.FC<{
 	}
 
 	const handleSharedClick = async () => {
-		const url = new URL(window.location.href)
+		const url = new URL(window.location.host)
+		userInfo?.nameUser &&
+			url.searchParams.append('username1', userInfo.nameUser)
 		url.searchParams.append('idLayer', String(layerInfo.layerID))
 		url.searchParams.append('idSelect', String(selectInfo.selectID))
 		url.searchParams.append('sys', String(sys))

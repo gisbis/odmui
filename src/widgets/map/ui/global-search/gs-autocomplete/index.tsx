@@ -16,6 +16,7 @@ import { BaseInput } from 'shared/ui'
 import { selectApi } from 'shared/api'
 import type { ISearchGlobalValue } from 'shared/api/select'
 import { INPUT_BORDER_RADIUS } from 'shared/config'
+import { useTranslate } from 'shared/i18n'
 
 const CustomPopper = (props: PopperProps) => {
 	return (
@@ -44,6 +45,7 @@ const CustomPaper = (props: PaperProps) => {
 export const GsAutocomplete: React.FC<{
 	handleSearchChange: (value: ISearchGlobalValue | null) => void
 }> = ({ handleSearchChange }) => {
+	const { translate } = useTranslate()
 	const [open, setOpen] = useState(false)
 	const [options, setOptions] = useState<ISearchGlobalValue[]>([])
 	const [inputValue, setInputValue] = useState('')
@@ -87,7 +89,7 @@ export const GsAutocomplete: React.FC<{
 				<div ref={params.InputProps.ref}>
 					<BaseInput
 						{...params.inputProps}
-						placeholder="Search..."
+						placeholder={translate('Search')}
 						sx={{
 							height: '50px',
 							bgcolor: 'transparent',

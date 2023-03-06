@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
-import { Box, Divider, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 
+import { useTranslate } from 'shared/i18n'
 import { useMapContext, mapLib } from 'widgets/map'
 
 import { SwitchBaseLayers } from '../switch-base-layers'
@@ -8,6 +9,7 @@ import { SwitchOverlayLayers } from '../switch-overlay-layers'
 import { FilterLayers } from '../filter-layers'
 
 export const LayerSwitcherWrapper = () => {
+	const { translate } = useTranslate()
 	const { map } = useMapContext()
 
 	const [query, setQuery] = useState('')
@@ -55,14 +57,14 @@ export const LayerSwitcherWrapper = () => {
 			<Stack spacing={2} sx={{ flexGrow: 1, overflowY: 'auto', px: 3, pb: 3 }}>
 				<Box>
 					<Typography variant="body2" color="text.secondary" mb={1.5}>
-						Подложки
+						{translate('Base layers')}
 					</Typography>
 					<SwitchBaseLayers layerList={filteredBaseLayerList} />
 				</Box>
 
 				<Box>
 					<Typography variant="body2" color="text.secondary" mb={1.5}>
-						Слои
+						{translate('Overlay layers')}
 					</Typography>
 					<SwitchOverlayLayers
 						query={query}

@@ -18,6 +18,7 @@ import {
 	ObserveCrfValues,
 	ObserveInfoMapGeoms,
 	ObserveUriParams,
+	ObserveSidebarState,
 } from './observe'
 
 import { GlobalSearch } from './global-search'
@@ -116,6 +117,7 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({
 				{mapOnLoaded && <ObserveCrfValues />}
 				{mapOnLoaded && <ObserveInfoMapGeoms />}
 				{mapOnLoaded && <ObserveUriParams />}
+				{mapOnLoaded && <ObserveSidebarState />}
 
 				<GlobalSearch />
 

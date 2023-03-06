@@ -10,6 +10,9 @@ export const selectRightSidebarData = (state: RootState) => ({
 	contentType: state.map.rightSidebarContentType,
 })
 
+export const selectIsOpenRightSidebar = (state: RootState) =>
+	state.map.isOpenRightSidebar
+
 export const selectLeftSidebarData = (state: RootState) => ({
 	isOpen: state.map.isOpenLeftSidebar,
 	contentType: state.map.leftSidebarContentType,

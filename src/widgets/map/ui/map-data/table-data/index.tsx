@@ -11,6 +11,7 @@ import {
 } from '@mui/material'
 
 import type { ISelectRecord, ISelectUserField } from 'shared/api/select'
+import { parsersLib } from 'shared/lib'
 
 const StyledTableRow = styled(TableRow)(() => ({
 	td: {
@@ -29,7 +30,7 @@ export const TableData: React.FC<{
 	userFields: ISelectUserField[]
 }> = ({ record, userFields }) => {
 	const getValue = (record: ISelectRecord, idField: number) =>
-		record['f' + idField] || ''
+		parsersLib.clearString(record['f' + idField] || '')
 
 	return (
 		<TableContainer>

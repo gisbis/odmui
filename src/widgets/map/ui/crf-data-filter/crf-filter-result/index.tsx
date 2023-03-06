@@ -1,11 +1,19 @@
-import { Box, Chip } from '@mui/material'
+import { useMemo } from 'react'
+import { Box, Button, Chip, IconButton, Stack, Typography } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 
 import { useAppDispatch, useAppSelector } from 'shared/model'
-
+import type { IGroupedArrayPart } from 'shared/model'
 import { mapSelectors, mapActions } from 'widgets/map'
 import type { ICRFClassifierValue } from 'widgets/map'
 
+import { groupLib } from 'shared/lib'
+import { useLayer } from 'entities/user'
+import { useTranslate } from 'shared/i18n'
+
 export const CRFFilterResult = () => {
+	const { getLayerById } = useLayer()
+	const { translate } = useTranslate()
 	const dispatch = useAppDispatch()
 
 	const crfClassifierValues = useAppSelector(
@@ -14,11 +22,15 @@ export const CRFFilterResult = () => {
 
 	const crfUserLayers = useAppSelector(mapSelectors.selectCRFUserLayerList)
 
-	if (!crfClassifierValues.length) {
+	const groupedCRFValues = useMemo(() => {
+		return groupLib.groupByKey('idLayer', crfClassifierValues)
+	}, [crfClassifierValues])
+
+	if (!groupedCRFValues.length || !crfUserLayers.length) {
 		return null
 	}
 
-	const handleDelete = (value: ICRFClassifierValue) => {
+	const handleDeleteValue = (value: ICRFClassifierValue) => {
 		dispatch(
 			mapActions.setCRFClassifierValues(
 				crfClassifierValues.filter((i) => i.key !== value.key)
@@ -26,16 +38,54 @@ export const CRFFilterResult = () => {
 		)
 	}
 
-	const handleClear = () => {
+	const handleDeleteAll = () => {
 		dispatch(mapActions.setCRFClassifierValues([]))
 	}
 
-	if (!crfClassifierValues.length || !crfUserLayers.length) {
-		return null
+	const renderGroup = (i: IGroupedArrayPart) => {
+		return (
+			<Box key={i.keyValue}>
+				<Stack
+					direction="row"
+					justifyContent="space-between"
+					alignItems="center"
+					mb={0.5}
+				>
+					<Typography variant="body2" fontWeight={500}>
+						{getLayerById(i.keyValue)?.name || translate('untitled')}
+					</Typography>
+
+					<IconButton color="error" size="small" onClick={handleDeleteAll}>
+						<CloseIcon fontSize="small" />
+					</IconButton>
+				</Stack>
+
+				<Box
+					sx={{
+						display: 'flex',
+						flexWrap: 'wrap',
+						columnGap: 0.5,
+						rowGap: 0.5,
+						mb: 1.5,
+					}}
+				>
+					{i.items.map((x) => (
+						<Chip
+							variant="filled"
+							color="primary"
+							key={x.key}
+							label={x.value}
+							onDelete={() => handleDeleteValue(x.key)}
+						/>
+					))}
+				</Box>
+			</Box>
+		)
 	}
 
 	return (
-		<Box
+		<Stack
+			spacing={1}
 			sx={{
 				width: '100%',
 				maxWidth: '276px',
@@ -46,33 +96,7 @@ export const CRFFilterResult = () => {
 				boxShadow: '0 2px 6px 0 rgba(0,0,0,0.2)',
 			}}
 		>
-			<Box
-				sx={{
-					display: 'flex',
-					flexWrap: 'wrap',
-					columnGap: 0.5,
-					rowGap: 0.5,
-					mb: 1.5,
-				}}
-			>
-				{crfClassifierValues.map((i) => (
-					<Chip
-						variant="filled"
-						color="primary"
-						key={i.key}
-						label={i.value}
-						onDelete={() => handleDelete(i)}
-					/>
-				))}
-			</Box>
-
-			<Chip
-				label="clear all"
-				variant="filled"
-				color="error"
-				key="crf-chip-delete"
-				onClick={handleClear}
-			/>
-		</Box>
+			{groupedCRFValues.map((i) => renderGroup(i))}
+		</Stack>
 	)
 }

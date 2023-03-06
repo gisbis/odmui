@@ -3,7 +3,6 @@ import { Box } from '@mui/material'
 
 import { WithSidebarsLayout, FullScreenPageLayout } from 'shared/ui'
 import { useAppSelector } from 'shared/model'
-import { theme } from 'shared/theme'
 import { DEFAULT_SIDEBAR_WIDTH } from 'shared/config'
 
 import { mapSelectors } from 'widgets/map'
@@ -11,7 +10,7 @@ import { mapSelectors } from 'widgets/map'
 import { LayerSwitcherWrapper } from '../../layer-switcher'
 import { SymbolsWrapper } from '../../symbols'
 import { Bio } from '../../bio'
-import { ClearData, MapData } from '../../map-data'
+import { MapData } from '../../map-data'
 
 export const MapPageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 	const rightSidebarData = useAppSelector(mapSelectors.selectRightSidebarData)
