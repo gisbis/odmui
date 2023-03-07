@@ -31,7 +31,6 @@ export interface IInfoMapGeom {
 }
 
 interface IMapState {
-	defaultBaseLayerId: string
 	activeIdLayerList: number[]
 	crfUserLayerList: ILayer[]
 	crfClassifierValues: ICRFClassifierValue[]
@@ -51,7 +50,6 @@ interface IMapState {
 }
 
 const initialState: IMapState = {
-	defaultBaseLayerId: 'osm',
 	activeIdLayerList: [],
 	crfUserLayerList: [],
 	crfClassifierValues: [],
@@ -74,9 +72,6 @@ const state = createSlice({
 	name: 'map',
 	initialState,
 	reducers: {
-		setDefaultBaseLayerId(state, action: PayloadAction<string>) {
-			state.defaultBaseLayerId = action.payload
-		},
 		setCurrentZoom(state, action: PayloadAction<number | undefined>) {
 			state.currentZoom = action.payload
 		},

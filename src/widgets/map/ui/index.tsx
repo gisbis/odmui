@@ -55,7 +55,7 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({
 			return
 		}
 
-		const minExtent = boundBox
+		/*const minExtent = boundBox
 			? fromLonLat([boundBox.min.Coordinate.lng, boundBox.min.Coordinate.lat])
 			: []
 
@@ -63,13 +63,13 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({
 			? fromLonLat([boundBox.max.Coordinate.lng, boundBox.max.Coordinate.lat])
 			: []
 
-		const extent = [...minExtent, ...maxExtent]
+		const extent = [...minExtent, ...maxExtent]*/
 
 		const mapObject = new ol.Map({
 			view: new ol.View({
 				center,
 				zoom,
-				extent,
+				//extent,
 			}),
 			layers: [],
 			controls: [],

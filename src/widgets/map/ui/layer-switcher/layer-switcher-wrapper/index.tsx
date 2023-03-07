@@ -27,7 +27,7 @@ export const LayerSwitcherWrapper = () => {
 			return []
 		}
 
-		return mapLib.getMapBaseLayers({ map }).filter((i) => !i.get('autoload'))
+		return mapLib.getMapBaseLayers({ map })
 	}, [map])
 
 	const filteredOverlayLayerList = useMemo(() => {

@@ -107,6 +107,7 @@ export interface ILayer {
 	noLegend?: number
 	legendStyle?: string
 	classifierFilterRules: ILayerClassifierFilterRule[]
+	isHistorical?: 0 | 1
 }
 
 export interface ILayerGroup {

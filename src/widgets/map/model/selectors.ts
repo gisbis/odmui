@@ -30,8 +30,5 @@ export const selectIsOpenCRFFilterSearch = (state: RootState) =>
 export const selectCRFClassifierValues = (state: RootState) =>
 	state.map.crfClassifierValues
 
-export const selectDefaultBaseLayerId = (state: RootState) =>
-	state.map.defaultBaseLayerId
-
 export const selectInfoMapGeoms = (state: RootState) => state.map.infoMapGeoms
 export const selectMapInfoData = (state: RootState) => state.map.mapInfoData

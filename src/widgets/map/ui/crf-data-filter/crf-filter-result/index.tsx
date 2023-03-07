@@ -30,7 +30,7 @@ export const CRFFilterResult = () => {
 		return null
 	}
 
-	const handleDeleteValue = (value: ICRFClassifierValue) => {
+	const handleDeleteValue = (value: Record<string, any>) => {
 		dispatch(
 			mapActions.setCRFClassifierValues(
 				crfClassifierValues.filter((i) => i.key !== value.key)
@@ -38,8 +38,12 @@ export const CRFFilterResult = () => {
 		)
 	}
 
-	const handleDeleteAll = () => {
-		dispatch(mapActions.setCRFClassifierValues([]))
+	const handleDeleteLayerValues = (idLayer: number) => {
+		dispatch(
+			mapActions.setCRFClassifierValues(
+				crfClassifierValues.filter((i) => i.idLayer !== idLayer)
+			)
+		)
 	}
 
 	const renderGroup = (i: IGroupedArrayPart) => {
@@ -55,7 +59,11 @@ export const CRFFilterResult = () => {
 						{getLayerById(i.keyValue)?.name || translate('untitled')}
 					</Typography>
 
-					<IconButton color="error" size="small" onClick={handleDeleteAll}>
+					<IconButton
+						color="error"
+						size="small"
+						onClick={() => handleDeleteLayerValues(i.keyValue)}
+					>
 						<CloseIcon fontSize="small" />
 					</IconButton>
 				</Stack>
@@ -75,7 +83,7 @@ export const CRFFilterResult = () => {
 							color="primary"
 							key={x.key}
 							label={x.value}
-							onDelete={() => handleDeleteValue(x.key)}
+							onDelete={() => handleDeleteValue(x)}
 						/>
 					))}
 				</Box>

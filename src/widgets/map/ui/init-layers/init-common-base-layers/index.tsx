@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { mapSelectors, useMapContext } from 'widgets/map'
+import { useMapContext } from 'widgets/map'
 import { useAppSelector } from 'shared/model'
+import { userSelectors } from 'entities/user'
 
 import TileLayer from 'ol/layer/Tile'
 import { OSM, XYZ } from 'ol/source'
@@ -8,9 +9,8 @@ import { OSM, XYZ } from 'ol/source'
 export const InitCommonBaseLayers = () => {
 	const { map } = useMapContext()
 
-	const defaultBaseLayerId = useAppSelector(
-		mapSelectors.selectDefaultBaseLayerId
-	)
+	const defaultBaseLayerId =
+		useAppSelector(userSelectors.getSettingById(21)) || 'osm'
 
 	useEffect(() => {
 		if (!map) {

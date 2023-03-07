@@ -33,6 +33,7 @@ export const createImgLayer = (
 		visible: isBase ? false : !!layer.autoload,
 		minZoom: layer.minzoom,
 		maxZoom: layer.maxzoom,
+		opacity: layer.transparent,
 	})
 
 	imgLayer.setZIndex(layer.zindex)

@@ -19,6 +19,7 @@ export const createTileLayer = (
 			},
 			serverType: 'geoserver',
 			transition: 0,
+			crossOrigin: 'anonymous',
 		}),
 		properties: {
 			title: layer.name,
@@ -32,6 +33,7 @@ export const createTileLayer = (
 		visible: isBase ? false : !!layer.autoload,
 		minZoom: layer.minzoom,
 		maxZoom: layer.maxzoom,
+		opacity: layer.transparent,
 	})
 
 	tileLayer.setZIndex(layer.zindex)

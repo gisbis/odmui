@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
 	Card,
 	CardActions,
@@ -54,6 +54,14 @@ export const RecordData: React.FC<{
 }) => {
 	const [expanded, setExpanded] = useState(isExpanded)
 
+	const galleryDocList = useMemo(() => {
+		return record.doclist.filter((i) => !!i.hasPreview)
+	}, [record])
+
+	const listDocList = useMemo(() => {
+		return record.doclist.filter((i) => !i.hasPreview)
+	}, [record])
+
 	const handleExpandClick = () => {
 		setExpanded(!expanded)
 	}
@@ -89,12 +97,12 @@ export const RecordData: React.FC<{
 				}
 			/>
 
-			{!!record.doclist.length && (
+			{!!galleryDocList.length && (
 				<CardContent
 					onClick={(evt) => evt.stopPropagation()}
 					sx={{ cursor: 'default', '&:Last-child': { pb: 2 } }}
 				>
-					<RecordDocGallery documents={record.doclist} />
+					<RecordDocGallery documents={galleryDocList} />
 				</CardContent>
 			)}
 
@@ -130,6 +138,15 @@ export const RecordData: React.FC<{
 				>
 					<TableData record={record} userFields={userFields} />
 				</CardContent>
+
+				{!!listDocList.length && (
+					<CardContent
+						onClick={(evt) => evt.stopPropagation()}
+						sx={{ cursor: 'default', '&:Last-child': { pb: 2 } }}
+					>
+						{listDocList.length}
+					</CardContent>
+				)}
 			</Collapse>
 		</Card>
 	)
