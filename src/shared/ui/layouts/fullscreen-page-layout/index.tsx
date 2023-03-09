@@ -7,6 +7,7 @@ export const FullScreenPageLayout: React.FC<PropsWithChildren> = ({
 	return (
 		<Box
 			sx={{
+				position: 'relative',
 				height: '100%',
 				overflow: 'hidden',
 			}}

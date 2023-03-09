@@ -2,15 +2,17 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Box } from '@mui/material'
 
+import { useIsBreakpoint } from 'shared/hooks'
+import { BREAKPOINTS } from 'shared/config'
 import type { IUserBoundBox } from 'shared/api/user'
-
 import { useAppSelector } from 'shared/model'
+
 import { userSelectors } from 'entities/user'
+
 import { MapContextProvider, mapSelectors } from 'widgets/map'
 
 import { OnSingleClick, OnMoveend, OnLoadEnd } from './events'
 import { InitLayers } from './init-layers'
-import { MapControlsLayout, MapPageLayout } from './layouts'
 
 import {
 	ObserveCrfLayers,
@@ -21,7 +23,12 @@ import {
 	ObserveSidebarState,
 } from './observe'
 
-import { GlobalSearch } from './global-search'
+import {
+	DesktopPageLayout,
+	DesktopControlsLayout,
+	MobilePageLayout,
+	MobileControlsLayout,
+} from './layouts'
 
 import * as ol from 'ol'
 import type { Map } from 'ol'
@@ -40,6 +47,7 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({
 	zoom,
 	boundBox,
 }) => {
+	const isMobile = useIsBreakpoint(BREAKPOINTS.mobile)
 	const mapOnLoaded = useAppSelector(mapSelectors.selectMapOnLoadEnd)
 	const userLayerList = useAppSelector(userSelectors.selectUserLayerList)
 
@@ -55,15 +63,9 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({
 			return
 		}
 
-		/*const minExtent = boundBox
-			? fromLonLat([boundBox.min.Coordinate.lng, boundBox.min.Coordinate.lat])
-			: []
-
-		const maxExtent = boundBox
-			? fromLonLat([boundBox.max.Coordinate.lng, boundBox.max.Coordinate.lat])
-			: []
-
-		const extent = [...minExtent, ...maxExtent]*/
+		if (map) {
+			setMap(null)
+		}
 
 		const mapObject = new ol.Map({
 			view: new ol.View({
@@ -81,7 +83,7 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({
 		setMap(mapObject)
 
 		return () => mapObject.setTarget(undefined)
-	}, [boundBox])
+	}, [isMobile])
 
 	useEffect(() => {
 		map?.getView().setZoom(zoom)
@@ -119,21 +121,35 @@ export const MapWidget: React.FC<IMapWidgetProps> = ({
 				{mapOnLoaded && <ObserveUriParams />}
 				{mapOnLoaded && <ObserveSidebarState />}
 
-				<GlobalSearch />
+				{isMobile ? (
+					<MobilePageLayout>
+						<Box
+							ref={mapRef}
+							sx={{
+								height: '100%',
+								width: '100%',
+								minHeight: 500,
+								position: 'relative',
+							}}
+						/>
 
-				<MapPageLayout>
-					<Box
-						ref={mapRef}
-						sx={{
-							height: '100%',
-							width: '100%',
-							minHeight: 500,
-							position: 'relative',
-						}}
-					>
-						{mapOnLoaded && <MapControlsLayout />}
-					</Box>
-				</MapPageLayout>
+						{mapOnLoaded && <MobileControlsLayout />}
+					</MobilePageLayout>
+				) : (
+					<DesktopPageLayout>
+						<Box
+							ref={mapRef}
+							sx={{
+								height: '100%',
+								width: '100%',
+								minHeight: 500,
+								position: 'relative',
+							}}
+						/>
+
+						{mapOnLoaded && <DesktopControlsLayout />}
+					</DesktopPageLayout>
+				)}
 			</MapContextProvider>
 		</>
 	)

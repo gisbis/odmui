@@ -48,7 +48,7 @@ export const SymbolsWrapper = () => {
 	}, [symbolLayers])
 
 	return (
-		<Stack spacing={5} sx={{ p: 3 }}>
+		<Stack spacing={5}>
 			{groupedSymbolLayers.map((group) => (
 				<SymbolsGroup key={group.idLayerGroup} group={group} />
 			))}

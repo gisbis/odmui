@@ -1,2 +1,2 @@
-export * from './controls-layout'
-export * from './page-layout'
+export * from './desktop'
+export * from './mobile'

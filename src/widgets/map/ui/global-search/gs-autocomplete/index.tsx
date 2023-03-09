@@ -122,7 +122,7 @@ export const GsAutocomplete: React.FC<{
 				)
 			}}
 			disableClearable={false}
-			disablePortal={true}
+			disablePortal={false}
 			PopperComponent={CustomPopper}
 			PaperComponent={CustomPaper}
 			onOpen={() => {

@@ -48,13 +48,14 @@ export const LayerSwitcherWrapper = () => {
 				height: '100%',
 				display: 'flex',
 				flexDirection: 'column',
+				rowGap: 2,
 			}}
 		>
-			<Box sx={{ p: 3, pt: '1rem' }}>
+			<Box>
 				<FilterLayers query={query} setQuery={setQuery} />
 			</Box>
 
-			<Stack spacing={2} sx={{ flexGrow: 1, overflowY: 'auto', px: 3, pb: 3 }}>
+			<Stack spacing={2} sx={{ flexGrow: 1, overflowY: 'auto' }}>
 				<Box>
 					<Typography variant="body2" color="text.secondary" mb={1.5}>
 						{translate('Base layers')}

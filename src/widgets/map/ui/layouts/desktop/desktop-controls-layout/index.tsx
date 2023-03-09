@@ -3,15 +3,14 @@ import { Box } from '@mui/material'
 import {
 	Measure,
 	ToggleLayerSwitcher,
-	ToggleLeftSidebar,
 	ToggleCRFFilterSearch,
 	ToggleSymbolList,
 	ZoomGroup,
-} from '../../controls'
+} from '../../../controls'
 
-import { CRFFilterResult } from '../../crf-data-filter'
+import { CRFFilterResult } from '../../../crf-data-filter'
 
-export const MapControlsLayout = () => {
+export const DesktopControlsLayout = () => {
 	return (
 		<>
 			<Box
@@ -55,11 +54,8 @@ export const MapControlsLayout = () => {
 				}}
 			>
 				<ToggleLayerSwitcher />
-
 				<ZoomGroup />
-
 				<Measure />
-
 				<ToggleSymbolList />
 			</Box>
 		</>

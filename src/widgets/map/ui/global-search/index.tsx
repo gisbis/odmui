@@ -1,19 +1,15 @@
 import { Box, Stack } from '@mui/material'
 
-import { DEFAULT_SIDEBAR_WIDTH } from 'shared/config'
 import { useAppDispatch, useAppSelector } from 'shared/model'
 import { theme } from 'shared/theme'
-
 import type { ISearchGlobalValue } from 'shared/api/select'
 
 import { mapActions, mapApi, mapSelectors } from 'widgets/map'
-
 import type { IMapInfoRowData } from 'widgets/map/api'
 
 import { GsAutocomplete } from './gs-autocomplete'
 import { GsLogo } from './gs-logo'
 
-import { ToggleLeftSidebar } from '../controls'
 import { ClearData } from '../map-data'
 
 export const GlobalSearch = () => {
@@ -52,50 +48,27 @@ export const GlobalSearch = () => {
 	}
 
 	return (
-		<Box
+		<Stack
+			direction="row"
+			alignItems="center"
+			spacing={1}
 			sx={{
-				position: 'absolute',
-				top: '0',
-				left: '0',
-				zIndex: 2,
-				width: DEFAULT_SIDEBAR_WIDTH,
+				borderRadius: '14px',
+				backgroundColor: isOpenLeftSidebar
+					? theme.palette.grey['200']
+					: 'white',
+				position: 'relative',
+				px: 1,
+				transition: 'background-color .25s ease-out',
 			}}
 		>
-			<Box
-				sx={{
-					px: 2,
-					py: '1rem',
-				}}
-			>
-				<Stack
-					direction="row"
-					alignItems="center"
-					spacing={1}
-					sx={{
-						borderRadius: '14px',
-						backgroundColor: isOpenLeftSidebar
-							? theme.palette.grey['200']
-							: 'white',
-						position: 'relative',
-						px: 1,
-						transition: 'background-color .25s ease-out',
-					}}
-				>
-					<GsLogo />
+			<GsLogo />
 
-					<Box sx={{ flexGrow: 1, position: 'relative' }}>
-						<GsAutocomplete handleSearchChange={handleSearchChange} />
-					</Box>
-
-					{infoData !== null && <ClearData />}
-				</Stack>
+			<Box sx={{ flexGrow: 1, position: 'relative' }}>
+				<GsAutocomplete handleSearchChange={handleSearchChange} />
 			</Box>
 
-			<Box
-				sx={{ position: 'absolute', right: '-64px', top: 'calc(1rem + 5px)' }}
-			>
-				<ToggleLeftSidebar />
-			</Box>
-		</Box>
+			{infoData !== null && <ClearData />}
+		</Stack>
 	)
 }

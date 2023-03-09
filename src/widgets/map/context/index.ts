@@ -1,6 +1,6 @@
-import type { Map } from 'ol'
 import { createContext, useContext } from 'react'
 
+import type { Map } from 'ol'
 import VectorSource from 'ol/source/Vector'
 
 interface IMapContext {
