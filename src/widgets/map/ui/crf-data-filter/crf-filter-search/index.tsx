@@ -133,7 +133,13 @@ export const CRFFilterSearch = () => {
 			multiple
 			disableCloseOnSelect={true}
 			disableClearable={true}
-			onOpen={getOptions}
+			onOpen={async () => {
+				dispatch(mapActions.setIsOpenCRFFilterList(true))
+				await getOptions()
+			}}
+			onClose={() => {
+				dispatch(mapActions.setIsOpenCRFFilterList(false))
+			}}
 			onChange={(_, value) => {
 				dispatch(mapActions.setCRFClassifierValues(value))
 			}}
@@ -144,6 +150,7 @@ export const CRFFilterSearch = () => {
 					setInputValue(value)
 				}
 			}}
+			disablePortal={true}
 		/>
 	)
 }

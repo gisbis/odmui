@@ -17,6 +17,9 @@ import { selectApi } from 'shared/api'
 import type { ISearchGlobalValue } from 'shared/api/select'
 import { INPUT_BORDER_RADIUS } from 'shared/config'
 import { useTranslate } from 'shared/i18n'
+import { useAppDispatch } from 'shared/model'
+
+import { mapActions } from 'widgets/map'
 
 const CustomPopper = (props: PopperProps) => {
 	return (
@@ -46,6 +49,7 @@ export const GsAutocomplete: React.FC<{
 	handleSearchChange: (value: ISearchGlobalValue | null) => void
 }> = ({ handleSearchChange }) => {
 	const { translate } = useTranslate()
+	const dispatch = useAppDispatch()
 	const [open, setOpen] = useState(false)
 	const [options, setOptions] = useState<ISearchGlobalValue[]>([])
 	const [inputValue, setInputValue] = useState('')
@@ -122,14 +126,16 @@ export const GsAutocomplete: React.FC<{
 				)
 			}}
 			disableClearable={false}
-			disablePortal={false}
+			disablePortal={true}
 			PopperComponent={CustomPopper}
 			PaperComponent={CustomPaper}
 			onOpen={() => {
 				setOpen(true)
+				dispatch(mapActions.setIsOpenGlobalSearchList(true))
 			}}
 			onClose={() => {
 				setOpen(false)
+				dispatch(mapActions.setIsOpenGlobalSearchList(false))
 			}}
 			onInputChange={(event, value, reason) => {
 				if (event && event.type === 'blur') {

@@ -2,10 +2,12 @@ import { Box } from '@mui/material'
 
 import {
 	Measure,
-	ToggleLayerSwitcher,
-	ToggleCRFFilterSearch,
-	ToggleSymbolList,
+	MobileToggleLayerSwitcher,
+	MobileToggleCRFFilterSearch,
+	MobileToggleSymbolList,
+	ToggleLeftSidebar,
 } from '../../../controls'
+import { CurrentLocation } from 'widgets/map/ui/controls/current-location'
 
 export const MobileControlsLayout = () => {
 	return (
@@ -21,7 +23,8 @@ export const MobileControlsLayout = () => {
 					rowGap: 2,
 				}}
 			>
-				<Measure />
+				<ToggleLeftSidebar />
+				<CurrentLocation />
 			</Box>
 
 			<Box
@@ -36,10 +39,13 @@ export const MobileControlsLayout = () => {
 					rowGap: 2,
 				}}
 			>
-				<ToggleCRFFilterSearch />
+				<MobileToggleCRFFilterSearch />
 
-				<ToggleLayerSwitcher />
-				<ToggleSymbolList />
+				<MobileToggleLayerSwitcher />
+
+				<Measure />
+
+				<MobileToggleSymbolList />
 			</Box>
 		</>
 	)

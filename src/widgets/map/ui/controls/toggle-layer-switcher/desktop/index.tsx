@@ -1,32 +1,34 @@
 import { useCallback } from 'react'
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark'
 
-import { useAppDispatch, useAppSelector } from 'shared/model'
+import LayersIcon from '@mui/icons-material/Layers'
+
+import { useAppSelector, useAppDispatch } from 'shared/model'
 import { MapIconButton } from 'shared/ui'
 
 import { mapActions } from 'widgets/map'
 
-export const ToggleSymbolList = () => {
+export const DesktopToggleLayerSwitcher = () => {
 	const dispatch = useAppDispatch()
 
 	const isOpen = useAppSelector((state) => state.map.isOpenRightSidebar)
+
 	const contentType = useAppSelector(
 		(state) => state.map.rightSidebarContentType
 	)
 
 	const handleOnClick = useCallback(() => {
-		if (contentType === 'symbol-list') {
+		if (contentType === 'layer-switcher') {
 			dispatch(mapActions.setIsOpenRightSidebar(!isOpen))
 			return
 		}
 
-		dispatch(mapActions.setRightSidebarContentType('symbol-list'))
+		dispatch(mapActions.setRightSidebarContentType('layer-switcher'))
 		dispatch(mapActions.setIsOpenRightSidebar(true))
 	}, [isOpen, contentType])
 
 	return (
 		<MapIconButton onClick={handleOnClick}>
-			<QuestionMarkIcon />
+			<LayersIcon />
 		</MapIconButton>
 	)
 }

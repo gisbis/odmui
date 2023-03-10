@@ -13,7 +13,7 @@ import {
 import { useAppDispatch, useAppSelector } from 'shared/model'
 import { mapSelectors, mapActions } from 'widgets/map'
 
-import { CRFFilterSearch } from '../../crf-data-filter'
+import { CRFFilterSearch } from '../../../crf-data-filter'
 
 const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
 	'&:hover': {
@@ -32,7 +32,7 @@ const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
 	height: 40,
 }))
 
-export const ToggleCRFFilterSearch = () => {
+export const DesktopToggleCRFFilterSearch = () => {
 	const dispatch = useAppDispatch()
 
 	const crfUserLayers = useAppSelector(mapSelectors.selectCRFUserLayerList)

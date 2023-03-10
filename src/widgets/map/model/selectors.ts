@@ -18,6 +18,11 @@ export const selectLeftSidebarData = (state: RootState) => ({
 	contentType: state.map.leftSidebarContentType,
 })
 
+export const selectDrawerData = (state: RootState) => ({
+	isOpen: state.map.isOpenDrawer,
+	contentType: state.map.drawerContentType,
+})
+
 export const selectIsOpenLeftSidebar = (state: RootState) =>
 	state.map.isOpenLeftSidebar
 
@@ -32,3 +37,9 @@ export const selectCRFClassifierValues = (state: RootState) =>
 
 export const selectInfoMapGeoms = (state: RootState) => state.map.infoMapGeoms
 export const selectMapInfoData = (state: RootState) => state.map.mapInfoData
+
+export const selectIsOpenGlobalSearchList = (state: RootState) =>
+	state.map.isOpenGlobalSearchList
+
+export const selectIsOpenCRFFilterList = (state: RootState) =>
+	state.map.isOpenCRFFilterList

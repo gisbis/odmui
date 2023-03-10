@@ -1,4 +1,5 @@
 import { PropsWithChildren, useCallback } from 'react'
+
 import { Box, SwipeableDrawerProps } from '@mui/material'
 
 import { FullScreenPageLayout, WithDrawerPageLayout } from 'shared/ui'
@@ -11,17 +12,25 @@ import { SymbolsWrapper } from '../../../symbols'
 import { Bio } from '../../../bio'
 import { MapData } from '../../../map-data'
 import { GlobalSearch } from 'widgets/map/ui/global-search'
+import {
+	CRFFilterResult,
+	CRFFilterSearch,
+} from 'widgets/map/ui/crf-data-filter'
 
 export const MobilePageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 	const dispatch = useAppDispatch()
 
-	const rightSidebarData = useAppSelector(mapSelectors.selectRightSidebarData)
-	const leftSidebarData = useAppSelector(mapSelectors.selectLeftSidebarData)
+	const drawerData = useAppSelector(mapSelectors.selectDrawerData)
 	const mapOnLoadEnd = useAppSelector(mapSelectors.selectMapOnLoadEnd)
+	const isOpenGlobalSearchList = useAppSelector(
+		mapSelectors.selectIsOpenGlobalSearchList
+	)
+	const isOpenCRFFilerList = useAppSelector(
+		mapSelectors.selectIsOpenCRFFilterList
+	)
 
 	const handleClose = () => {
-		dispatch(mapActions.setIsOpenLeftSidebar(false))
-		dispatch(mapActions.setIsOpenRightSidebar(false))
+		dispatch(mapActions.setIsOpenDrawer(false))
 	}
 
 	const handleOpen = () => {}
@@ -31,58 +40,61 @@ export const MobilePageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 			return null
 		}
 
+		const isGlobalSearch =
+			drawerData.contentType === 'map-data' ||
+			drawerData.contentType === 'home-screen'
+
 		return (
 			<Box
 				sx={{
 					height: '100%',
-					overflowY: 'auto',
-					p: 2,
+					overflowY: 'hidden',
+					display: 'flex',
+					flexDirection: 'column',
+					py: 2,
+					rowGap: 1.5,
 				}}
 			>
-				{leftSidebarData.isOpen && (
-					<Box>
-						<Box mb={1.5}>
-							<GlobalSearch />
-						</Box>
-
-						{renderLeftSidebarContent()}
+				{isGlobalSearch && (
+					<Box px={2}>
+						<GlobalSearch />
 					</Box>
 				)}
 
-				{rightSidebarData.isOpen && renderRightSidebarContent()}
+				<Box sx={{ flexGrow: 1, overflowY: 'auto', px: 2 }}>
+					{drawerData.contentType === 'home-screen' && <Bio />}
+					{drawerData.contentType === 'map-data' && <MapData />}
+					{drawerData.contentType === 'symbol-list' && <SymbolsWrapper />}
+					{drawerData.contentType === 'layer-switcher' && (
+						<LayerSwitcherWrapper />
+					)}
+					{drawerData.contentType === 'crf-filter' && (
+						<>
+							<Box>
+								<CRFFilterSearch />
+							</Box>
+
+							<Box>
+								<CRFFilterResult />
+							</Box>
+						</>
+					)}
+				</Box>
 			</Box>
 		)
-	}, [mapOnLoadEnd, rightSidebarData, leftSidebarData])
-
-	const renderLeftSidebarContent = () => {
-		if (leftSidebarData.contentType === 'home-screen') {
-			return <Bio />
-		}
-
-		if (leftSidebarData.contentType === 'map-data') {
-			return <MapData />
-		}
-
-		return null
-	}
-
-	const renderRightSidebarContent = () => {
-		if (rightSidebarData.contentType === 'layer-switcher') {
-			return <LayerSwitcherWrapper />
-		}
-
-		if (rightSidebarData.contentType === 'symbol-list') {
-			return <SymbolsWrapper />
-		}
-
-		return null
-	}
+	}, [mapOnLoadEnd, drawerData.contentType])
 
 	const drawerProps: SwipeableDrawerProps = {
-		open: rightSidebarData.isOpen || leftSidebarData.isOpen,
+		open: drawerData.isOpen,
 		anchor: 'bottom',
 		onClose: handleClose,
 		onOpen: handleOpen,
+		PaperProps: {
+			sx: {
+				maxHeight: '80vh',
+				height: isOpenGlobalSearchList || isOpenCRFFilerList ? '80vh' : 'auto',
+			},
+		},
 	}
 
 	return (

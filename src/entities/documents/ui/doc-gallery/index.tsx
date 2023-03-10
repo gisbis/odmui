@@ -15,6 +15,8 @@ import type { IAttachment } from 'shared/api/documents'
 import { DOC_PREVIEW_URL } from 'shared/config'
 import { DocSwiper } from 'entities/documents/ui/doc-swiper'
 
+import './index.scss'
+
 interface IDocGalleryProps {
 	documents: IAttachment[]
 	viewMode: 'swiper'

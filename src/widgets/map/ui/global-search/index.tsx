@@ -57,6 +57,9 @@ export const GlobalSearch = () => {
 				backgroundColor: isOpenLeftSidebar
 					? theme.palette.grey['200']
 					: 'white',
+				borderWidth: '1px',
+				borderStyle: 'solid',
+				borderColor: theme.palette.grey['200'],
 				position: 'relative',
 				px: 1,
 				transition: 'background-color .25s ease-out',

@@ -70,6 +70,9 @@ export const OnSingleClick = () => {
 				.finally(() => {
 					dispatch(mapActions.setLeftSidebarContentType('map-data'))
 					dispatch(mapActions.setIsOpenLeftSidebar(true))
+
+					dispatch(mapActions.setDrawerContentType('map-data'))
+					dispatch(mapActions.setIsOpenDrawer(true))
 				})
 		},
 		[map, currentZoom]

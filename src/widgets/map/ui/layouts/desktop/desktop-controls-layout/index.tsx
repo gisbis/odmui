@@ -1,16 +1,23 @@
 import { Box } from '@mui/material'
 
+import { useAppSelector } from 'shared/model'
+import { mapSelectors } from 'widgets/map/model'
+
 import {
 	Measure,
-	ToggleLayerSwitcher,
-	ToggleCRFFilterSearch,
-	ToggleSymbolList,
+	DesktopToggleCRFFilterSearch,
+	DesktopToggleSymbolList,
 	ZoomGroup,
+	DesktopToggleLayerSwitcher,
 } from '../../../controls'
 
 import { CRFFilterResult } from '../../../crf-data-filter'
 
 export const DesktopControlsLayout = () => {
+	const isOpenCRFFilter = useAppSelector(
+		mapSelectors.selectIsOpenCRFFilterSearch
+	)
+
 	return (
 		<>
 			<Box
@@ -37,8 +44,22 @@ export const DesktopControlsLayout = () => {
 					rowGap: 1,
 				}}
 			>
-				<ToggleCRFFilterSearch />
-				<CRFFilterResult />
+				<DesktopToggleCRFFilterSearch />
+
+				{isOpenCRFFilter && (
+					<Box
+						sx={{
+							maxWidth: '276px',
+							bgcolor: '#ffffff70',
+							backdropFilter: 'blur(5px)',
+							p: 1.5,
+							borderRadius: '14px',
+							boxShadow: '0 2px 6px 0 rgba(0,0,0,0.2)',
+						}}
+					>
+						<CRFFilterResult />
+					</Box>
+				)}
 			</Box>
 
 			<Box
@@ -53,10 +74,10 @@ export const DesktopControlsLayout = () => {
 					rowGap: 3,
 				}}
 			>
-				<ToggleLayerSwitcher />
+				<DesktopToggleLayerSwitcher />
 				<ZoomGroup />
 				<Measure />
-				<ToggleSymbolList />
+				<DesktopToggleSymbolList />
 			</Box>
 		</>
 	)

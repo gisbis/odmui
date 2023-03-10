@@ -1,11 +1,10 @@
 import { useMemo } from 'react'
-import { Box, Button, Chip, IconButton, Stack, Typography } from '@mui/material'
+import { Box, Chip, IconButton, Stack, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
 import { useAppDispatch, useAppSelector } from 'shared/model'
 import type { IGroupedArrayPart } from 'shared/model'
 import { mapSelectors, mapActions } from 'widgets/map'
-import type { ICRFClassifierValue } from 'widgets/map'
 
 import { groupLib } from 'shared/lib'
 import { useLayer } from 'entities/user'
@@ -96,12 +95,6 @@ export const CRFFilterResult = () => {
 			spacing={1}
 			sx={{
 				width: '100%',
-				maxWidth: '276px',
-				bgcolor: '#ffffff70',
-				backdropFilter: 'blur(5px)',
-				p: 1.5,
-				borderRadius: '14px',
-				boxShadow: '0 2px 6px 0 rgba(0,0,0,0.2)',
 			}}
 		>
 			{groupedCRFValues.map((i) => renderGroup(i))}

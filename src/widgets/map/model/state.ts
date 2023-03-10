@@ -4,7 +4,9 @@ import { RequestStatus } from 'shared/model'
 import { convertersLib } from 'shared/lib'
 
 import type { IClassifierValue } from 'shared/api/classifier'
+
 import type {
+	DrawerContentType,
 	IMapInfoRowData,
 	LeftSidebarContentType,
 	MapModeType,
@@ -40,6 +42,10 @@ interface IMapState {
 	currenMapModeType: MapModeType
 	isOpenLeftSidebar: boolean
 	isOpenRightSidebar: boolean
+	isOpenDrawer: boolean
+	isOpenGlobalSearchList: boolean
+	isOpenCRFFilterList: boolean
+	drawerContentType: DrawerContentType
 	leftSidebarContentType: LeftSidebarContentType
 	rightSidebarContentType: RightSidebarContentType
 	mapInfoData: IMapInfoRowData[] | null
@@ -59,8 +65,12 @@ const initialState: IMapState = {
 	currentZoom: undefined,
 	isOpenLeftSidebar: true,
 	isOpenRightSidebar: false,
+	isOpenDrawer: false,
+	isOpenGlobalSearchList: false,
+	isOpenCRFFilterList: false,
 	leftSidebarContentType: 'home-screen',
 	rightSidebarContentType: 'layer-switcher',
+	drawerContentType: 'home-screen',
 	mapOnLoadEnd: false,
 	mapInfoData: null,
 	infoMapGeoms: null,
@@ -96,11 +106,23 @@ const state = createSlice({
 		setIsOpenCRFFilterSearch(state, action: PayloadAction<boolean>) {
 			state.isOpenCrfFilterSearch = action.payload
 		},
+		setIsOpenCRFFilterList(state, action: PayloadAction<boolean>) {
+			state.isOpenCRFFilterList = action.payload
+		},
 		setIsOpenLeftSidebar(state, action: PayloadAction<boolean>) {
 			state.isOpenLeftSidebar = action.payload
 		},
 		setIsOpenRightSidebar(state, action: PayloadAction<boolean>) {
 			state.isOpenRightSidebar = action.payload
+		},
+		setIsOpenDrawer(state, action: PayloadAction<boolean>) {
+			state.isOpenDrawer = action.payload
+		},
+		setIsOpenGlobalSearchList(state, action: PayloadAction<boolean>) {
+			state.isOpenGlobalSearchList = action.payload
+		},
+		setDrawerContentType(state, action: PayloadAction<DrawerContentType>) {
+			state.drawerContentType = action.payload
 		},
 		setLeftSidebarContentType(
 			state,
