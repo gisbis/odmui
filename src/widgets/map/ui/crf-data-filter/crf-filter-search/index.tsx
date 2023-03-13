@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Autocomplete } from '@mui/material'
+import { Autocomplete, AutocompleteRenderInputParams } from '@mui/material'
 
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
@@ -15,7 +15,8 @@ import { BaseInput } from 'shared/ui'
 import { useAppDispatch, useAppSelector } from 'shared/model'
 import { useTranslate } from 'shared/i18n'
 import { ICRFClassifierValue, mapActions, mapSelectors } from 'widgets/map'
-import { INPUT_BORDER_RADIUS } from 'shared/config'
+import { BREAKPOINTS, INPUT_BORDER_RADIUS } from 'shared/config'
+import { useIsBreakpoint } from 'shared/hooks'
 
 interface IFetchClassifierValuesData {
 	nameGroup: string
@@ -26,6 +27,7 @@ interface IFetchClassifierValuesData {
 }
 
 export const CRFFilterSearch = () => {
+	const isMobile = useIsBreakpoint(BREAKPOINTS.mobile)
 	const { translate } = useTranslate()
 	const dispatch = useAppDispatch()
 
@@ -82,6 +84,31 @@ export const CRFFilterSearch = () => {
 		}
 	}, [crfUserLayers])
 
+	const renderInput = useCallback(
+		(params: AutocompleteRenderInputParams) => {
+			if (isMobile) {
+				return (
+					<BaseInput
+						{...params.inputProps}
+						placeholder={translate('Filter')}
+						sx={{
+							bgcolor: theme.palette.grey['200'],
+							borderRadius: INPUT_BORDER_RADIUS,
+							padding: '1px 15px',
+							width: 'calc(100% - 30px)',
+							height: '50px',
+						}}
+					/>
+				)
+			} else {
+				return (
+					<BaseInput {...params.inputProps} placeholder={translate('Filter')} />
+				)
+			}
+		},
+		[isMobile]
+	)
+
 	const fetchClassifierValues = (params: IFetchClassifierValuesParams) => {
 		return classifierApi.fetchClassifierValues(params)
 	}
@@ -125,9 +152,7 @@ export const CRFFilterSearch = () => {
 			}}
 			renderTags={() => null}
 			renderInput={(params) => (
-				<div ref={params.InputProps.ref}>
-					<BaseInput {...params.inputProps} placeholder={translate('Filter')} />
-				</div>
+				<div ref={params.InputProps.ref}>{renderInput(params)}</div>
 			)}
 			multiple
 			disableCloseOnSelect={true}

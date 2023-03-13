@@ -77,7 +77,7 @@ export const MobilePageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 					{contentType === 'layer-switcher' && <LayerSwitcherWrapper />}
 					{contentType === 'crf-filter' && (
 						<>
-							<Box sx={{ mb: 1.5, borderBottom: 1, borderColor: 'divider' }}>
+							<Box sx={{ mb: 1.5 }}>
 								<CRFFilterSearch />
 							</Box>
 

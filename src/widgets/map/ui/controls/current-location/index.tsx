@@ -20,55 +20,61 @@ export const CurrentLocation = () => {
 	const source = useRef(new VectorSource())
 
 	const handleClick = () => {
+		source.current.clear()
+
 		if (!map) {
 			return
 		}
 
-		source.current.clear()
+		if (!navigator.geolocation) {
+			alert('geolocation is not in navigator')
+		} else {
+			navigator.geolocation.getCurrentPosition(
+				(position) => {
+					const { longitude, latitude } = position.coords
+					console.log({ position })
 
-		const geolocation = new ol.Geolocation()
-		geolocation.setTracking(true)
+					const coordinates = fromLonLat([longitude, latitude])
 
-		geolocation.on('change:position', function () {
-			const coordinates = geolocation.getPosition()
+					const positionFeature = new Feature({
+						geometry: new Circle(coordinates, 15),
+					})
 
-			if (!coordinates) {
-				return
-			}
+					positionFeature.setStyle(
+						new Style({
+							image: new CircleStyle({
+								radius: 6,
+								fill: new Fill({
+									color: '#3399CC',
+								}),
+								stroke: new Stroke({
+									color: '#fff',
+									width: 2,
+								}),
+							}),
+						})
+					)
 
-			const positionFeature = new Feature({
-				geometry: new Circle(fromLonLat(coordinates), 15),
-			})
+					source.current.addFeature(positionFeature)
 
-			positionFeature.setStyle(
-				new Style({
-					image: new CircleStyle({
-						radius: 6,
-						fill: new Fill({
-							color: '#3399CC',
-						}),
-						stroke: new Stroke({
-							color: '#fff',
-							width: 2,
-						}),
-					}),
-				})
+					const layer = new VectorLayer({
+						source: source.current,
+						zIndex: 100,
+					})
+
+					map.addLayer(layer)
+
+					const geometry = source.current.getFeatures()[0]?.getGeometry()
+
+					geometry &&
+						// @ts-ignore
+						map?.getView().fit(geometry, { maxZoom: 18, duration: 500 })
+				},
+				(e) => {
+					console.log(e)
+				}
 			)
-
-			source.current.addFeature(positionFeature)
-
-			const layer = new VectorLayer({
-				source: source.current,
-				zIndex: 100,
-			})
-
-			map.addLayer(layer)
-
-			const geometry = source.current.getFeatures()[0]?.getGeometry()
-
-			// @ts-ignore
-			geometry && map?.getView().fit(geometry, { maxZoom: 22, duration: 500 })
-		})
+		}
 	}
 
 	return (
