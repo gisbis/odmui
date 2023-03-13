@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback } from 'react'
+import { PropsWithChildren, useCallback, useMemo } from 'react'
 
 import { Box, SwipeableDrawerProps } from '@mui/material'
 
@@ -11,7 +11,7 @@ import { LayerSwitcherWrapper } from '../../../layer-switcher'
 import { SymbolsWrapper } from '../../../symbols'
 import { Bio } from '../../../bio'
 import { MapData } from '../../../map-data'
-import { GlobalSearch } from 'widgets/map/ui/global-search'
+import { MobileGlobalSearch } from 'widgets/map/ui/global-search'
 import {
 	CRFFilterResult,
 	CRFFilterSearch,
@@ -35,14 +35,17 @@ export const MobilePageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 
 	const handleOpen = () => {}
 
+	const withGlobalSearch = useMemo(() => {
+		return (
+			drawerData.contentType === 'map-data' ||
+			drawerData.contentType === 'home-screen'
+		)
+	}, [drawerData.contentType])
+
 	const renderContent = useCallback(() => {
 		if (!mapOnLoadEnd) {
 			return null
 		}
-
-		const isGlobalSearch =
-			drawerData.contentType === 'map-data' ||
-			drawerData.contentType === 'home-screen'
 
 		return (
 			<Box
@@ -51,17 +54,21 @@ export const MobilePageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 					overflowY: 'hidden',
 					display: 'flex',
 					flexDirection: 'column',
-					py: 2,
 					rowGap: 1.5,
+					py: 2,
 				}}
 			>
-				{isGlobalSearch && (
-					<Box px={2}>
-						<GlobalSearch />
-					</Box>
-				)}
+				{withGlobalSearch && <MobileGlobalSearch />}
 
-				<Box sx={{ flexGrow: 1, overflowY: 'auto', px: 2 }}>
+				<Box
+					sx={{
+						flexGrow: 1,
+						overflowY: 'auto',
+						px: 2,
+						display:
+							withGlobalSearch && isOpenGlobalSearchList ? 'none' : 'block',
+					}}
+				>
 					{drawerData.contentType === 'home-screen' && <Bio />}
 					{drawerData.contentType === 'map-data' && <MapData />}
 					{drawerData.contentType === 'symbol-list' && <SymbolsWrapper />}
@@ -82,7 +89,12 @@ export const MobilePageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 				</Box>
 			</Box>
 		)
-	}, [mapOnLoadEnd, drawerData.contentType])
+	}, [
+		mapOnLoadEnd,
+		drawerData.contentType,
+		isOpenGlobalSearchList,
+		withGlobalSearch,
+	])
 
 	const drawerProps: SwipeableDrawerProps = {
 		open: drawerData.isOpen,
@@ -91,8 +103,9 @@ export const MobilePageLayout: React.FC<PropsWithChildren> = ({ children }) => {
 		onOpen: handleOpen,
 		PaperProps: {
 			sx: {
-				maxHeight: '80vh',
-				height: isOpenGlobalSearchList || isOpenCRFFilerList ? '80vh' : 'auto',
+				overflowY: 'hidden',
+				maxHeight: '50vh',
+				height: isOpenGlobalSearchList || isOpenCRFFilerList ? '50vh' : 'auto',
 			},
 		},
 	}

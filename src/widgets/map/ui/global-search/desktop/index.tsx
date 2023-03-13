@@ -7,12 +7,12 @@ import type { ISearchGlobalValue } from 'shared/api/select'
 import { mapActions, mapApi, mapSelectors } from 'widgets/map'
 import type { IMapInfoRowData } from 'widgets/map/api'
 
-import { GsAutocomplete } from './gs-autocomplete'
-import { GsLogo } from './gs-logo'
+import { GsAutocomplete } from '../gs-autocomplete'
+import { GsLogo } from '../gs-logo'
 
-import { ClearData } from '../map-data'
+import { ClearData } from '../../map-data'
 
-export const GlobalSearch = () => {
+export const DesktopGlobalSearch = () => {
 	const dispatch = useAppDispatch()
 	const infoData = useAppSelector(mapSelectors.selectMapInfoData)
 	const isOpenLeftSidebar = useAppSelector(mapSelectors.selectIsOpenLeftSidebar)
@@ -43,8 +43,12 @@ export const GlobalSearch = () => {
 
 			dispatch(mapActions.setMapinfoData([infoData]))
 			dispatch(mapActions.setLeftSidebarContentType('map-data'))
+			dispatch(mapActions.setIsOpenDrawer(true))
+			dispatch(mapActions.setDrawerContentType('map-data'))
 			dispatch(mapActions.setIsOpenLeftSidebar(true))
-		} catch (e) {}
+		} catch (e) {
+			console.log(e)
+		}
 	}
 
 	return (
