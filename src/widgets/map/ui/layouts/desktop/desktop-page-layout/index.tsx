@@ -11,7 +11,7 @@ import { LayerSwitcherWrapper } from '../../../layer-switcher'
 import { SymbolsWrapper } from '../../../symbols'
 import { Bio } from '../../../bio'
 import { MapData } from '../../../map-data'
-import { DesktopGlobalSearch } from '../../../global-search'
+import { GlobalSearch } from '../../../global-search'
 import { ToggleLeftSidebar } from '../../../controls'
 
 export const DesktopPageLayout: React.FC<PropsWithChildren> = ({
@@ -85,7 +85,7 @@ export const DesktopPageLayout: React.FC<PropsWithChildren> = ({
 				}}
 			>
 				<Box sx={{ px: 3, py: '1rem' }}>
-					<DesktopGlobalSearch />
+					<GlobalSearch />
 				</Box>
 
 				<Box

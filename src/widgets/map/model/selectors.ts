@@ -23,6 +23,8 @@ export const selectDrawerData = (state: RootState) => ({
 	contentType: state.map.drawerContentType,
 })
 
+export const selectIsOpenDrawer = (state: RootState) => state.map.isOpenDrawer
+
 export const selectIsOpenLeftSidebar = (state: RootState) =>
 	state.map.isOpenLeftSidebar
 

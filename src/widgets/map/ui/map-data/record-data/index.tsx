@@ -75,10 +75,6 @@ export const RecordData: React.FC<{
 				borderRadius: '14px',
 				backgroundColor: 'white',
 				borderColor: theme.palette.grey['300'],
-				transition: 'box-shadow .1s ease-out,background-color .1s ease-out',
-				'&:hover': {
-					boxShadow: '0 2px 10px 0 rgba(0,0,0,0.2)',
-				},
 			}}
 		>
 			<CardHeader

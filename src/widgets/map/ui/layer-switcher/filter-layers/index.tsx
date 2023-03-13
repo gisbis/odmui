@@ -20,7 +20,7 @@ export const FilterLayers: React.FC<IFilterLayersProps> = ({
 			placeholder={translate('Filter layers')}
 			sx={{
 				bgcolor: theme.palette.grey['200'],
-				borderRadius: `${INPUT_BORDER_RADIUS}px`,
+				borderRadius: INPUT_BORDER_RADIUS,
 				padding: '1px 15px',
 				width: 'calc(100% - 30px)',
 				height: '50px',

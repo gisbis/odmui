@@ -20,6 +20,7 @@ import { useTranslate } from 'shared/i18n'
 import { useAppDispatch } from 'shared/model'
 
 import { mapActions } from 'widgets/map'
+import { parsersLib } from 'shared/lib'
 
 const CustomPopper = (props: PopperProps) => {
 	return (
@@ -103,8 +104,10 @@ export const GsAutocomplete: React.FC<{
 				</div>
 			)}
 			renderOption={(props, option, { inputValue }) => {
-				const matches = match(option.meta, inputValue, { insideWords: true })
-				const parts = parse(option.meta, matches)
+				const title = parsersLib.clearString(option.meta)
+
+				const matches = match(title, inputValue, { insideWords: true })
+				const parts = parse(title, matches)
 
 				return (
 					<li {...props}>

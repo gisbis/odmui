@@ -11,6 +11,7 @@ export const ClearData = () => {
 		dispatch(mapActions.setMapinfoData(null))
 		dispatch(mapActions.setInfoMapGeoms(null))
 		dispatch(mapActions.setLeftSidebarContentType('home-screen'))
+		dispatch(mapActions.setDrawerContentType('home-screen'))
 	}
 
 	return (

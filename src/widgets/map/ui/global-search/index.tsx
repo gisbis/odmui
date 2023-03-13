@@ -7,15 +7,16 @@ import type { ISearchGlobalValue } from 'shared/api/select'
 import { mapActions, mapApi, mapSelectors } from 'widgets/map'
 import type { IMapInfoRowData } from 'widgets/map/api'
 
-import { GsAutocomplete } from '../gs-autocomplete'
-import { GsLogo } from '../gs-logo'
+import { GsAutocomplete } from './gs-autocomplete'
+import { GsLogo } from './gs-logo'
 
-import { ClearData } from '../../map-data'
+import { ClearData } from '../map-data'
 
-export const DesktopGlobalSearch = () => {
+export const GlobalSearch = () => {
 	const dispatch = useAppDispatch()
 	const infoData = useAppSelector(mapSelectors.selectMapInfoData)
 	const isOpenLeftSidebar = useAppSelector(mapSelectors.selectIsOpenLeftSidebar)
+	const isOpenDrawer = useAppSelector(mapSelectors.selectIsOpenDrawer)
 
 	const handleSearchChange = async (value: ISearchGlobalValue | null) => {
 		if (!value) {
@@ -58,9 +59,10 @@ export const DesktopGlobalSearch = () => {
 			spacing={1}
 			sx={{
 				borderRadius: '14px',
-				backgroundColor: isOpenLeftSidebar
-					? theme.palette.grey['200']
-					: 'white',
+				backgroundColor:
+					isOpenLeftSidebar || isOpenDrawer
+						? theme.palette.grey['200']
+						: 'white',
 				borderWidth: '1px',
 				borderStyle: 'solid',
 				borderColor: theme.palette.grey['200'],

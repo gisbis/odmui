@@ -40,7 +40,7 @@ const Sidebar = styled('div', {
 		prop !== 'open' && prop !== 'sidebarwidth' && prop !== 'anchor',
 })<{
 	open: boolean
-	sidebarwidth: number
+	sidebarwidth: string
 	anchor: 'left' | 'right'
 }>(({ theme, open, anchor, sidebarwidth }) => ({
 	width: sidebarwidth,
@@ -56,7 +56,7 @@ const Sidebar = styled('div', {
 		easing: theme.transitions.easing.sharp,
 		duration: theme.transitions.duration.leavingScreen,
 	}),
-	marginLeft: anchor === 'left' ? -sidebarwidth : 0,
+	marginLeft: anchor === 'left' ? `calc(-1 * ${sidebarwidth})` : 0,
 	...(open && {
 		transition: theme.transitions.create('margin', {
 			easing: theme.transitions.easing.easeOut,
@@ -64,7 +64,7 @@ const Sidebar = styled('div', {
 		}),
 		marginLeft: 0,
 	}),
-	marginRight: anchor === 'right' ? -sidebarwidth : 0,
+	marginRight: anchor === 'right' ? `calc(-1 * ${sidebarwidth})` : 0,
 	...(open && {
 		transition: theme.transitions.create('margin', {
 			easing: theme.transitions.easing.easeOut,
@@ -75,8 +75,8 @@ const Sidebar = styled('div', {
 }))
 
 interface IWithSidebarsLayoutProps extends PropsWithChildren {
-	leftSidebarWidth?: number
-	rightSidebarWidth?: number
+	leftSidebarWidth?: string
+	rightSidebarWidth?: string
 	isOpenRightSidebar?: boolean
 	isOpenLeftSidebar?: boolean
 	rightSidebarComponent: JSX.Element | null

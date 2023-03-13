@@ -1,7 +1,7 @@
-export const DEFAULT_SIDEBAR_WIDTH = 410
-export const CARD_BORDER_RADIUS = 14
-export const BUTTON_BORDER_RADIUS = 32
-export const INPUT_BORDER_RADIUS = 14
+export const DEFAULT_SIDEBAR_WIDTH = '410px'
+export const CARD_BORDER_RADIUS = '14px'
+export const BUTTON_BORDER_RADIUS = '32px'
+export const INPUT_BORDER_RADIUS = '14px'
 
 export const BREAKPOINTS = {
 	mobile: 640,

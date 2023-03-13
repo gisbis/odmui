@@ -11,6 +11,7 @@ import {
 } from '@mui/material'
 
 import { useAppDispatch, useAppSelector } from 'shared/model'
+import { INPUT_BORDER_RADIUS } from 'shared/config'
 import { mapSelectors, mapActions } from 'widgets/map'
 
 import { CRFFilterSearch } from '../../../crf-data-filter'
@@ -19,7 +20,7 @@ const StyledPaper = styled(Paper)<PaperProps>(({ theme }) => ({
 	'&:hover': {
 		boxShadow: '0 2px 10px 0 rgba(0,0,0,0.2)',
 	},
-	borderRadius: '14px',
+	borderRadius: INPUT_BORDER_RADIUS,
 	backgroundColor: '#ffffff',
 	borderColor: theme.palette.divider,
 	boxShadow: '0 2px 6px 0 rgba(0,0,0,0.2)',

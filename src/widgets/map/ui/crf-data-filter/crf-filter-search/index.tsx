@@ -15,6 +15,7 @@ import { BaseInput } from 'shared/ui'
 import { useAppDispatch, useAppSelector } from 'shared/model'
 import { useTranslate } from 'shared/i18n'
 import { ICRFClassifierValue, mapActions, mapSelectors } from 'widgets/map'
+import { INPUT_BORDER_RADIUS } from 'shared/config'
 
 interface IFetchClassifierValuesData {
 	nameGroup: string
@@ -96,9 +97,7 @@ export const CRFFilterSearch = () => {
 			value={crfValues}
 			inputValue={inputValue}
 			options={options}
-			isOptionEqualToValue={(option, value) =>
-				option.key === value.key && option.value === value.value
-			}
+			isOptionEqualToValue={(option, value) => option.value === value.value}
 			groupBy={(option) => option.nameGroup}
 			getOptionLabel={(option) => option.value}
 			renderOption={(props, option, { inputValue }) => {
